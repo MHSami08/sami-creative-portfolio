@@ -31,11 +31,10 @@ const Contact = () => {
 
   const contactInfo = [
     {
-      icon: Mail,
-      title: "Email",
-      value: "masrafihaque398@gmail.com",
-      link: "mailto:masrafihaque398@gmail.com",
-      color: "from-blue-500 to-blue-600"
+      icon: Facebook,
+      title: "Facebook",
+      value: "MH Sami",
+      link: "https://www.facebook.com/share/1Lfd6yoWnQ/",
     },
     {
       icon: Youtube,
