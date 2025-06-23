@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { Mail, Youtube, Clock, MapPin, Send, CheckCircle,Facebook } from 'lucide-react';
+import { Mail, Youtube, Clock, MapPin, Send, CheckCircle} from 'lucide-react';
+import { FaFacebook } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -31,7 +32,7 @@ const Contact = () => {
 
   const contactInfo = [
     {
-      icon: Facebook,
+      icon: FaFacebook,
       title: "Facebook",
       value: "MH Sami",
       link: "https://www.facebook.com/share/1Lfd6yoWnQ/",
