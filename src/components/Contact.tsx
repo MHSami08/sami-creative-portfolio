@@ -41,14 +41,14 @@ const Contact = () => {
       icon: Youtube,
       title: "YouTube",
       value: "MH_officialYT",
-      link: "https://youtube.com/@MH_officialYT",
+      link: "https://youtube.com/@mhsami-08?si=u3EFol8eZyvqnfzw",
       color: "from-red-500 to-red-600"
     },
     {
       icon: Clock,
       title: "TikTok",
       value: "MH_officialYT",
-      link: "https://tiktok.com/@MH_officialYT",
+      link: "https://www.tiktok.com/@mh_sami25?_t=ZS-8xReoXChhq5&_r=1",
       color: "from-purple-500 to-purple-600"
     },
     {
