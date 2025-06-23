@@ -1,97 +1,164 @@
 
-import { Video, Code, Palette, Star } from 'lucide-react';
+import { Video, Code, Palette, Zap, Clock, Shield } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const Services = () => {
-  const futureServices = [
+  const services = [
     {
       icon: Video,
       title: "Video Editing",
-      description: "Creative, Islamic-friendly content editing for social media, educational content, and personal projects",
-      features: ["Social Media Videos", "Educational Content", "Islamic Content", "Basic Transitions"]
+      description: "Creative and Islamic-friendly content editing for social media, YouTube, and personal projects.",
+      features: ["Basic cuts and transitions", "Color correction", "Audio synchronization", "Islamic-compliant content"],
+      status: "Learning",
+      color: "from-blue-500 to-blue-600",
+      bgColor: "bg-blue-500/10",
+      borderColor: "border-blue-500/20"
     },
     {
       icon: Code,
-      title: "Simple Programming",
-      description: "Basic C programming assistance and simple algorithm implementations as I continue learning",
-      features: ["Basic C Programs", "Simple Algorithms", "Learning Support", "Code Review"]
+      title: "C Programming",
+      description: "Basic programming solutions and simple applications as I develop my coding skills.",
+      features: ["Basic algorithms", "Simple applications", "Code optimization", "Problem solving"],
+      status: "Learning",
+      color: "from-amber-500 to-amber-600",
+      bgColor: "bg-amber-500/10",
+      borderColor: "border-amber-500/20"
     },
     {
       icon: Palette,
-      title: "Creative Collaboration",
-      description: "Collaborative work on creative projects with fellow learners and content creators",
-      features: ["Content Planning", "Creative Ideas", "Islamic Themes", "Community Projects"]
+      title: "Content Creation",
+      description: "Helping create meaningful, halal content that resonates with Muslim audiences.",
+      features: ["Social media content", "Educational videos", "Islamic themes", "Community projects"],
+      status: "Planning",
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-500/10",
+      borderColor: "border-purple-500/20"
     }
   ];
 
+  const principles = [
+    {
+      icon: Shield,
+      title: "Halal Content Only",
+      description: "All projects must align with Islamic principles and values."
+    },
+    {
+      icon: Clock,
+      title: "Timely Delivery",
+      description: "Committed to meeting deadlines and maintaining trust."
+    },
+    {
+      icon: Zap,
+      title: "Continuous Learning",
+      description: "Always improving skills to provide better service quality."
+    }
+  ];
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="py-20 bg-card geometric-pattern">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What I Plan to Offer</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            I am learning video editing and plan to offer creative, Islamic-friendly content editing 
-            services in the near future. Feel free to reach out for collaboration or small projects.
+    <section className="py-20 bg-gradient-to-br from-background via-blue-50/30 to-amber-50/30 dark:from-background dark:via-blue-900/10 dark:to-amber-900/10 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-20 right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-20 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
+              What I Plan to Offer
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            I am learning video editing and plan to offer creative, Islamic-friendly content editing services 
+            in the near future. Feel free to reach out for collaboration or small projects.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {futureServices.map((service, index) => (
-            <div 
-              key={index}
-              className="bg-background border border-border rounded-lg p-8 hover:shadow-lg transition-all hover:scale-105 animate-fade-in"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <service.icon className="h-8 w-8 text-primary" />
-              </div>
-              
-              <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-              <p className="text-muted-foreground mb-6">{service.description}</p>
-              
-              <ul className="space-y-2">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center gap-2 text-sm">
-                    <Star className="h-4 w-4 text-accent fill-current" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          {services.map((service, index) => (
+            <Card key={index} className={`group hover:shadow-xl transition-all duration-500 ${service.bgColor} backdrop-blur-sm border ${service.borderColor} hover:scale-105`}>
+              <CardHeader className="text-center pb-4">
+                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <service.icon className="w-8 h-8 text-white" />
+                </div>
+                <CardTitle className="text-xl font-bold text-foreground">{service.title}</CardTitle>
+                <div className="flex justify-center">
+                  <span className={`text-xs font-medium px-3 py-1 rounded-full ${
+                    service.status === 'Learning' 
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
+                      : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                  }`}>
+                    {service.status}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground text-center">{service.description}</p>
+                <ul className="space-y-2">
+                  {service.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-sm">
+                      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}></div>
+                      <span className="text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-8 border border-primary/20">
-            <h3 className="text-2xl font-bold mb-4 text-primary">Ready to Collaborate?</h3>
-            <p className="text-muted-foreground mb-6 text-lg">
-              While I'm still in the learning phase, I'm open to small projects and collaborations 
-              that will help me grow. Let's create something meaningful together, In shaa Allah.
-            </p>
-            
-            <div className="grid md:grid-cols-2 gap-6 mt-8">
-              <div className="text-center p-4 bg-background rounded-lg border border-border">
-                <h4 className="font-semibold text-primary mb-2">Current Focus</h4>
-                <p className="text-sm text-muted-foreground">Learning video editing techniques and C programming fundamentals</p>
+        {/* Principles Section */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-center mb-12">
+            <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+              My Work Principles
+            </span>
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {principles.map((principle, index) => (
+              <div key={index} className="text-center group">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <principle.icon className="w-10 h-10 text-white" />
+                </div>
+                <h4 className="text-xl font-semibold text-foreground mb-3">{principle.title}</h4>
+                <p className="text-muted-foreground">{principle.description}</p>
               </div>
-              <div className="text-center p-4 bg-background rounded-lg border border-border">
-                <h4 className="font-semibold text-accent mb-2">Open For</h4>
-                <p className="text-sm text-muted-foreground">Small projects, collaborations, and learning opportunities</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Learning Journey */}
-        <div className="mt-16 text-center">
-          <h3 className="text-xl font-semibold mb-6 text-primary">My Learning Journey</h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">Video Editing</span>
-            <span className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">C Programming</span>
-            <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">Creative Content</span>
-            <span className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">Islamic Values</span>
+        {/* CTA Section */}
+        <div className="text-center bg-background/70 backdrop-blur-sm rounded-3xl p-12 border border-border/50">
+          <h3 className="text-3xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
+              Ready to Collaborate?
+            </span>
+          </h3>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Whether you have a small project or want to discuss future collaborations, 
+            I'd love to hear from you. Let's create something meaningful together, In shaa Allah.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              onClick={() => scrollToSection('#contact')}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              Get In Touch
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => scrollToSection('#portfolio')}
+              className="border-2 border-amber-500/50 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white px-8 py-4 text-lg rounded-xl font-semibold backdrop-blur-sm bg-background/50 transition-all duration-300 hover:scale-105"
+            >
+              View Portfolio
+            </Button>
           </div>
         </div>
       </div>

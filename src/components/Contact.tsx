@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import { Mail, MessageCircle, Send, Youtube, Phone } from 'lucide-react';
+import { Mail, Youtube, Clock, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,22 +12,14 @@ const Contact = () => {
     email: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
     // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "جزاك الله خيرا",
-        description: "Your message has been sent successfully! I'll get back to you soon, In shaa Allah.",
-      });
-      setFormData({ name: '', email: '', message: '' });
-      setIsSubmitting(false);
-    }, 1000);
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000);
+    setFormData({ name: '', email: '', message: '' });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,145 +32,198 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: Mail,
-      label: "Email",
+      title: "Email",
       value: "masrafihaque398@gmail.com",
-      href: "mailto:masrafihaque398@gmail.com"
+      link: "mailto:masrafihaque398@gmail.com",
+      color: "from-blue-500 to-blue-600"
     },
     {
       icon: Youtube,
-      label: "YouTube",
+      title: "YouTube",
       value: "MH_officialYT",
-      href: "https://youtube.com/@MH_officialYT"
+      link: "https://youtube.com/@MH_officialYT",
+      color: "from-red-500 to-red-600"
     },
     {
-      icon: MessageCircle,
-      label: "TikTok",
+      icon: Clock,
+      title: "TikTok",
       value: "MH_officialYT",
-      href: "https://tiktok.com/@MH_officialYT"
+      link: "https://tiktok.com/@MH_officialYT",
+      color: "from-purple-500 to-purple-600"
+    },
+    {
+      icon: MapPin,
+      title: "Location",
+      value: "Bangladesh",
+      link: null,
+      color: "from-amber-500 to-amber-600"
     }
   ];
 
   return (
-    <section className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact Me</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you. 
-            Let's create something amazing together, In shaa Allah.
+    <section className="py-20 bg-background relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-background to-amber-50/30 dark:from-blue-900/10 dark:via-background dark:to-amber-900/10"></div>
+      <div className="absolute top-10 right-10 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
+              Let's Connect
+            </span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            I'd love to hear from you! Whether you have a project idea, want to collaborate, 
+            or just want to say hello, feel free to reach out.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
-          <div className="animate-fade-in">
-            <h3 className="text-2xl font-bold mb-6 text-primary">Get in Touch</h3>
-            <p className="text-muted-foreground mb-8">
-              Whether you have a question, want to collaborate, or just want to say hello, 
-              I'm always excited to connect with fellow creators and learners.
-            </p>
-
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <a
-                  key={index}
-                  href={info.href}
-                  target={info.href.startsWith('http') ? '_blank' : undefined}
-                  rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center gap-4 p-4 bg-card border border-border rounded-lg hover:shadow-lg transition-all hover:scale-105"
-                >
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <info.icon className="h-6 w-6 text-primary" />
-                  </div>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Contact Form */}
+          <Card className="bg-background/70 backdrop-blur-sm border-border/50 shadow-xl">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-center">
+                <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
+                  Send a Message
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {isSubmitted ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-green-600 mb-2">Message Sent!</h3>
+                  <p className="text-muted-foreground">جزاك الله خيرا! I'll get back to you soon, In shaa Allah.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <h4 className="font-semibold text-foreground">{info.label}</h4>
-                    <p className="text-muted-foreground">{info.value}</p>
+                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                      Full Name *
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full"
+                      placeholder="Enter your full name"
+                    />
                   </div>
-                </a>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                      Email Address *
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full"
+                      placeholder="Enter your email address"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                      Message *
+                    </label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      required
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={6}
+                      className="w-full resize-none"
+                      placeholder="Tell me about your project or just say hello..."
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+                  >
+                    <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    Send Message
+                  </Button>
+                </form>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Contact Information */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-3xl font-bold mb-8">
+                <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+                  Get In Touch
+                </span>
+              </h3>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                I'm always excited to discuss new projects and opportunities. 
+                Whether you're looking for video editing services or just want to connect, 
+                I'm here to help, بإذن الله.
+              </p>
+            </div>
+
+            {/* Contact Cards */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {contactInfo.map((info, index) => (
+                <Card key={index} className="group hover:shadow-lg transition-all duration-300 bg-background/50 backdrop-blur-sm border-border/50">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <info.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground">{info.title}</h4>
+                        {info.link ? (
+                          <a 
+                            href={info.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:text-primary/80 transition-colors break-all"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="text-muted-foreground">{info.value}</p>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
 
-            {/* Islamic Quote */}
-            <div className="mt-8 p-6 bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg border border-primary/20">
-              <p className="text-center font-amiri text-lg text-primary mb-2">
-                "وَقُل رَّبِّ زِدْنِي عِلْمًا"
+            {/* Additional Info */}
+            <Card className="bg-gradient-to-r from-amber-500/10 to-blue-500/10 backdrop-blur-sm border-border/50">
+              <CardContent className="p-6">
+                <h4 className="text-lg font-semibold text-foreground mb-3">Response Time</h4>
+                <p className="text-muted-foreground">
+                  I typically respond within 24-48 hours, In shaa Allah. 
+                  For urgent matters, please mention it in your message.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Islamic Touch */}
+            <div className="text-center p-6 bg-amber-500/10 rounded-2xl border border-amber-500/20">
+              <p className="text-amber-600 dark:text-amber-400 font-amiri text-lg font-medium">
+                "وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ"
               </p>
-              <p className="text-center text-sm text-muted-foreground">
-                "And say: My Lord, increase me in knowledge" - Quran 20:114
+              <p className="text-sm text-muted-foreground mt-2">
+                "And my success is not but through Allah"
               </p>
-            </div>
-          </div>
-
-          {/* Contact Form */}
-          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full"
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full"
-                  placeholder="Tell me about your project or just say hello..."
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 flex items-center justify-center gap-2 transition-all"
-              >
-                {isSubmitting ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    <Send className="h-5 w-5" />
-                    Send Message
-                  </>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center text-sm text-muted-foreground">
-              <p>I'll respond as soon as possible, In shaa Allah</p>
             </div>
           </div>
         </div>

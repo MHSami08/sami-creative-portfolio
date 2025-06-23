@@ -109,22 +109,16 @@ const Hero = () => {
               {/* Main profile container with modern styling */}
               <div className="relative w-96 h-96">
                 {/* Animated gradient border */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-amber-500 to-blue-500 rounded-3xl blur-lg opacity-75 group-hover:opacity-100 transition-opacity animate-geometric"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-amber-500 to-blue-500 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition-opacity animate-geometric"></div>
                 
                 {/* Profile picture container */}
-                <div className="relative w-full h-full rounded-3xl bg-gradient-to-br from-blue-600 to-amber-600 p-1">
-                  <div className="w-full h-full rounded-3xl bg-background flex items-center justify-center overflow-hidden">
-                    <div className="w-full h-full rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center relative overflow-hidden">
-                      {/* Subtle pattern overlay */}
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.1)_0%,transparent_50%)] opacity-50"></div>
-                      
-                      <div className="text-center text-muted-foreground z-10">
-                        <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-blue-500/20 to-amber-500/20 mx-auto mb-6 flex items-center justify-center backdrop-blur-sm border border-white/20">
-                          <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-amber-600 bg-clip-text text-transparent">MHS</span>
-                        </div>
-                        <p className="text-sm font-medium">Profile Picture</p>
-                      </div>
-                    </div>
+                <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-600 to-amber-600 p-1">
+                  <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden">
+                    <img 
+                      src="https://i.postimg.cc/1zHtBmkx/Screenshot-2025-06-16-22-41-45-730-com-alightcreative-motion-edit.jpg"
+                      alt="Masrafi Haque Sami"
+                      className="w-full h-full object-cover rounded-full"
+                    />
                   </div>
                 </div>
                 
