@@ -143,7 +143,7 @@ const Index = () => {
           <div className="text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
               © 2025 Masrafi Haque Sami. All rights reserved. 
-              <span className="block sm:inline text-emerald-400 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
+              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
             </p>
           </div>
         </div>
