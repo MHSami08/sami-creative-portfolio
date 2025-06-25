@@ -168,15 +168,24 @@ const Portfolio = () => {
 
               {/* Action buttons */}
               <div className="flex gap-3">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1"
-                  disabled={project.status !== 'completed'}
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  {project.status === 'completed' ? 'View Project' : 'Coming Soon'}
-                </Button>
+                {project.status === 'completed' && project.videoUrl ? (
+  <a
+    href={project.videoUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex-1"
+  >
+    <Button variant="outline" size="sm" className="w-full">
+      <ExternalLink className="h-4 w-4 mr-2" />
+      View Project
+    </Button>
+  </a>
+) : (
+  <Button variant="outline" size="sm" className="flex-1" disabled>
+    <ExternalLink className="h-4 w-4 mr-2" />
+    Coming Soon
+  </Button>
+)}
               </div>
             </div>
           ))}
