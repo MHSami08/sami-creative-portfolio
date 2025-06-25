@@ -103,7 +103,7 @@ const Hero = () => {
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Projects</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 backdrop-blur-lg border border-cyan-400/30 shadow-lg shadow-cyan-500/10">
-                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">Learning</div>
+                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">NEW</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Phase</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 backdrop-blur-lg border border-amber-400/30 shadow-lg shadow-amber-500/10">
