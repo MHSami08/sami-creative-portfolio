@@ -9,10 +9,10 @@ const Portfolio = () => {
   const projects = [
     {
       id: 1,
-      title: "Islamic Nasheed Video",
-      description: "Coming soon - A beautiful compilation of Islamic nasheeds with custom visual effects",
+      title: "Islamic Nasheed Video:Qalbi Fil Madina",
+      description: "A beautiful Islamic nasheeds with custom visual effects",
       category: "video",
-      status: "planned",
+      status: "completed",
       tools: ["VN Video Editor", "Alight motion"],
       duration: "3-5 min",
       type: "Nasheed Video"
