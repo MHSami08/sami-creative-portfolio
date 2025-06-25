@@ -9,13 +9,13 @@ const Portfolio = () => {
   const projects = [
     {
       id: 1,
-      title: "Islamic Nasheeds Video",
+      title: "Islamic Nasheed Video",
       description: "Coming soon - A beautiful compilation of Islamic nasheeds with custom visual effects",
       category: "video",
       status: "planned",
-      tools: ["DaVinci Resolve", "After Effects"],
+      tools: ["VN Video Editor", "Alight motion"],
       duration: "3-5 min",
-      type: "Music Video"
+      type: "Nasheed Video"
     },
     {
       id: 2,
