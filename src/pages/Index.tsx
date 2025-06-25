@@ -45,24 +45,24 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Enhanced Navigation */}
+      {/* Enhanced Navigation - Mobile responsive */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-emerald-400/20 shadow-lg shadow-emerald-500/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-14 sm:h-16">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
                 Masrafi Haque Sami
               </h1>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
+              <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
                 {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="text-foreground hover:text-emerald-400 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-emerald-500/10"
+                    className="text-foreground hover:text-emerald-400 px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-emerald-500/10"
                   >
                     {item.name}
                   </button>
@@ -70,17 +70,17 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 sm:space-x-4">
               {/* Enhanced Dark Mode Toggle */}
               <button
                 onClick={toggleDarkMode}
-                className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
+                className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Toggle dark mode"
               >
                 {isDark ? (
-                  <Sun className="h-5 w-5 text-amber-400 group-hover:rotate-180 transition-transform duration-300" />
+                  <Sun className="h-4 sm:h-5 w-4 sm:w-5 text-amber-400 group-hover:rotate-180 transition-transform duration-300" />
                 ) : (
-                  <Moon className="h-5 w-5 text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
+                  <Moon className="h-4 sm:h-5 w-4 sm:w-5 text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
                 )}
               </button>
 
@@ -88,9 +88,9 @@ const Index = () => {
               <div className="md:hidden">
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg"
+                  className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg"
                 >
-                  {isMenuOpen ? <X className="h-5 w-5 text-emerald-400" /> : <Menu className="h-5 w-5 text-emerald-400" />}
+                  {isMenuOpen ? <X className="h-4 sm:h-5 w-4 sm:w-5 text-emerald-400" /> : <Menu className="h-4 sm:h-5 w-4 sm:w-5 text-emerald-400" />}
                 </button>
               </div>
             </div>
@@ -115,35 +115,35 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main>
+      {/* Main Content with proper spacing for mobile */}
+      <main className="pt-14 sm:pt-16">
         <section id="home">
           <Hero />
         </section>
-        <section id="about">
+        <section id="about" className="py-8 sm:py-16">
           <About />
         </section>
-        <section id="myaim">
+        <section id="myaim" className="py-8 sm:py-16">
           <MyAim />
         </section>
-        <section id="portfolio">
+        <section id="portfolio" className="py-8 sm:py-16">
           <Portfolio />
         </section>
-        <section id="services">
+        <section id="services" className="py-8 sm:py-16">
           <Services />
         </section>
-        <section id="contact">
+        <section id="contact" className="py-8 sm:py-16">
           <Contact />
         </section>
       </main>
 
-      {/* Enhanced Footer */}
+      {/* Enhanced Footer - Mobile responsive */}
       <footer className="bg-gradient-to-r from-emerald-900/10 to-blue-900/10 border-t border-emerald-400/20 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               © 2025 Masrafi Haque Sami. All rights reserved. 
-              <span className="text-emerald-400 font-amiri ml-2">جزاك الله خيرا</span>
+              <span className="block sm:inline text-emerald-400 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
             </p>
           </div>
         </div>
