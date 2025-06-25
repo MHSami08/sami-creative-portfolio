@@ -11,22 +11,22 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Enhanced gradient background with cyber theme */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-background to-cyan-900/20"></div>
       
       {/* Animated grid pattern with cyber accents */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/10_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/10_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       
       {/* Floating geometric elements with cyber theme */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         
         {/* Cyber-style floating elements */}
         <div className="absolute top-20 left-20 p-4 bg-blue-500/20 backdrop-blur-lg rounded-2xl border border-blue-400/30 animate-float shadow-lg shadow-blue-500/20">
           <Video className="w-8 h-8 text-blue-400" />
         </div>
-        <div className="absolute bottom-32 right-16 p-4 bg-purple-500/20 backdrop-blur-lg rounded-2xl border border-purple-400/30 animate-float shadow-lg shadow-purple-500/20" style={{ animationDelay: '1s' }}>
-          <Code className="w-8 h-8 text-purple-400" />
+        <div className="absolute bottom-32 right-16 p-4 bg-cyan-500/20 backdrop-blur-lg rounded-2xl border border-cyan-400/30 animate-float shadow-lg shadow-cyan-500/20" style={{ animationDelay: '1s' }}>
+          <Code className="w-8 h-8 text-cyan-400" />
         </div>
         <div className="absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
           <Sparkles className="w-6 h-6 text-amber-400" />
@@ -34,7 +34,7 @@ const Hero = () => {
         
         {/* Additional cyber elements */}
         <div className="absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div>
-        <div className="absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-purple-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +58,7 @@ const Hero = () => {
               </div>
               
               <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
+                <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
                   Masrafi Haque Sami
                 </span>
               </h1>
@@ -71,7 +71,7 @@ const Hero = () => {
               </p>
 
               {/* Quranic verse */}
-              <div className="p-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
+              <div className="p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
                 <p className="text-blue-400 dark:text-blue-300 font-amiri text-lg font-medium text-center mb-2">
                   "وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا"
                 </p>
@@ -94,7 +94,7 @@ const Hero = () => {
               <Button 
                 variant="outline"
                 onClick={() => scrollToSection('#contact')}
-                className="group border-2 border-purple-400/50 text-purple-400 dark:text-purple-300 hover:bg-purple-500 hover:text-white px-8 py-4 text-lg rounded-xl font-semibold backdrop-blur-lg bg-background/20 transition-all duration-300 hover:scale-105 shadow-lg shadow-purple-500/20"
+                className="group border-2 border-cyan-400/50 text-cyan-400 dark:text-cyan-300 hover:bg-cyan-500 hover:text-white px-8 py-4 text-lg rounded-xl font-semibold backdrop-blur-lg bg-background/20 transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/20"
               >
                 <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                 <span>Contact Me</span>
@@ -107,8 +107,8 @@ const Hero = () => {
                 <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">0+</div>
                 <div className="text-sm text-muted-foreground font-medium">Projects</div>
               </div>
-              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-600/10 backdrop-blur-lg border border-purple-400/30 shadow-lg shadow-purple-500/10">
-                <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-purple-500 bg-clip-text text-transparent">Learning</div>
+              <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 backdrop-blur-lg border border-cyan-400/30 shadow-lg shadow-cyan-500/10">
+                <div className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">Learning</div>
                 <div className="text-sm text-muted-foreground font-medium">Phase</div>
               </div>
               <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 backdrop-blur-lg border border-amber-400/30 shadow-lg shadow-amber-500/10">
@@ -141,13 +141,13 @@ const Hero = () => {
                 <div className="absolute top-4 right-4 w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-2xl flex items-center justify-center animate-float shadow-xl shadow-blue-500/50 border border-blue-300/50">
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
-                <div className="absolute bottom-4 left-4 w-10 h-10 bg-gradient-to-r from-purple-400 to-purple-500 rounded-xl flex items-center justify-center animate-float shadow-xl shadow-purple-500/50 border border-purple-300/50" style={{ animationDelay: '1s' }}>
+                <div className="absolute bottom-4 left-4 w-10 h-10 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-xl flex items-center justify-center animate-float shadow-xl shadow-cyan-500/50 border border-cyan-300/50" style={{ animationDelay: '1s' }}>
                   <Video className="w-5 h-5 text-white" />
                 </div>
                 <div className="absolute top-12 left-8 w-8 h-8 bg-gradient-to-r from-amber-400 to-amber-500 rounded-lg flex items-center justify-center animate-float shadow-lg shadow-amber-500/50" style={{ animationDelay: '2s' }}>
                   <Code className="w-4 h-4 text-white" />
                 </div>
-                <div className="absolute bottom-12 right-8 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center animate-float shadow-lg shadow-blue-500/50" style={{ animationDelay: '1.5s' }}>
+                <div className="absolute bottom-12 right-8 w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center animate-float shadow-lg shadow-blue-500/50" style={{ animationDelay: '1.5s' }}>
                   <Target className="w-4 h-4 text-white" />
                 </div>
               </div>
