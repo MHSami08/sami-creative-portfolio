@@ -124,7 +124,7 @@ const Contact = () => {
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
                   <h3 className="text-xl font-semibold text-emerald-600 mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground">جزاك الله خيرا! I'll get back to you soon, In shaa Allah.</p>
+                  <p className="text-muted-foreground">جزاك الله خيرا! I'll get back to you soon, Insha'Allah.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -239,7 +239,7 @@ const Contact = () => {
               <CardContent className="p-6">
                 <h4 className="text-lg font-semibold text-foreground mb-3">Response Time</h4>
                 <p className="text-muted-foreground">
-                  I typically respond within 24-48 hours, In shaa Allah. 
+                  I typically respond within 24-48 hours, Insha'Allah. 
                   For urgent matters, please mention it in your message.
                 </p>
               </CardContent>
