@@ -168,9 +168,9 @@ const Portfolio = () => {
 
               {/* Action buttons */}
               <div className="flex gap-3">
-                {project.status === 'completed' && project.videoUrl ? (
+                {project.status === 'completed' && https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO ? (
   <a
-    href={project.videoUrl}
+    href={https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO}
     target="_blank"
     rel="noopener noreferrer"
     className="flex-1"
