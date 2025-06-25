@@ -28,9 +28,9 @@ const Hero = () => {
         {/* <div className="hidden sm:block absolute bottom-32 right-16 p-4 bg-cyan-500/20 backdrop-blur-lg rounded-2xl border border-cyan-400/30 animate-float shadow-lg shadow-cyan-500/20" style={{ animationDelay: '1s' }}>
           <Code className="w-8 h-8 text-cyan-400" />
         </div> */}
-        <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
+        {/* <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
           <Sparkles className="w-6 h-6 text-amber-400" />
-        </div>
+        </div> */}
         
         {/* Additional cyber elements - Responsive */}
         <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div>
