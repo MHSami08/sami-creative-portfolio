@@ -33,7 +33,7 @@ const About = () => {
     },
     {
       year: "2025",
-      title: "New Phase",
+      title: "Learning Phase",
       description: "Currently learning video editing and C programming",
       status: "current"
     },
