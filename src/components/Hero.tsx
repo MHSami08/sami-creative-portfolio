@@ -25,9 +25,9 @@ const Hero = () => {
         <div className="hidden sm:block absolute top-20 left-20 p-4 bg-blue-500/20 backdrop-blur-lg rounded-2xl border border-blue-400/30 animate-float shadow-lg shadow-blue-500/20">
           <Video className="w-8 h-8 text-blue-400" />
         </div>
-        <div className="hidden sm:block absolute bottom-32 right-16 p-4 bg-cyan-500/20 backdrop-blur-lg rounded-2xl border border-cyan-400/30 animate-float shadow-lg shadow-cyan-500/20" style={{ animationDelay: '1s' }}>
+        {/* <div className="hidden sm:block absolute bottom-32 right-16 p-4 bg-cyan-500/20 backdrop-blur-lg rounded-2xl border border-cyan-400/30 animate-float shadow-lg shadow-cyan-500/20" style={{ animationDelay: '1s' }}>
           <Code className="w-8 h-8 text-cyan-400" />
-        </div>
+        </div> */}
         <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
           <Sparkles className="w-6 h-6 text-amber-400" />
         </div>
