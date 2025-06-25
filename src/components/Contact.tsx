@@ -1,10 +1,12 @@
+
 import { useState } from 'react';
-import { Mail, MapPin, Send, CheckCircle } from 'lucide-react';
+import { MapPin, Send, CheckCircle } from 'lucide-react';
 import { FaFacebook, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,12 +15,33 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.send(
+        'service_gjv2lol',
+        'template_up88ozh',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        'nOoj81ggjwYf097Gj'
+      );
+      
+      setIsSubmitted(true);
+      setTimeout(() => setIsSubmitted(false), 3000);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -30,18 +53,18 @@ const Contact = () => {
 
   const contactInfo = [
     {
-      icon: FaFacebook,
-      title: "Facebook",
-      value: "MH Sami",
-      link: "https://www.facebook.com/share/1Lfd6yoWnQ/",
-      color: "from-blue-600 to-blue-800"
-    },
-    {
       icon: FaYoutube,
       title: "YouTube",
       value: "MH_officialYT",
       link: "https://youtube.com/@mhsami-08?si=u3EFol8eZyvqnfzw",
       color: "from-red-500 to-red-600"
+    },
+    {
+      icon: FaFacebook,
+      title: "Facebook",
+      value: "MH Sami",
+      link: "https://www.facebook.com/share/19Fwc5eFu2/",
+      color: "from-blue-600 to-blue-800"
     },
     {
       icon: FaTiktok,
@@ -147,10 +170,11 @@ const Contact = () => {
                   
                   <Button 
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    Send Message
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}
