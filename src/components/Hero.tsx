@@ -9,7 +9,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-24 sm:pt-0">
       {/* Enhanced gradient background with cyber theme */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-background to-cyan-900/20"></div>
       
