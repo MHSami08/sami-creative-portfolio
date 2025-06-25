@@ -15,7 +15,7 @@ const Portfolio = () => {
       status: "completed",
       tools: ["VN Video Editor", "Alight motion"],
       duration: "3-5 min",
-      type: "Nasheed Video"
+      type: "Nasheed Video",
       videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO"
     },
     {
