@@ -20,25 +20,25 @@ const About = () => {
       icon: Target,
       title: "Dedication",
       description: "Committed to continuous learning and improvement",
-      color: "from-blue-500 to-indigo-500"
+      color: "from-emerald-500 to-emerald-600"
     }
   ];
 
   const timeline = [
     {
-      year: "2024",
+      year: "2025",
       title: "SSC Examination",
       description: "Successfully completed Secondary School Certificate",
       status: "completed"
     },
     {
-      year: "2024",
+      year: "2025",
       title: "Learning Phase",
       description: "Currently learning video editing and C programming",
       status: "current"
     },
     {
-      year: "2025",
+      year: "2026",
       title: "Future Goals",
       description: "Planning to offer professional editing services",
       status: "future"
@@ -46,32 +46,32 @@ const About = () => {
   ];
 
   return (
-    <section className="py-20 bg-background relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-emerald-50/30 via-background to-blue-50/30 dark:from-emerald-900/10 dark:via-background dark:to-blue-900/10 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-amber-50/50 dark:from-blue-900/10 dark:to-amber-900/10"></div>
-      <div className="absolute top-10 right-10 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 left-10 w-40 h-40 bg-amber-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b981/05_1px,transparent_1px),linear-gradient(to_bottom,#10b981/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      <div className="absolute top-10 right-10 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-10 left-10 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           {/* Bismillah */}
           <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500/10 rounded-full border border-amber-500/20 backdrop-blur-sm">
-              <BookOpen className="w-5 h-5 text-amber-500" />
-              <p className="text-amber-600 dark:text-amber-400 font-amiri text-lg font-medium">بسم الله الرحمن الرحيم</p>
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-amber-500/10 rounded-full border border-emerald-400/30 backdrop-blur-lg shadow-lg shadow-emerald-500/10">
+              <BookOpen className="w-5 h-5 text-emerald-400" />
+              <p className="text-emerald-400 dark:text-emerald-300 font-amiri text-lg font-medium">بسم الله الرحمن الرحيم</p>
             </div>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">About Me</span>
+            <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">About Me</span>
           </h2>
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
-              I am a simple Muslim, passionate about <span className="text-blue-500 font-semibold">editing and programming</span>. 
+              I am a simple Muslim, passionate about <span className="text-emerald-400 font-semibold">editing and programming</span>. 
               Though I am at the beginning of my journey, I am deeply committed to growing and sharing my creative work.
             </p>
             <p>
-              My goal is to create content that is both <span className="text-amber-500 font-semibold">meaningful and halal</span>, 
+              My goal is to create content that is both <span className="text-amber-400 font-semibold">meaningful and halal</span>, 
               contributing positively to our community while honing my technical skills.
             </p>
           </div>
@@ -81,11 +81,11 @@ const About = () => {
           {/* Islamic Values */}
           <div className="space-y-8">
             <h3 className="text-2xl font-bold text-center lg:text-left mb-8">
-              <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">My Values</span>
+              <span className="bg-gradient-to-r from-amber-400 to-emerald-500 bg-clip-text text-transparent">My Values</span>
             </h3>
             <div className="space-y-6">
               {values.map((value, index) => (
-                <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-border/50 bg-background/50 backdrop-blur-sm">
+                <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-emerald-400/30 bg-gradient-to-r from-emerald-500/5 to-blue-500/5 backdrop-blur-lg hover:scale-105">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className={`p-3 rounded-xl bg-gradient-to-r ${value.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
@@ -105,21 +105,21 @@ const About = () => {
           {/* Timeline */}
           <div className="space-y-8">
             <h3 className="text-2xl font-bold text-center lg:text-left mb-8">
-              <span className="bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">My Journey</span>
+              <span className="bg-gradient-to-r from-blue-400 to-emerald-500 bg-clip-text text-transparent">My Journey</span>
             </h3>
             <div className="relative">
               {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-amber-500 to-blue-500"></div>
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-400 via-blue-500 to-emerald-400"></div>
               
               <div className="space-y-8">
                 {timeline.map((item, index) => (
                   <div key={index} className="relative flex items-start gap-6">
                     {/* Timeline dot */}
-                    <div className={`relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-lg ${
+                    <div className={`relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-xl ${
                       item.status === 'completed' 
-                        ? 'bg-gradient-to-r from-green-500 to-emerald-500' 
+                        ? 'bg-gradient-to-r from-emerald-400 to-emerald-500 shadow-emerald-500/50' 
                         : item.status === 'current'
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 animate-pulse'
+                        ? 'bg-gradient-to-r from-blue-400 to-blue-500 animate-pulse shadow-blue-500/50'
                         : 'bg-gradient-to-r from-gray-400 to-gray-500'
                     }`}>
                       {item.status === 'completed' && <Award className="w-6 h-6 text-white" />}
@@ -128,14 +128,14 @@ const About = () => {
                     </div>
                     
                     {/* Timeline content */}
-                    <Card className="flex-1 bg-background/70 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300">
+                    <Card className="flex-1 bg-gradient-to-r from-emerald-500/5 to-blue-500/5 backdrop-blur-lg border border-emerald-400/30 hover:shadow-xl transition-all duration-300 hover:scale-105">
                       <CardContent className="p-6">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">
+                          <span className="text-sm font-bold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/30">
                             {item.year}
                           </span>
                           {item.status === 'current' && (
-                            <span className="text-xs font-medium text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-2 py-1 rounded-full animate-pulse">
+                            <span className="text-xs font-medium text-blue-400 bg-blue-400/10 px-2 py-1 rounded-full animate-pulse border border-blue-400/30">
                               Current
                             </span>
                           )}
@@ -151,15 +151,15 @@ const About = () => {
           </div>
         </div>
 
-        {/* Stats Section */}
+        {/* Enhanced Stats Section */}
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { label: "Learning Hours", value: "100+", color: "from-blue-500 to-blue-400" },
-            { label: "Projects Planned", value: "5+", color: "from-amber-500 to-amber-400" },
-            { label: "Skills Growing", value: "2", color: "from-purple-500 to-purple-400" },
-            { label: "Years Ahead", value: "Many", color: "from-green-500 to-green-400" }
+            { label: "Learning Hours", value: "100+", color: "from-emerald-400 to-emerald-500", bgColor: "from-emerald-500/10 to-emerald-600/10" },
+            { label: "Projects Planned", value: "5+", color: "from-blue-400 to-blue-500", bgColor: "from-blue-500/10 to-blue-600/10" },
+            { label: "Skills Growing", value: "2", color: "from-purple-400 to-purple-500", bgColor: "from-purple-500/10 to-purple-600/10" },
+            { label: "Years Ahead", value: "Many", color: "from-amber-400 to-amber-500", bgColor: "from-amber-500/10 to-amber-600/10" }
           ].map((stat, index) => (
-            <Card key={index} className="text-center bg-background/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 group">
+            <Card key={index} className={`text-center bg-gradient-to-br ${stat.bgColor} backdrop-blur-lg border border-emerald-400/30 hover:shadow-xl transition-all duration-300 group hover:scale-105`}>
               <CardContent className="p-6">
                 <div className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}>
                   {stat.value}
