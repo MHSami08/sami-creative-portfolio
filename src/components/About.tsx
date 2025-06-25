@@ -67,7 +67,7 @@ const About = () => {
           </h2>
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
-              I am a simple Muslim, passionate about <span className="text-blue-400 font-semibold">editing and programming</span>. 
+              I am an ordinary Muslim, passionate about <span className="text-blue-400 font-semibold">editing and programming</span>. 
               Though I am at the beginning of my journey, I am deeply committed to growing and sharing my creative work.
             </p>
             <p>
