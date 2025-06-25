@@ -22,10 +22,7 @@ const Hero = () => {
         <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         
         {/* Cyber-style floating elements - Hidden on small screens */}
-
-         <div className="hidden sm:block absolute bottom-32 right-16 p-4 bg-cyan-500/20 backdrop-blur-lg rounded-2xl border border-cyan-400/30 animate-float shadow-lg shadow-cyan-500/20" style={{ animationDelay: '1s' }}>
-          <Code className="w-8 h-8 text-cyan-400" />
-        </div>
+        
          <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
           <Sparkles className="w-6 h-6 text-amber-400" />
         </div>
