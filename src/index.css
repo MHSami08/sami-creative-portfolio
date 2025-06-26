@@ -94,6 +94,21 @@
   body {
     @apply bg-background text-foreground font-poppins;
   }
+
+  /* Enhanced Arabic font rendering */
+  .font-amiri {
+    font-family: 'Amiri', 'Traditional Arabic', 'Noto Naskh Arabic', serif;
+    font-feature-settings: 'liga', 'dlig', 'kern';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Improve Arabic text direction and spacing */
+  [dir="rtl"] {
+    letter-spacing: 0.025em;
+    line-height: 1.8;
+  }
 }
 
 @layer components {
@@ -111,5 +126,32 @@
 
   .gradient-text {
     @apply bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent;
+  }
+
+  /* Enhanced glow effects for dark mode */
+  .dark .contact-card-glow:hover {
+    box-shadow: 
+      0 0 20px rgba(var(--glow-color), 0.3),
+      0 0 40px rgba(var(--glow-color), 0.2),
+      0 0 80px rgba(var(--glow-color), 0.1);
+  }
+
+  /* Custom scrollbar for better Arabic text reading */
+  .arabic-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .arabic-scroll::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+
+  .arabic-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 3px;
+  }
+
+  .arabic-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
   }
 }
