@@ -1,6 +1,8 @@
+
 import { useState } from 'react';
-import { ExternalLink, Github, Play, Calendar, Clock } from 'lucide-react';
+import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 const Portfolio = () => {
 const [activeFilter, setActiveFilter] = useState('all');
@@ -15,7 +17,9 @@ status: "completed",
 tools: ["VN Video Editor", "Alight motion"],
 duration: "3:29 min",
 type: "Nasheed Video",
-videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO"
+videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
+detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
+features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
 {
 id: 2,
@@ -25,7 +29,9 @@ category: "programming",
 status: "planned",
 tools: ["C", "Code::Blocks", "OBS Studio"],
 duration: "10-15 min",
-type: "Educational"
+type: "Educational",
+detailedDescription: "A comprehensive tutorial series designed to teach C programming fundamentals to beginners with practical examples and clear explanations.",
+features: ["Step-by-step tutorials", "Practical examples", "Beginner-friendly approach"]
 },
 {
 id: 3,
@@ -35,7 +41,9 @@ category: "video",
 status: "planned",
 tools: ["After Effects", "Illustrator"],
 duration: "1-2 min",
-type: "Motion Graphics"
+type: "Motion Graphics",
+detailedDescription: "Beautiful motion graphics featuring inspirational Islamic quotes with elegant animations and typography to spread positive messages.",
+features: ["Professional typography", "Smooth animations", "Inspirational content"]
 },
 {
 id: 4,
@@ -45,7 +53,9 @@ category: "programming",
 status: "learning",
 tools: ["C", "Terminal"],
 duration: "N/A",
-type: "Console App"
+type: "Console App",
+detailedDescription: "A fundamental C programming project that demonstrates basic programming concepts including user input, mathematical operations, and console output.",
+features: ["Basic arithmetic operations", "User-friendly interface", "Clean code structure"]
 }
 ];
 
@@ -76,142 +86,179 @@ element.scrollIntoView({ behavior: 'smooth' });
 };
 
 return (
-<section className="py-20 bg-background" id="portfolio">
+<section className="py-12 sm:py-20 bg-background" id="portfolio">
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 {/* Header */}
-<div className="text-center mb-16 animate-fade-in">
-<h2 className="text-4xl md:text-5xl font-bold mb-6">
+<div className="text-center mb-12 sm:mb-16 animate-fade-in">
+<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
 My <span className="gradient-text">Portfolio</span>
 </h2>
-<p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+<p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
 I'm currently learning and building my skills. Here's what I'm planning to create, In shaa Allah.
 </p>
 
 {/* Filter buttons */}  
-      <div className="flex flex-wrap justify-center gap-4">  
-        {filters.map((filter) => (  
-          <button  
-            key={filter.id}  
-            onClick={() => setActiveFilter(filter.id)}  
-            className={`px-6 py-3 rounded-lg font-medium transition-all ${  
-              activeFilter === filter.id  
-                ? 'bg-primary text-primary-foreground shadow-lg'  
-                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'  
-            }`}  
-          >  
-            {filter.name}  
-          </button>  
-        ))}  
-      </div>  
-    </div>  
+<div className="flex flex-wrap justify-center gap-3 sm:gap-4">  
+{filters.map((filter) => (  
+<button  
+key={filter.id}  
+onClick={() => setActiveFilter(filter.id)}  
+className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${  
+activeFilter === filter.id  
+? 'bg-primary text-primary-foreground shadow-lg transform scale-105'  
+: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:scale-105'  
+}`}  
+>  
+{filter.name}  
+</button>  
+))}  
+</div>  
+</div>  
 
-    {/* Projects Grid */}  
-    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">  
-      {filteredProjects.map((project, index) => (  
-        <div  
-          key={project.id}  
-          className="group bg-card rounded-xl border border-border p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in"  
-          style={{ animationDelay: `${index * 0.1}s` }}  
-        >  
-          {/* Project header */}  
-          <div className="flex items-start justify-between mb-4">  
-            <div className="flex-1">  
-              <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">  
-                {project.title}  
-              </h3>  
-              <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>  
-                {project.status.charAt(0).toUpperCase() + project.status.slice(1)}  
-              </span>  
-            </div>  
-            <div className="ml-4">  
-              {project.category === 'video' ? (  
-                <Play className="h-8 w-8 text-blue-500" />  
-              ) : (  
-                <Github className="h-8 w-8 text-amber-500" />  
-              )}  
-            </div>  
-          </div>  
+{/* Projects Grid */}  
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">  
+{filteredProjects.map((project, index) => (  
+<article  
+key={project.id}  
+className="group bg-card rounded-xl border border-border p-4 sm:p-6 transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover:-translate-y-2 animate-fade-in cursor-pointer"  
+style={{ animationDelay: `${index * 0.1}s` }}
+role="article"
+aria-label={`Project: ${project.title}`}
+>  
+{/* Project header */}  
+<div className="flex items-start justify-between mb-4">  
+<div className="flex-1 min-w-0">
+<HoverCard>
+<HoverCardTrigger asChild>
+<h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300 cursor-pointer truncate pr-2">  
+{project.title}  
+</h3>
+</HoverCardTrigger>
+<HoverCardContent className="w-80 sm:w-96 p-4 sm:p-6 bg-card border border-border shadow-xl" side="top">
+<div className="space-y-3 sm:space-y-4">
+<div className="flex items-center gap-2 mb-2">
+<Eye className="h-4 w-4 text-primary" />
+<h4 className="font-semibold text-sm sm:text-base">{project.title}</h4>
+</div>
+<p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+{project.detailedDescription}
+</p>
+<div className="space-y-2">
+<h5 className="font-medium text-sm">Key Features:</h5>
+<ul className="text-sm text-muted-foreground space-y-1">
+{project.features.map((feature, idx) => (
+<li key={idx} className="flex items-center gap-2">
+<div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
+{feature}
+</li>
+))}
+</ul>
+</div>
+<div className="flex items-center gap-4 text-sm text-muted-foreground pt-2 border-t">
+<div className="flex items-center gap-1">
+<Calendar className="h-3 w-3" />
+<span>{project.type}</span>
+</div>
+<div className="flex items-center gap-1">
+<Clock className="h-3 w-3" />
+<span>{project.duration}</span>
+</div>
+</div>
+</div>
+</HoverCardContent>
+</HoverCard>
+<span className={`inline-block px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(project.status)}`}>  
+{project.status.charAt(0).toUpperCase() + project.status.slice(1)}  
+</span>  
+</div>  
+<div className="ml-2 sm:ml-4 flex-shrink-0">  
+{project.category === 'video' ? (  
+<Play className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 group-hover:scale-110 transition-transform duration-300" />  
+) : (  
+<Github className="h-6 w-6 sm:h-8 sm:w-8 text-amber-500 group-hover:scale-110 transition-transform duration-300" />  
+)}  
+</div>  
+</div>  
 
-          {/* Project details */}  
-          <p className="text-muted-foreground mb-4 leading-relaxed">  
-            {project.description}  
-          </p>  
+{/* Project details */}  
+<p className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">  
+{project.description}  
+</p>  
 
-          {/* Project metadata */}  
-          <div className="space-y-3 mb-6">  
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">  
-              <Calendar className="h-4 w-4" />  
-              <span className="font-medium">Type:</span>  
-              <span>{project.type}</span>  
-            </div>  
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">  
-              <Clock className="h-4 w-4" />  
-              <span className="font-medium">Duration:</span>  
-              <span>{project.duration}</span>  
-            </div>  
-          </div>  
+{/* Project metadata */}  
+<div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">  
+<div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">  
+<Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />  
+<span className="font-medium">Type:</span>  
+<span>{project.type}</span>  
+</div>  
+<div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">  
+<Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />  
+<span className="font-medium">Duration:</span>  
+<span>{project.duration}</span>  
+</div>  
+</div>  
 
-          {/* Tools used */}  
-          <div className="mb-6">  
-            <p className="text-sm font-medium text-muted-foreground mb-2">Tools & Technologies:</p>  
-            <div className="flex flex-wrap gap-2">  
-              {project.tools.map((tool, toolIndex) => (  
-                <span  
-                  key={toolIndex}  
-                  className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-medium"  
-                >  
-                  {tool}  
-                </span>  
-              ))}  
-            </div>  
-          </div>  
+{/* Tools used */}  
+<div className="mb-4 sm:mb-6">  
+<p className="text-xs sm:text-sm font-medium text-muted-foreground mb-2">Tools & Technologies:</p>  
+<div className="flex flex-wrap gap-1.5 sm:gap-2">  
+{project.tools.map((tool, toolIndex) => (  
+<span  
+key={toolIndex}  
+className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:text-sm font-medium hover:bg-primary/20 transition-colors duration-200"  
+>  
+{tool}  
+</span>  
+))}  
+</div>  
+</div>  
 
-          {/* Action buttons */}  
-          <div className="flex gap-3">  
-            {project.status === 'completed' && project.videoUrl ? (
-
+{/* Action buttons */}  
+<div className="flex gap-2 sm:gap-3">  
+{project.status === 'completed' && project.videoUrl ? (
 <a
 href={project.videoUrl}
 target="_blank"
 rel="noopener noreferrer"
 className="flex-1"
-
+aria-label={`View ${project.title} project`}
 > 
-
-<Button variant="outline" size="sm" className="w-full">  
-  <ExternalLink className="h-4 w-4 mr-2" />  
-  View Project  
+<Button variant="outline" size="sm" className="w-full text-xs sm:text-sm hover:scale-105 transition-transform duration-200">  
+<ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
+View Project  
 </Button>
-
-  </a>  
+</a>  
 ) : (  
-  <Button variant="outline" size="sm" className="flex-1" disabled>  
-    <ExternalLink className="h-4 w-4 mr-2" />  
-    Coming Soon  
-  </Button>  
+<Button variant="outline" size="sm" className="flex-1 text-xs sm:text-sm" disabled>  
+<ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
+Coming Soon  
+</Button>  
 )}  
-              </div>  
-            </div>  
-          ))}  
-        </div>  {/* Call to action */}  
-    <div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-8">  
-      <h3 className="text-2xl font-bold mb-4">  
-        Interested in Collaboration?  
-      </h3>  
-      <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">  
-        I'm always open to learning opportunities and small projects.   
-        Feel free to reach out if you'd like to work together or have any suggestions!  
-      </p>  
-      <Button   
-        onClick={scrollToContact}  
-        className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"  
-      >  
-        Get In Touch  
-      </Button>  
-    </div>  
-  </div>  
-</section>
+</div>  
+</article>  
+))}  
+</div>
 
+{/* Call to action */}  
+<div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-6 sm:p-8 hover:shadow-xl transition-all duration-300">  
+<h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">  
+Interested in Collaboration?  
+</h3>  
+<p className="text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">  
+I'm always open to learning opportunities and small projects.   
+Feel free to reach out if you'd like to work together or have any suggestions!  
+</p>  
+<Button   
+onClick={scrollToContact}  
+className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base hover:scale-105 transition-all duration-200"  
+aria-label="Contact me for collaboration"
+>  
+Get In Touch  
+</Button>  
+</div>  
+</div>  
+</section>
 );
 };
 
