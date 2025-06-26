@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -120,7 +119,7 @@ activeFilter === filter.id
 {filteredProjects.map((project, index) => (  
 <article  
 key={project.id}  
-className="group bg-card rounded-xl border border-border p-4 sm:p-6 transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover:-translate-y-2 animate-fade-in cursor-pointer"  
+className="group bg-card rounded-xl border border-border p-4 sm:p-6 transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in cursor-pointer dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg"
 style={{ animationDelay: `${index * 0.1}s` }}
 role="article"
 aria-label={`Project: ${project.title}`}
