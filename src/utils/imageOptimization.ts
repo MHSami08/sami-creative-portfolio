@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 
 // Image optimization utilities for better performance
 
