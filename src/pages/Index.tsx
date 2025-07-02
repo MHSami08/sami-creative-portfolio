@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X, Search, Volume2, VolumeX } from 'lucide-react';
 import Hero from '../components/Hero';
@@ -64,12 +65,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Enhanced Navigation with Search */}
+      {/* Enhanced Navigation with better mobile layout */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-emerald-400/20 shadow-lg shadow-emerald-500/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-14 sm:h-16">
-            <div className="flex-shrink-0">
-              <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-12 sm:h-16">
+            <div className="flex-shrink-0 min-w-0">
+              <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
                 Masrafi Haque Sami
               </h1>
             </div>
@@ -90,18 +91,18 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Search Button */}
               <button
                 onClick={() => {
                   setIsSearchOpen(true);
                   playSound('click');
                 }}
-                className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Search (Ctrl+K)"
                 title="Search (Ctrl+K)"
               >
-                <Search className="h-4 sm:h-5 w-4 sm:w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
               </button>
 
               {/* Sound Toggle */}
@@ -110,14 +111,14 @@ const Index = () => {
                   const newState = toggleSound();
                   playSound('click');
                 }}
-                className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Toggle sound effects"
                 title="Toggle sound effects"
               >
                 {soundEnabled ? (
-                  <Volume2 className="h-4 sm:h-5 w-4 sm:w-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+                  <Volume2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                 ) : (
-                  <VolumeX className="h-4 sm:h-5 w-4 sm:w-5 text-gray-400 group-hover:scale-110 transition-transform duration-300" />
+                  <VolumeX className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-gray-400 group-hover:scale-110 transition-transform duration-300" />
                 )}
               </button>
 
@@ -125,13 +126,13 @@ const Index = () => {
               <button
                 onClick={toggleDarkMode}
                 onMouseEnter={() => playSound('hover')}
-                className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Toggle dark mode"
               >
                 {isDark ? (
-                  <Sun className="h-4 sm:h-5 w-4 sm:w-5 text-amber-400 group-hover:rotate-180 transition-transform duration-300" />
+                  <Sun className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-amber-400 group-hover:rotate-180 transition-transform duration-300" />
                 ) : (
-                  <Moon className="h-4 sm:h-5 w-4 sm:w-5 text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
+                  <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
                 )}
               </button>
 
@@ -142,9 +143,9 @@ const Index = () => {
                     setIsMenuOpen(!isMenuOpen);
                     playSound('click');
                   }}
-                  className="p-2 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg"
+                  className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg"
                 >
-                  {isMenuOpen ? <X className="h-4 sm:h-5 w-4 sm:w-5 text-emerald-400" /> : <Menu className="h-4 sm:h-5 w-4 sm:w-5 text-emerald-400" />}
+                  {isMenuOpen ? <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400" /> : <Menu className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400" />}
                 </button>
               </div>
             </div>
@@ -189,7 +190,7 @@ const Index = () => {
       />
 
       {/* Main Content */}
-      <main className="pt-14 sm:pt-16">
+      <main className="pt-12 sm:pt-16">
         
         <section id="home">
           <Hero />
