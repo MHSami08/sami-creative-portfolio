@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Portfolio theme with Islamic geometric patterns */
+/* Portfolio theme with Islamic geometric patterns - OPTIMIZED */
 
 @layer base {
   :root {
@@ -93,15 +93,26 @@
 
   body {
     @apply bg-background text-foreground font-poppins;
+    /* Performance optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Enhanced Arabic font rendering */
+  /* Enhanced Arabic font rendering with better performance */
   .font-amiri {
     font-family: 'Amiri', 'Traditional Arabic', 'Noto Naskh Arabic', serif;
     font-feature-settings: 'liga', 'dlig', 'kern';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Add better contrast for dark mode */
+    font-weight: 500;
+  }
+
+  .dark .font-amiri {
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
   /* Improve Arabic text direction and spacing */
@@ -109,34 +120,63 @@
     letter-spacing: 0.025em;
     line-height: 1.8;
   }
+
+  /* Performance: Enable hardware acceleration for animations */
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-in-right {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
 }
 
 @layer components {
+  /* Optimized geometric patterns with better performance */
   .geometric-pattern {
     background-image: 
       radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+    /* Enable GPU acceleration */
+    transform: translateZ(0);
   }
   
   .islamic-pattern {
     background-image: 
       repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(59, 130, 246, 0.03) 30deg, transparent 60deg),
       repeating-conic-gradient(from 45deg at 50% 50%, transparent 0deg, rgba(245, 158, 11, 0.03) 30deg, transparent 60deg);
+    transform: translateZ(0);
   }
 
   .gradient-text {
     @apply bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent;
   }
 
-  /* Enhanced glow effects for dark mode */
+  /* Enhanced glow effects with RGB animation for dark mode */
   .dark .contact-card-glow:hover {
     box-shadow: 
-      0 0 20px rgba(var(--glow-color), 0.3),
-      0 0 40px rgba(var(--glow-color), 0.2),
-      0 0 80px rgba(var(--glow-color), 0.1);
+      0 0 20px rgba(var(--glow-color), 0.4),
+      0 0 40px rgba(var(--glow-color), 0.3),
+      0 0 80px rgba(var(--glow-color), 0.2);
+    animation: rgb-glow 2s ease-in-out infinite alternate;
   }
 
-  /* Custom scrollbar for better Arabic text reading */
+  /* RGB glow animation for dark mode cards */
+  @keyframes rgb-glow {
+    0% {
+      --glow-color: 255, 0, 0; /* Red */
+    }
+    33% {
+      --glow-color: 0, 255, 0; /* Green */
+    }
+    66% {
+      --glow-color: 0, 0, 255; /* Blue */
+    }
+    100% {
+      --glow-color: 255, 0, 255; /* Magenta */
+    }
+  }
+
+  /* Performance optimized scrollbar */
   .arabic-scroll::-webkit-scrollbar {
     width: 6px;
   }
@@ -153,5 +193,73 @@
 
   .arabic-scroll::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary) / 0.8);
+  }
+
+  /* Search result highlighting */
+  .search-highlight {
+    background: rgba(59, 130, 246, 0.2);
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+  }
+
+  /* Optimized button hover effects with sound feedback */
+  .sound-button {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0);
+  }
+
+  .sound-button:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .sound-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Performance: Reduce paint operations */
+  .card-hover-effect {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Line clamp utility for better text truncation */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Performance: Optimize font loading */
+@font-face {
+  font-family: 'Poppins';
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Amiri';
+  font-display: swap;
+}
+
+/* Reduced motion preferences for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .gradient-text {
+    background: none;
+    color: hsl(var(--foreground));
+    font-weight: 600;
   }
 }
