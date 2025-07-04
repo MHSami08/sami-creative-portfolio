@@ -125,7 +125,7 @@ const Hero = () => {
                 <div className="relative w-full h-full rounded-full bg-gradient-to-br from-emerald-500 to-green-600 p-1 shadow-2xl shadow-emerald-500/50">
                   <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden border-2 border-emerald-400/30">
                     <img 
-                      src="https://i.postimg.cc/1zHtBmkx/Screenshot-2025-06-16-22-41-45-730-com-alightcreative-motion-edit.jpg"
+                      src="https://i.postimg.cc/8zn3mQ1z/Screenshot-2025-06-16-22-41-45-730-com-alightcreative-motion-edit.jpg"
                       alt="Masrafi Haque Sami"
                       className="w-full h-full object-cover rounded-full"
                     />
