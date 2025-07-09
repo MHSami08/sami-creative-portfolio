@@ -34,15 +34,16 @@ features: ["Step-by-step tutorials", "Practical examples", "Beginner-friendly ap
 },
 {
 id: 3,
-title: "Islamic Quotes Motion Graphics",
-description: "Animated inspirational quotes from Quran and Hadith",
-category: "video",
-status: "planned",
-tools: ["After Effects", "Illustrator"],
-duration: "1-2 min",
-type: "Motion Graphics",
-detailedDescription: "Beautiful motion graphics featuring inspirational Islamic quotes with elegant animations and typography to spread positive messages.",
-features: ["Professional typography", "Smooth animations", "Inspirational content"]
+title: "Surah An-Nisa(75-76)",
+description: "Advanced Quranic reel ",
+category: "reel",
+status: "completed",
+tools: ["Inshot,Node video"],
+duration: "1:27 min",
+type: "Quranic reel",
+videoUrl: "https://youtu.be/1QN3Mid2gog?si=IZ8nlgGJrvAYz6ut",
+detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
+features: [" Advanced effects", "Smooth transition", "Inspirational content"]
 },
 {
 id: 4,
