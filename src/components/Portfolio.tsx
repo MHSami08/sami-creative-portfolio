@@ -36,7 +36,7 @@ features: ["Step-by-step tutorials", "Practical examples", "Beginner-friendly ap
 id: 3,
 title: "Surah An-Nisa(75-76)",
 description: "Advanced Quranic reel ",
-category: "reel",
+category: "video",
 status: "completed",
 tools: ["Inshot","Node video"],
 duration: "1:27 min",
