@@ -41,7 +41,7 @@ status: "completed",
 tools: ["Inshot","Node video"],
 duration: "1:27 min",
 type: "Quranic reel",
-videoUrl: "https://youtu.be/1QN3Mid2gog?si=IZ8nlgGJrvAYz6ut",
+videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
 detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
 features: [" Advanced effects", "Smooth transition", "Inspirational content"]
 },
