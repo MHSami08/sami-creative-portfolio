@@ -15,21 +15,19 @@ const TikTokEmbed = ({ videoUrl }: TikTokEmbedProps) => {
     const blockquote = document.createElement('blockquote');
     blockquote.className = 'tiktok-embed';
     blockquote.setAttribute('cite', videoUrl);
-    blockquote.setAttribute('data-video-id', extractVideoId(videoUrl));
-    blockquote.style.maxWidth = '100%';
-    blockquote.style.minWidth = '325px';
+    blockquote.setAttribute('style', 'max-width: 100%; min-width: 325px;');
 
     embedRef.current.appendChild(blockquote);
+
     loadTikTokScript();
   }, [videoUrl]);
 
-  const extractVideoId = (url: string) => {
-    const match = url.match(/\/video\/(\d+)/);
-    return match ? match[1] : '';
-  };
-
   const loadTikTokScript = () => {
-    if (document.getElementById('tiktok-embed-script')) return;
+    // Remove existing script to reload
+    const existingScript = document.getElementById('tiktok-embed-script');
+    if (existingScript) {
+      existingScript.remove();
+    }
 
     const script = document.createElement('script');
     script.id = 'tiktok-embed-script';
