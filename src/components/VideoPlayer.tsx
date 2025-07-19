@@ -30,8 +30,8 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-full p-0 bg-transparent border-0">
-        <DialogHeader className="p-4 bg-background">
+      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">
+        <DialogHeader className="p-4 bg-background border-b">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg font-semibold truncate pr-4">
               {title}
@@ -58,34 +58,36 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
 
-        {/* Full screen width video player */}
-        <div className="relative w-full aspect-video mx-auto">
-          {embedUrl && !isTikTok ? (
-            <iframe
-              src={embedUrl}
-              title={title}
-              className="absolute top-0 left-0 w-full h-full"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          ) : (
-            <div className="flex items-center justify-center absolute top-0 left-0 w-full h-full bg-muted p-4 text-center">
-              <div>
-                <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
-                <p className="text-muted-foreground mb-6">
-                  This platform doesn't support embedding. Click below to view on the original platform.
-                </p>
-                <Button
-                  onClick={() => window.open(videoUrl, '_blank')}
-                  className="flex items-center gap-2"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
-                </Button>
+        {/* Centered Player Container */}
+        <div className="flex justify-center items-center w-full p-4">
+          <div className="relative bg-black w-[320px] h-[180px] md:w-full md:h-auto md:aspect-video mx-auto">
+            {embedUrl && !isTikTok ? (
+              <iframe
+                src={embedUrl}
+                title={title}
+                className="absolute top-0 left-0 w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="flex items-center justify-center absolute top-0 left-0 w-full h-full bg-muted p-4 text-center">
+                <div>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
+                  <p className="text-muted-foreground mb-6">
+                    This platform doesn't support embedding. Click below to view on the original platform.
+                  </p>
+                  <Button
+                    onClick={() => window.open(videoUrl, '_blank')}
+                    className="flex items-center gap-2"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
