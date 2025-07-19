@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import VideoPlayer from './VideoPlayer';
 
 const Portfolio = () => {
 const [activeFilter, setActiveFilter] = useState('all');
+const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string } | null>(null);
 
 const projects = [
 {
@@ -217,24 +219,22 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
 {/* Action buttons */}  
 <div className="flex gap-2 sm:gap-3">  
 {project.status === 'completed' && project.videoUrl ? (
-<a
-href={project.videoUrl}
-target="_blank"
-rel="noopener noreferrer"
-className="flex-1"
+<Button 
+variant="outline" 
+size="sm" 
+className="flex-1 text-xs sm:text-sm hover:scale-105 transition-transform duration-200"
+onClick={() => setSelectedVideo({ url: project.videoUrl!, title: project.title })}
 aria-label={`View ${project.title} project`}
-> 
-<Button variant="outline" size="sm" className="w-full text-xs sm:text-sm hover:scale-105 transition-transform duration-200">  
-<ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
-View Project  
+>  
+<Play className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
+Watch Video  
 </Button>
-</a>  
 ) : (  
 <Button variant="outline" size="sm" className="flex-1 text-xs sm:text-sm" disabled>  
 <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
 Coming Soon  
 </Button>  
-)}  
+)}
 </div>  
 </article>  
 ))}  
@@ -257,7 +257,15 @@ aria-label="Contact me for collaboration"
 Get In Touch  
 </Button>  
 </div>  
-</div>  
+</div>
+
+{/* Video Player Modal */}
+<VideoPlayer
+isOpen={!!selectedVideo}
+onClose={() => setSelectedVideo(null)}
+videoUrl={selectedVideo?.url || ''}
+title={selectedVideo?.title || ''}
+/>
 </section>
 );
 };
