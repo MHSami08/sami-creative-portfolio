@@ -2,16 +2,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import TikTokEmbed from './TikTokEmbed'; // Assuming you have this component
+import TikTokEmbed from './TikTokEmbed'; // your TikTok embed component
 
 interface VideoPlayerProps {
   isOpen: boolean;
   onClose: () => void;
   videoUrl: string;
   title: string;
+  isPortrait: boolean; // new prop for aspect ratio
 }
 
-const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
+const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isPortrait }: VideoPlayerProps) => {
   const [loading, setLoading] = useState(true);
 
   const getYouTubeVideoId = (url: string) => {
@@ -31,8 +32,8 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        className="w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl p-4 sm:p-6 bg-black border-0 rounded-lg overflow-hidden" 
+      <DialogContent
+        className="w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl p-4 sm:p-6 bg-black border-0 rounded-lg overflow-hidden"
         style={{ maxHeight: '90vh' }}
       >
         <DialogHeader className="p-4 bg-background border-b">
@@ -61,7 +62,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
         </DialogHeader>
 
         <div
-          className={`${isTikTok ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full max-h-[80vh]`}
+          className={`${isPortrait ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full max-h-[80vh] relative`}
           style={{ maxHeight: '80vh', margin: '0 auto' }}
         >
           {loading && (
@@ -79,6 +80,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
               onLoad={() => setLoading(false)}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              loading="lazy"
             />
           ) : isTikTok ? (
             <TikTokEmbed videoUrl={videoUrl} />
