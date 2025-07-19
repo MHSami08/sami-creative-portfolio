@@ -49,19 +49,20 @@ const Hero = () => {
             <div className="space-y-4 lg:space-y-6">
               <div className="space-y-2">
                 <p className="text-blue-400 dark:text-blue-300 text-lg sm:text-xl md:text-2xl font-amiri font-medium">السلام عليكم</p>
-                <p className="text-muted-foreground text-base sm:text-lg md:text-xl">Assalamu Alaikum, I'm</p>
+                <p className="text-muted-foreground text-base sm:text-lg md:text-xl">Assalamu Alaikum,</p>
               </div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+                <span className="text-muted-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl block mb-2">I'm</span>
                 <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
                   Masrafi Haque Sami
                 </span>
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-                A passionate Muslim and aspiring 
-                <span className="text-blue-400 font-bold"> video editor </span>
-                dedicated to creating meaningful content following 
+                A Freelance 
+                <span className="text-blue-400 font-bold"> Video Editor </span>
+                With 3 Years Experience creating meaningful content following 
                 <span className="text-amber-400 font-bold"> Islamic principles</span>.
               </p>
 
@@ -99,16 +100,16 @@ const Hero = () => {
             {/* Enhanced stats with cyber styling */}
             <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8">
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 backdrop-blur-lg border border-blue-400/30 shadow-lg shadow-blue-500/10">
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">0+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Projects</div>
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">3+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Exp.</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 backdrop-blur-lg border border-cyan-400/30 shadow-lg shadow-cyan-500/10">
-                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">NEW</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Phase</div>
+                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">10+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Projects</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 backdrop-blur-lg border border-amber-400/30 shadow-lg shadow-amber-500/10">
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">SSC</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-medium">2025</div>
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">100%</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Quality</div>
               </div>
             </div>
           </div>

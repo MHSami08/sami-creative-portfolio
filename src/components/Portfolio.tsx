@@ -25,19 +25,6 @@ features: ["High-quality audio processing", "Professional video editing", "Islam
 },
 {
 id: 2,
-title: "C Programming Tutorial Series",
-description: "Educational content explaining C programming basics for beginners",
-category: "programming",
-status: "planned",
-tools: ["C", "Code::Blocks", "OBS Studio"],
-duration: "10-15 min",
-type: "Educational",
-thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "A comprehensive tutorial series designed to teach C programming fundamentals to beginners with practical examples and clear explanations.",
-features: ["Step-by-step tutorials", "Practical examples", "Beginner-friendly approach"]
-},
-{
-id: 3,
 title: "Surah An-Nisa(75-76)",
 description: "Advanced Quranic reel ",
 category: "video",
@@ -51,24 +38,38 @@ detailedDescription: "Beautiful quranic inspirational reel to spread positive me
 features: [" Advanced effects", "Smooth transition", "Inspirational content"]
 },
 {
+id: 3,
+title: "Islamic Motivation Video",
+description: "Inspiring Islamic content with beautiful visuals",
+category: "video",
+status: "completed",
+tools: ["CapCut", "Canva"],
+duration: "2:15 min",
+type: "Motivational Video",
+videoUrl: "https://youtu.be/example3",
+thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&h=450&fit=crop&crop=center",
+detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
+features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
+},
+{
 id: 4,
-title: "Simple Calculator in C",
-description: "A basic calculator program demonstrating C programming fundamentals",
-category: "programming",
-status: "learning",
-tools: ["C", "Terminal"],
-duration: "N/A",
-type: "Console App",
-thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "A fundamental C programming project that demonstrates basic programming concepts including user input, mathematical operations, and console output.",
-features: ["Basic arithmetic operations", "User-friendly interface", "Clean code structure"]
+title: "Wedding Highlights Reel",
+description: "Beautiful wedding moments captured in cinematic style",
+category: "video",
+status: "completed",
+tools: ["DaVinci Resolve", "After Effects"],
+duration: "4:30 min",
+type: "Wedding Video",
+videoUrl: "https://youtu.be/example4",
+thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=450&fit=crop&crop=center",
+detailedDescription: "A cinematic wedding highlights reel capturing the most precious moments of a couple's special day with professional editing and color grading.",
+features: ["Cinematic color grading", "Smooth transitions", "Emotional storytelling"]
 }
 ];
 
 const filters = [
 { id: 'all', name: 'All Projects' },
-{ id: 'video', name: 'Video Editing' },
-{ id: 'programming', name: 'Programming' }
+{ id: 'video', name: 'Video Editing' }
 ];
 
 const filteredProjects = activeFilter === 'all'
@@ -105,9 +106,9 @@ return (
 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
 My <span className="gradient-text">Portfolio</span>
 </h2>
-<p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-I'm currently learning and building my skills. Here's what I'm planning to create, In shaa Allah.
-</p>
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
+            Showcasing my video editing projects and creative work. Each project reflects my passion for storytelling and visual creativity.
+          </p>
 
 {/* Filter buttons */}  
 <div className="flex flex-wrap justify-center gap-3 sm:gap-4">  

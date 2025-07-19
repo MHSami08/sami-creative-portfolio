@@ -195,14 +195,14 @@ const Index = () => {
         <section id="home">
           <Hero />
         </section>
+        <section id="portfolio" className="py-8 sm:py-16">
+          <Portfolio />
+        </section>
         <section id="about" className="py-8 sm:py-16">
           <About />
         </section>
         <section id="myaim" className="py-8 sm:py-16">
           <MyAim />
-        </section>
-        <section id="portfolio" className="py-8 sm:py-16">
-          <Portfolio />
         </section>
         <section id="services" className="py-8 sm:py-16">
           <Services />
