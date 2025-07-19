@@ -11,6 +11,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
   const getEmbedUrl = (url: string) => {
+    // YouTube
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       const videoId = url.includes('youtu.be') 
         ? url.split('youtu.be/')[1]?.split('?')[0]
@@ -18,10 +19,13 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
     
+    // TikTok
     if (url.includes('tiktok.com')) {
+      // For TikTok, we'll show the original link since embedding is limited
       return null;
     }
     
+    // Default fallback
     return url;
   };
 
@@ -57,37 +61,34 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
             </div>
           </div>
         </DialogHeader>
-
-        {/* Centered Player Container */}
-        <div className="flex justify-center items-center w-full p-4">
-          <div className="relative bg-black w-[320px] h-[180px] md:w-full md:h-auto md:aspect-video mx-auto">
-            {embedUrl && !isTikTok ? (
-              <iframe
-                src={embedUrl}
-                title={title}
-                className="absolute top-0 left-0 w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div className="flex items-center justify-center absolute top-0 left-0 w-full h-full bg-muted p-4 text-center">
-                <div>
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
-                  <p className="text-muted-foreground mb-6">
-                    This platform doesn't support embedding. Click below to view on the original platform.
-                  </p>
-                  <Button
-                    onClick={() => window.open(videoUrl, '_blank')}
-                    className="flex items-center gap-2"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    View on {isTikTok ? 'TikTok' : 'Original Platform'}
-                  </Button>
-                </div>
+        
+        <div className="aspect-video bg-black">
+          {embedUrl && !isTikTok ? (
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full bg-muted">
+              <div className="text-center p-8">
+                <h3 className="text-xl font-semibold mb-4">Video Preview Not Available</h3>
+                <p className="text-muted-foreground mb-6">
+                  This platform doesn't support embedding. Click below to view on the original platform.
+                </p>
+                <Button
+                  onClick={() => window.open(videoUrl, '_blank')}
+                  className="flex items-center gap-2"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                </Button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
