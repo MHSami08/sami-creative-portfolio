@@ -18,6 +18,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
     if (url.includes('tiktok.com')) {
+      const videoIdMatch = url.match(/\/video\/(\d+)/);
+      if (videoIdMatch) {
+        return `https://www.tiktok.com/embed/${videoIdMatch[1]}`;
+      }
       return null;
     }
     return url;
@@ -28,7 +32,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-4xl p-0 bg-black border-0 rounded-lg overflow-hidden">
+      <DialogContent
+        className="w-full max-w-3xl p-0 bg-black border-0 rounded-lg overflow-hidden"
+        style={{ maxHeight: '90vh' }}
+      >
         <DialogHeader className="p-4 bg-background border-b">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-base md:text-lg font-semibold truncate pr-4">
@@ -56,18 +63,24 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
 
-        <div className="relative w-full aspect-video bg-black">
-          {embedUrl && !isTikTok ? (
-            <iframe
-              src={embedUrl}
-              title={title}
-              className="w-full h-full"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+        <div className="w-full bg-black flex justify-center items-center">
+          {embedUrl ? (
+            <div
+              className={`w-full ${
+                isTikTok ? 'aspect-[9/16]' : 'aspect-video'
+              } bg-black`}
+            >
+              <iframe
+                src={embedUrl}
+                title={title}
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
           ) : (
-            <div className="flex items-center justify-center h-full bg-muted p-4 text-center">
+            <div className="flex items-center justify-center h-[40vh] sm:h-[60vh] bg-muted p-4 text-center">
               <div>
                 <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
                 <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
@@ -78,7 +91,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
                   className="flex items-center gap-2"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                  View on TikTok
                 </Button>
               </div>
             </div>
