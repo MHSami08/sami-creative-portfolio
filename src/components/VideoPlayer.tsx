@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import TikTokEmbed from './TikTokEmbed'; // Assuming you have this component
 
 interface VideoPlayerProps {
   isOpen: boolean;
@@ -30,7 +31,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0 rounded-lg overflow-hidden">
+      <DialogContent 
+        className="w-full max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl p-4 sm:p-6 bg-black border-0 rounded-lg overflow-hidden" 
+        style={{ maxHeight: '90vh' }}
+      >
         <DialogHeader className="p-4 bg-background border-b">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg font-semibold truncate">{title}</DialogTitle>
@@ -48,6 +52,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
                 size="sm"
                 onClick={onClose}
                 className="h-8 w-8 p-0"
+                aria-label="Close video player"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -55,7 +60,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
 
-        <div className={`${isTikTok ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full relative`}>
+        <div
+          className={`${isTikTok ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full max-h-[80vh]`}
+          style={{ maxHeight: '80vh', margin: '0 auto' }}
+        >
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
               <div className="loader border-t-transparent border-4 border-primary rounded-full w-10 h-10 animate-spin"></div>
