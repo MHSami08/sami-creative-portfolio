@@ -19,6 +19,7 @@ tools: ["VN Video Editor", "Alight motion"],
 duration: "3:29 min",
 type: "Nasheed Video",
 videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
+thumbnail: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&h=450&fit=crop&crop=center",
 detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
 features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
@@ -31,6 +32,7 @@ status: "planned",
 tools: ["C", "Code::Blocks", "OBS Studio"],
 duration: "10-15 min",
 type: "Educational",
+thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&crop=center",
 detailedDescription: "A comprehensive tutorial series designed to teach C programming fundamentals to beginners with practical examples and clear explanations.",
 features: ["Step-by-step tutorials", "Practical examples", "Beginner-friendly approach"]
 },
@@ -44,6 +46,7 @@ tools: ["Inshot","Node video"],
 duration: "1:27 min",
 type: "Quranic reel",
 videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
+thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=450&fit=crop&crop=center",
 detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
 features: [" Advanced effects", "Smooth transition", "Inspirational content"]
 },
@@ -56,6 +59,7 @@ status: "learning",
 tools: ["C", "Terminal"],
 duration: "N/A",
 type: "Console App",
+thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&crop=center",
 detailedDescription: "A fundamental C programming project that demonstrates basic programming concepts including user input, mathematical operations, and console output.",
 features: ["Basic arithmetic operations", "User-friendly interface", "Clean code structure"]
 }
@@ -84,6 +88,12 @@ const scrollToContact = () => {
 const element = document.querySelector('#contact');
 if (element) {
 element.scrollIntoView({ behavior: 'smooth' });
+}
+};
+
+const handleProjectClick = (project: typeof projects[0]) => {
+if (project.status === 'completed' && project.videoUrl) {
+setSelectedVideo({ url: project.videoUrl, title: project.title });
 }
 };
 
@@ -122,11 +132,38 @@ activeFilter === filter.id
 {filteredProjects.map((project, index) => (  
 <article  
 key={project.id}  
-className="group bg-card rounded-xl border border-border p-4 sm:p-6 transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in cursor-pointer dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg"
+className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in ${
+project.status === 'completed' && project.videoUrl ? 'cursor-pointer' : 'cursor-default'
+} dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg`}
 style={{ animationDelay: `${index * 0.1}s` }}
 role="article"
 aria-label={`Project: ${project.title}`}
+onClick={() => handleProjectClick(project)}
 >  
+{/* Video Thumbnail for video projects */}
+{project.category === 'video' && (
+<div className="relative overflow-hidden">
+<img 
+src={project.thumbnail} 
+alt={`${project.title} thumbnail`}
+className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+/>
+<div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+<div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+<Play className="h-8 w-8 text-white" fill="white" />
+</div>
+</div>
+{project.status === 'completed' && (
+<div className="absolute top-3 right-3">
+<span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+Ready to Watch
+</span>
+</div>
+)}
+</div>
+)}
+
+<div className="p-4 sm:p-6">
 {/* Project header */}  
 <div className="flex items-start justify-between mb-4">  
 <div className="flex-1 min-w-0">
@@ -215,27 +252,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
 ))}  
 </div>  
 </div>  
-
-{/* Action buttons */}  
-<div className="flex gap-2 sm:gap-3">  
-{project.status === 'completed' && project.videoUrl ? (
-<Button 
-variant="outline" 
-size="sm" 
-className="flex-1 text-xs sm:text-sm hover:scale-105 transition-transform duration-200"
-onClick={() => setSelectedVideo({ url: project.videoUrl!, title: project.title })}
-aria-label={`View ${project.title} project`}
->  
-<Play className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
-Watch Video  
-</Button>
-) : (  
-<Button variant="outline" size="sm" className="flex-1 text-xs sm:text-sm" disabled>  
-<ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />  
-Coming Soon  
-</Button>  
-)}
-</div>  
+</div>
 </article>  
 ))}  
 </div>
