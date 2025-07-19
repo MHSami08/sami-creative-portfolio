@@ -1,15 +1,15 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import TikTokEmbed from './TikTokEmbed'; // your TikTok embed component
+import { useMemo, useState, useEffect } from 'react';
+import TikTokEmbed from './TikTokEmbed';
 
 interface VideoPlayerProps {
   isOpen: boolean;
   onClose: () => void;
   videoUrl: string;
   title: string;
-  isPortrait: boolean; // new prop for aspect ratio
+  isPortrait: boolean;
 }
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isPortrait }: VideoPlayerProps) => {
@@ -30,6 +30,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isPortrait }: VideoPlay
 
   const isTikTok = videoUrl.includes('tiktok.com');
 
+  useEffect(() => {
+    setLoading(true);
+  }, [videoUrl]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
@@ -40,31 +44,17 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isPortrait }: VideoPlay
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg font-semibold truncate">{title}</DialogTitle>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => window.open(videoUrl, '_blank')}
-                className="flex items-center gap-2"
-              >
+              <Button variant="outline" size="sm" onClick={() => window.open(videoUrl, '_blank')}>
                 <ExternalLink className="h-4 w-4" /> Open Original
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="h-8 w-8 p-0"
-                aria-label="Close video player"
-              >
+              <Button variant="ghost" size="sm" onClick={onClose} className="h-8 w-8 p-0">
                 <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </DialogHeader>
 
-        <div
-          className={`${isPortrait ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full max-h-[80vh] relative`}
-          style={{ maxHeight: '80vh', margin: '0 auto' }}
-        >
+        <div className={`${isPortrait ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full max-h-[80vh] relative`}>
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
               <div className="loader border-t-transparent border-4 border-primary rounded-full w-10 h-10 animate-spin"></div>
