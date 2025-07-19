@@ -19,7 +19,7 @@ tools: ["VN Video Editor", "Alight motion"],
 duration: "3:29 min",
 type: "Nasheed Video",
 videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
-thumbnail: "https://drive.google.com/uc?export=view&id=1ly7rAZTF1IsLhIfaYAF4XxZvY2Y_vK_0",
+thumbnail: "https://i.postimg.cc/BZdqStyj/mqdefault.jpg",
 detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
 features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
