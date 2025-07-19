@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
 interface VideoPlayerProps {
   isOpen: boolean;
@@ -10,42 +11,35 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
-  const getEmbedUrl = (url: string) => {
-    // YouTube
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be') 
-        ? url.split('youtu.be/')[1]?.split('?')[0]
-        : url.split('v=')[1]?.split('&')[0];
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-    }
-    
-    // TikTok
-    if (url.includes('tiktok.com')) {
-      // For TikTok, we'll show the original link since embedding is limited
-      return null;
-    }
-    
-    // Default fallback
-    return url;
+  const [loading, setLoading] = useState(true);
+
+  const getYouTubeVideoId = (url: string) => {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([^?&]+)/);
+    return match ? match[1] : null;
   };
 
-  const embedUrl = getEmbedUrl(videoUrl);
+  const embedUrl = useMemo(() => {
+    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+      const videoId = getYouTubeVideoId(videoUrl);
+      return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0` : null;
+    }
+    return null; // No direct embed for TikTok
+  }, [videoUrl]);
+
   const isTikTok = videoUrl.includes('tiktok.com');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">
+      <DialogContent className="max-w-4xl md:max-w-3xl sm:max-w-[95%] w-full p-0 bg-black border-0 rounded-lg overflow-hidden">
         <DialogHeader className="p-4 bg-background border-b">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-lg font-semibold truncate pr-4">
-              {title}
-            </DialogTitle>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <DialogTitle className="text-lg font-semibold truncate pr-4">{title}</DialogTitle>
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => window.open(videoUrl, '_blank')}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-sm"
               >
                 <ExternalLink className="h-4 w-4" />
                 Open Original
@@ -55,38 +49,44 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
                 size="sm"
                 onClick={onClose}
                 className="h-8 w-8 p-0"
+                aria-label="Close"
               >
                 <X className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </DialogHeader>
-        
-        <div className="aspect-video bg-black">
-          {embedUrl && !isTikTok ? (
+
+        <div className={`${isTikTok ? 'aspect-[9/16]' : 'aspect-video'} bg-black w-full relative`}>
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+              <div className="loader border-t-transparent border-4 border-primary rounded-full w-10 h-10 animate-spin"></div>
+            </div>
+          )}
+
+          {embedUrl ? (
             <iframe
               src={embedUrl}
               title={title}
               className="w-full h-full"
               frameBorder="0"
+              onLoad={() => setLoading(false)}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
+          ) : isTikTok ? (
+            <iframe
+              src={videoUrl}
+              title={title}
+              className="w-full h-full"
+              frameBorder="0"
+              onLoad={() => setLoading(false)}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+              allowFullScreen
+            />
           ) : (
-            <div className="flex items-center justify-center h-full bg-muted">
-              <div className="text-center p-8">
-                <h3 className="text-xl font-semibold mb-4">Video Preview Not Available</h3>
-                <p className="text-muted-foreground mb-6">
-                  This platform doesn't support embedding. Click below to view on the original platform.
-                </p>
-                <Button
-                  onClick={() => window.open(videoUrl, '_blank')}
-                  className="flex items-center gap-2"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
-                </Button>
-              </div>
+            <div className="flex items-center justify-center h-full bg-muted text-center p-4">
+              <p className="text-muted-foreground">Cannot preview this video here.</p>
             </div>
           )}
         </div>
