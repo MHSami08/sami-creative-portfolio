@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
+import ReactPlayer from 'react-player';
 
 interface VideoPlayerProps {
   isOpen: boolean;
@@ -10,23 +11,7 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
-  const getEmbedUrl = (url: string) => {
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be') 
-        ? url.split('youtu.be/')[1]?.split('?')[0]
-        : url.split('v=')[1]?.split('&')[0];
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-    }
-    
-    if (url.includes('tiktok.com')) {
-      return null;
-    }
-    
-    return url;
-  };
-
-  const embedUrl = getEmbedUrl(videoUrl);
-  const isTikTok = videoUrl.includes('tiktok.com');
+  const isPlayable = ReactPlayer.canPlay(videoUrl);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -58,16 +43,15 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
 
-        {/* Full screen width video player */}
         <div className="relative w-full aspect-video mx-auto">
-          {embedUrl && !isTikTok ? (
-            <iframe
-              src={embedUrl}
-              title={title}
-              className="absolute top-0 left-0 w-full h-full"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+          {isPlayable ? (
+            <ReactPlayer
+              url={videoUrl}
+              width="100%"
+              height="100%"
+              controls
+              playing
+              style={{ position: 'absolute', top: 0, left: 0 }}
             />
           ) : (
             <div className="flex items-center justify-center absolute top-0 left-0 w-full h-full bg-muted p-4 text-center">
@@ -81,7 +65,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
                   className="flex items-center gap-2"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                  View on Original Platform
                 </Button>
               </div>
             </div>
