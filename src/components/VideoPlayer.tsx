@@ -2,7 +2,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import TikTokEmbed from './TikTokEmbed';
 
 interface VideoPlayerProps {
   isOpen: boolean;
