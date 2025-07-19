@@ -11,21 +11,15 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
   const getEmbedUrl = (url: string) => {
-    // YouTube
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be') 
+      const videoId = url.includes('youtu.be')
         ? url.split('youtu.be/')[1]?.split('?')[0]
         : url.split('v=')[1]?.split('&')[0];
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
-    
-    // TikTok
     if (url.includes('tiktok.com')) {
-      // For TikTok, we'll show the original link since embedding is limited
       return null;
     }
-    
-    // Default fallback
     return url;
   };
 
@@ -34,10 +28,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">
+      <DialogContent className="w-full max-w-4xl p-0 bg-black border-0 rounded-lg overflow-hidden">
         <DialogHeader className="p-4 bg-background border-b">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-lg font-semibold truncate pr-4">
+            <DialogTitle className="text-base md:text-lg font-semibold truncate pr-4">
               {title}
             </DialogTitle>
             <div className="flex items-center gap-2">
@@ -61,8 +55,8 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
             </div>
           </div>
         </DialogHeader>
-        
-        <div className="aspect-video bg-black">
+
+        <div className="relative w-full aspect-video bg-black">
           {embedUrl && !isTikTok ? (
             <iframe
               src={embedUrl}
@@ -73,10 +67,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
               allowFullScreen
             />
           ) : (
-            <div className="flex items-center justify-center h-full bg-muted">
-              <div className="text-center p-8">
-                <h3 className="text-xl font-semibold mb-4">Video Preview Not Available</h3>
-                <p className="text-muted-foreground mb-6">
+            <div className="flex items-center justify-center h-full bg-muted p-4 text-center">
+              <div>
+                <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
                   This platform doesn't support embedding. Click below to view on the original platform.
                 </p>
                 <Button
