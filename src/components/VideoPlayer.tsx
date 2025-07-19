@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import TikTokEmbed from './TikTokEmbed';
 
 interface VideoPlayerProps {
   isOpen: boolean;
@@ -23,33 +24,31 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
       const videoId = getYouTubeVideoId(videoUrl);
       return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0` : null;
     }
-    return null; // No direct embed for TikTok
+    return null;
   }, [videoUrl]);
 
   const isTikTok = videoUrl.includes('tiktok.com');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl md:max-w-3xl sm:max-w-[95%] w-full p-0 bg-black border-0 rounded-lg overflow-hidden">
+      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0 rounded-lg overflow-hidden">
         <DialogHeader className="p-4 bg-background border-b">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <DialogTitle className="text-lg font-semibold truncate pr-4">{title}</DialogTitle>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-lg font-semibold truncate">{title}</DialogTitle>
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => window.open(videoUrl, '_blank')}
-                className="flex items-center gap-2 text-sm"
+                className="flex items-center gap-2"
               >
-                <ExternalLink className="h-4 w-4" />
-                Open Original
+                <ExternalLink className="h-4 w-4" /> Open Original
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onClose}
                 className="h-8 w-8 p-0"
-                aria-label="Close"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -75,18 +74,10 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
               allowFullScreen
             />
           ) : isTikTok ? (
-            <iframe
-              src={videoUrl}
-              title={title}
-              className="w-full h-full"
-              frameBorder="0"
-              onLoad={() => setLoading(false)}
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-              allowFullScreen
-            />
+            <TikTokEmbed videoUrl={videoUrl} />
           ) : (
-            <div className="flex items-center justify-center h-full bg-muted text-center p-4">
-              <p className="text-muted-foreground">Cannot preview this video here.</p>
+            <div className="flex items-center justify-center h-full text-muted-foreground">
+              Cannot preview this video.
             </div>
           )}
         </div>
