@@ -58,7 +58,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
         
-        <div className="relative w-full aspect-video bg-black">
+        <div className="relative w-full h-[220px] md:h-auto md:aspect-video bg-black mx-auto">
           {embedUrl && !isTikTok ? (
             <iframe
               src={embedUrl}
