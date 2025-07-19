@@ -11,7 +11,6 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
   const getEmbedUrl = (url: string) => {
-    // YouTube
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       const videoId = url.includes('youtu.be') 
         ? url.split('youtu.be/')[1]?.split('?')[0]
@@ -19,21 +18,15 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
     
-    // TikTok
     if (url.includes('tiktok.com')) {
-      // For TikTok, we'll show the original link since embedding is limited
       return null;
     }
     
-    // Default fallback
     return url;
   };
 
   const embedUrl = getEmbedUrl(videoUrl);
   const isTikTok = videoUrl.includes('tiktok.com');
-
-  // Aspect ratio classes: 16:9 for YouTube, 9:16 for TikTok (vertical videos)
-  const aspectRatioClass = isTikTok ? 'pb-[177.77%]' : 'pb-[56.25%]'; // 177.77% = 16/9 inverted (9:16)
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -65,7 +58,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
           </div>
         </DialogHeader>
         
-        <div className={`relative w-full ${aspectRatioClass} bg-black`}>
+        <div className="relative w-full aspect-video bg-black">
           {embedUrl && !isTikTok ? (
             <iframe
               src={embedUrl}
