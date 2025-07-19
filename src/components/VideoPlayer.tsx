@@ -11,34 +11,36 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => {
   const getEmbedUrl = (url: string) => {
+    // YouTube
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be')
+      const videoId = url.includes('youtu.be') 
         ? url.split('youtu.be/')[1]?.split('?')[0]
         : url.split('v=')[1]?.split('&')[0];
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
+    
+    // TikTok
     if (url.includes('tiktok.com')) {
-      const videoIdMatch = url.match(/\/video\/(\d+)/);
-      if (videoIdMatch) {
-        return `https://www.tiktok.com/embed/${videoIdMatch[1]}`;
-      }
+      // For TikTok, we'll show the original link since embedding is limited
       return null;
     }
+    
+    // Default fallback
     return url;
   };
 
   const embedUrl = getEmbedUrl(videoUrl);
   const isTikTok = videoUrl.includes('tiktok.com');
 
+  // Aspect ratio classes: 16:9 for YouTube, 9:16 for TikTok (vertical videos)
+  const aspectRatioClass = isTikTok ? 'pb-[177.77%]' : 'pb-[56.25%]'; // 177.77% = 16/9 inverted (9:16)
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent
-        className="w-full max-w-3xl p-0 bg-black border-0 rounded-lg overflow-hidden"
-        style={{ maxHeight: '90vh' }}
-      >
+      <DialogContent className="max-w-4xl w-full p-0 bg-black border-0">
         <DialogHeader className="p-4 bg-background border-b">
           <div className="flex items-center justify-between">
-            <DialogTitle className="text-base md:text-lg font-semibold truncate pr-4">
+            <DialogTitle className="text-lg font-semibold truncate pr-4">
               {title}
             </DialogTitle>
             <div className="flex items-center gap-2">
@@ -62,28 +64,22 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
             </div>
           </div>
         </DialogHeader>
-
-        <div className="w-full bg-black flex justify-center items-center">
-          {embedUrl ? (
-            <div
-              className={`w-full ${
-                isTikTok ? 'aspect-[9/16]' : 'aspect-video'
-              } bg-black`}
-            >
-              <iframe
-                src={embedUrl}
-                title={title}
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+        
+        <div className={`relative w-full ${aspectRatioClass} bg-black`}>
+          {embedUrl && !isTikTok ? (
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="absolute top-0 left-0 w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           ) : (
-            <div className="flex items-center justify-center h-[40vh] sm:h-[60vh] bg-muted p-4 text-center">
+            <div className="flex items-center justify-center absolute top-0 left-0 w-full h-full bg-muted p-4 text-center">
               <div>
                 <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Video Preview Not Available</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">
+                <p className="text-muted-foreground mb-6">
                   This platform doesn't support embedding. Click below to view on the original platform.
                 </p>
                 <Button
@@ -91,7 +87,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title }: VideoPlayerProps) => 
                   className="flex items-center gap-2"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  View on TikTok
+                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
                 </Button>
               </div>
             </div>
