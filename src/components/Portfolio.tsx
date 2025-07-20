@@ -27,13 +27,13 @@ features: ["High-quality audio processing", "Professional video editing", "Islam
 id: 2,
 title: "Surah An-Nisa(75-76)",
 description: "Advanced Quranic reel",
-category: "short",
+category: "long",
 status: "completed",
 tools: ["Inshot", "Node video"],
 duration: "1:27 min",
 type: "Quranic reel",
-videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
-thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=1067&fit=crop&crop=center",
+videoUrl: "https://youtu.be/1QN3Mid2gog?si=3G8n-4q1JdX5FOMH",
+thumbnail: "https://imgur.com/a/9xCpPCm",
 detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
 features: ["Advanced effects", "Smooth transition", "Inspirational content"]
 },
@@ -56,7 +56,7 @@ features: ["Emotional storytelling", "Professional transitions", "Islamic callig
 const shortVideos = [
 {
 id: 4,
-title: "Islamic Reminder",
+title: "We compare to the yesterday,we don't compare to Zero",
 description: "Islamic Reminder",
 category: "short",
 status: "completed",
@@ -65,8 +65,8 @@ duration: "25 sec",
 type: "Shorts",
 videoUrl: "https://youtube.com/shorts/D4LESkLR4rA?si=ukWrR2Qxh9WTU_xT",
 thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "A cinematic wedding highlights reel capturing the most precious moments of a couple's special day with professional editing and color grading.",
-features: ["Cinematic color grading", "Smooth transitions", "Emotional storytelling"]
+detailedDescription: "A  beautiful Islamic short about gratification.",
+features: [" caption edit", "Smooth transitions"]
 },
 {
 id: 5,
