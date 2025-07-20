@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { X, ExternalLink, Youtube } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 
 interface VideoPlayerProps {
   isOpen: boolean;
@@ -20,16 +20,14 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
     
-    // TikTok - Use Vimeo as fallback for better embedding
+    // TikTok
     if (url.includes('tiktok.com')) {
-      // For TikTok videos, we'll show the fallback view with external link
+      // Extract TikTok video ID and create embed URL
+      const videoId = url.split('/video/')[1]?.split('?')[0] || url.split('/')[5]?.split('?')[0];
+      if (videoId) {
+        return `https://www.tiktok.com/embed/v2/${videoId}`;
+      }
       return null;
-    }
-    
-    // Vimeo
-    if (url.includes('vimeo.com')) {
-      const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
-      return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
     }
     
     // Default fallback
@@ -38,18 +36,14 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
 
   const embedUrl = getEmbedUrl(videoUrl);
   const isTikTok = videoUrl.includes('tiktok.com');
-  const isYouTube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        className={`w-full p-0 bg-black border-0 ${
-          isShortVideo 
-            ? 'max-w-sm sm:max-w-md h-[90vh] max-h-[800px]' 
-            : 'max-w-4xl max-h-[90vh]'
-        }`}
-        aria-describedby="video-player-description"
-      >
+      <DialogContent className={`w-full p-0 bg-black border-0 ${
+        isShortVideo 
+          ? 'max-w-sm sm:max-w-md h-[90vh] max-h-[800px]' 
+          : 'max-w-4xl max-h-[90vh]'
+      }`}>
         <DialogHeader className="p-3 sm:p-4 bg-background border-b">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-sm sm:text-lg font-semibold truncate pr-2 sm:pr-4">
@@ -77,26 +71,21 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
             </div>
           </div>
         </DialogHeader>
-        <div id="video-player-description" className="sr-only">
-          Video player for {title}. Press escape to close.
-        </div>
         
-        <div className={`bg-black relative ${
+        <div className={`bg-black ${
           isShortVideo 
             ? 'aspect-[9/16] max-h-[calc(90vh-80px)]' 
             : 'aspect-video max-h-[calc(90vh-80px)]'
         }`}>
           {embedUrl ? (
-            <>
-              <iframe
-                src={embedUrl}
-                title={title}
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </>
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           ) : (
             <div className="flex items-center justify-center h-full bg-muted">
               <div className="text-center p-4 sm:p-8">
