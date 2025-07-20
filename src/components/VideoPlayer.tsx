@@ -60,7 +60,14 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
                 <span className="hidden sm:inline">Open Original</span>
                 <span className="sm:hidden">Open</span>
               </Button>
-              
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onClose}
+                className="h-6 w-6 sm:h-8 sm:w-8 p-0"
+              >
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
             </div>
           </div>
         </DialogHeader>
