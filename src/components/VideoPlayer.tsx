@@ -19,23 +19,12 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
         : url.split('v=')[1]?.split('&')[0];
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
-    
-    // TikTok
-    if (url.includes('tiktok.com')) {
-      // Extract TikTok video ID and create embed URL
-      const videoId = url.split('/video/')[1]?.split('?')[0] || url.split('/')[5]?.split('?')[0];
-      if (videoId) {
-        return `https://www.tiktok.com/embed/v2/${videoId}`;
-      }
-      return null;
-    }
-    
+
     // Default fallback
     return url;
   };
 
   const embedUrl = getEmbedUrl(videoUrl);
-  const isTikTok = videoUrl.includes('tiktok.com');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -98,7 +87,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
                   className="flex items-center gap-2 text-sm sm:text-base"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                  View on Original Platform
                 </Button>
               </div>
             </div>
