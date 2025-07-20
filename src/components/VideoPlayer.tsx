@@ -20,8 +20,14 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     }
 
+    // Vimeo
+    if (url.includes('vimeo.com')) {
+      const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+      return `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=0`;
+    }
+
     // Default fallback
-    return url;
+    return null;
   };
 
   const embedUrl = getEmbedUrl(videoUrl);
