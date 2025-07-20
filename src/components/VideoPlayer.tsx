@@ -1,61 +1,112 @@
-import { useState } from 'react'; import { Play } from 'lucide-react'; import { Button } from '@/components/ui/button'; import VideoPlayer from './VideoPlayer';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { X, ExternalLink } from 'lucide-react';
 
-const Portfolio = () => { const [selectedVideo, setSelectedVideo] = useState(null);
+interface VideoPlayerProps {
+  isOpen: boolean;
+  onClose: () => void;
+  videoUrl: string;
+  title: string;
+  isShortVideo?: boolean;
+}
 
-const longVideos = [ { id: 1, title: "Qalbi Fil Madina Vocals Only", videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO", thumbnail: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=800&h=600&fit=crop&crop=center", category: 'long', duration: '3:29 min' } ];
+const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }: VideoPlayerProps) => {
+  const getEmbedUrl = (url: string) => {
+    // YouTube
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+      const videoId = url.includes('youtu.be') 
+        ? url.split('youtu.be/')[1]?.split('?')[0]
+        : url.split('v=')[1]?.split('&')[0];
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    }
+    
+    // TikTok
+    if (url.includes('tiktok.com')) {
+      // Extract TikTok video ID and create embed URL
+      const videoId = url.split('/video/')[1]?.split('?')[0] || url.split('/')[5]?.split('?')[0];
+      if (videoId) {
+        return `https://www.tiktok.com/embed/v2/${videoId}`;
+      }
+      return null;
+    }
+    
+    // Default fallback
+    return url;
+  };
 
-const shortVideos = [ { id: 2, title: "Surah An-Nisa(75-76)", videoUrl: "https://vimeo.com/123456789", thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=1200&fit=crop&crop=center", category: 'short', duration: '1:27 min' } ];
+  const embedUrl = getEmbedUrl(videoUrl);
+  const isTikTok = videoUrl.includes('tiktok.com');
 
-const handleProjectClick = (project) => { setSelectedVideo({ url: project.videoUrl, title: project.title, isShortVideo: project.category === 'short' }); };
-
-return ( <section className="py-12 sm:py-20 bg-gradient-to-b from-background to-background/90 backdrop-blur" id="portfolio"> <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <h2 className="text-4xl font-bold mb-12 text-center">My <span className="gradient-text">Portfolio</span></h2>
-
-<h3 className="text-2xl font-bold mb-4 text-center">Long Videos</h3>
-    <div className="grid grid-cols-1 gap-8 mb-16">
-      {longVideos.map(project => (
-        <article key={project.id} onClick={() => handleProjectClick(project)}
-          className="group bg-card rounded-xl border overflow-hidden transition-all hover:shadow-xl cursor-pointer">
-          <img src={project.thumbnail} alt="thumbnail"
-            className="w-full h-96 object-cover" />
-          <div className="p-4">
-            <h3 className="text-xl font-bold">{project.title}</h3>
-            <p className="text-muted-foreground">{project.duration}</p>
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className={`w-full p-0 bg-black border-0 ${
+        isShortVideo 
+          ? 'max-w-sm sm:max-w-md h-[90vh] max-h-[800px]' 
+          : 'max-w-4xl max-h-[90vh]'
+      }`}>
+        <DialogHeader className="p-3 sm:p-4 bg-background border-b">
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-sm sm:text-lg font-semibold truncate pr-2 sm:pr-4">
+              {title}
+            </DialogTitle>
+            <div className="flex items-center gap-1 sm:gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.open(videoUrl, '_blank')}
+                className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-3"
+              >
+                <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Open Original</span>
+                <span className="sm:hidden">Open</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onClose}
+                className="h-6 w-6 sm:h-8 sm:w-8 p-0"
+              >
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+              </Button>
+            </div>
           </div>
-        </article>
-      ))}
-    </div>
+        </DialogHeader>
+        
+        <div className={`bg-black ${
+          isShortVideo 
+            ? 'aspect-[9/16] max-h-[calc(90vh-80px)]' 
+            : 'aspect-video max-h-[calc(90vh-80px)]'
+        }`}>
+          {embedUrl ? (
+            <iframe
+              src={embedUrl}
+              title={title}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full bg-muted">
+              <div className="text-center p-4 sm:p-8">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Video Preview Not Available</h3>
+                <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
+                  This platform doesn't support embedding. Click below to view on the original platform.
+                </p>
+                <Button
+                  onClick={() => window.open(videoUrl, '_blank')}
+                  className="flex items-center gap-2 text-sm sm:text-base"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  View on {isTikTok ? 'TikTok' : 'Original Platform'}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
-    <h3 className="text-2xl font-bold mb-4 text-center">Short Videos</h3>
-    <div className="flex flex-col gap-8">
-      {shortVideos.map(project => (
-        <article key={project.id} onClick={() => handleProjectClick(project)}
-          className="group bg-card rounded-xl border overflow-hidden transition-all hover:shadow-xl cursor-pointer">
-          <img src={project.thumbnail} alt="thumbnail"
-            className="w-full h-[600px] object-cover" />
-          <div className="p-4">
-            <h3 className="text-xl font-bold">{project.title}</h3>
-            <p className="text-muted-foreground">{project.duration}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-
-    <div className="text-center mt-16">
-      <Button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-        Get In Touch
-      </Button>
-    </div>
-  </div>
-
-  <VideoPlayer
-    isOpen={!!selectedVideo}
-    onClose={() => setSelectedVideo(null)}
-    videoUrl={selectedVideo?.url || ''}
-    title={selectedVideo?.title || ''}
-    isShortVideo={selectedVideo?.isShortVideo || false}
-  />
-</section>
-
-); };
-
-export default Portfolio;
+export default VideoPlayer;
