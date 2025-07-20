@@ -6,14 +6,14 @@ import VideoPlayer from './VideoPlayer';
 
 const Portfolio = () => {
 const [activeFilter, setActiveFilter] = useState('all');
-const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string } | null>(null);
+const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
 
-const projects = [
+const longVideos = [
 {
 id: 1,
 title: "Qalbi Fil Madina Vocals Only",
 description: "A beautiful Islamic Slowed & reverb nasheed",
-category: "video",
+category: "long",
 status: "completed",
 tools: ["VN Video Editor", "Alight motion"],
 duration: "3:29 min",
@@ -24,24 +24,10 @@ detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals wi
 features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
 {
-id: 2,
-title: "Surah An-Nisa(75-76)",
-description: "Advanced Quranic reel ",
-category: "video",
-status: "completed",
-tools: ["Inshot","Node video"],
-duration: "1:27 min",
-type: "Quranic reel",
-videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
-thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
-features: [" Advanced effects", "Smooth transition", "Inspirational content"]
-},
-{
 id: 3,
 title: "Islamic Motivation Video",
 description: "Inspiring Islamic content with beautiful visuals",
-category: "video",
+category: "long",
 status: "completed",
 tools: ["CapCut", "Canva"],
 duration: "2:15 min",
@@ -55,7 +41,7 @@ features: ["Emotional storytelling", "Professional transitions", "Islamic callig
 id: 4,
 title: "Wedding Highlights Reel",
 description: "Beautiful wedding moments captured in cinematic style",
-category: "video",
+category: "long",
 status: "completed",
 tools: ["DaVinci Resolve", "After Effects"],
 duration: "4:30 min",
@@ -67,14 +53,56 @@ features: ["Cinematic color grading", "Smooth transitions", "Emotional storytell
 }
 ];
 
-const filters = [
-{ id: 'all', name: 'All Projects' },
-{ id: 'video', name: 'Video Editing' }
+const shortVideos = [
+{
+id: 2,
+title: "Surah An-Nisa(75-76)",
+description: "Advanced Quranic reel",
+category: "short",
+status: "completed",
+tools: ["Inshot", "Node video"],
+duration: "1:27 min",
+type: "Quranic reel",
+videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
+thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=1067&fit=crop&crop=center",
+detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
+features: ["Advanced effects", "Smooth transition", "Inspirational content"]
+},
+{
+id: 5,
+title: "Islamic Short Quote",
+description: "Motivational Islamic quote reel",
+category: "short",
+status: "completed",
+tools: ["CapCut", "Canva"],
+duration: "0:45 min",
+type: "Quote Reel",
+videoUrl: "https://www.tiktok.com/@example/video/1234567890",
+thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&h=1067&fit=crop&crop=center",
+detailedDescription: "Short inspirational Islamic quote with beautiful typography and background.",
+features: ["Typography animation", "Background effects", "Quote presentation"]
+},
+{
+id: 6,
+title: "Daily Reminder",
+description: "Short Islamic reminder for daily reflection",
+category: "short",
+status: "completed",
+tools: ["Inshot", "Alight Motion"],
+duration: "1:00 min",
+type: "Reminder Reel",
+videoUrl: "https://www.tiktok.com/@example/video/9876543210",
+thumbnail: "https://images.unsplash.com/photo-1564769625392-651b2049ce4b?w=600&h=1067&fit=crop&crop=center",
+detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
+features: ["Text animation", "Islamic imagery", "Spiritual content"]
+}
 ];
 
+const allProjects = [...longVideos, ...shortVideos];
+
 const filteredProjects = activeFilter === 'all'
-? projects
-: projects.filter(project => project.category === activeFilter);
+? allProjects
+: allProjects.filter(project => project.category === activeFilter);
 
 const getStatusColor = (status: string) => {
 switch (status) {
@@ -92,45 +120,38 @@ element.scrollIntoView({ behavior: 'smooth' });
 }
 };
 
-const handleProjectClick = (project: typeof projects[0]) => {
+const handleProjectClick = (project: typeof allProjects[0]) => {
 if (project.status === 'completed' && project.videoUrl) {
-setSelectedVideo({ url: project.videoUrl, title: project.title });
+setSelectedVideo({ 
+  url: project.videoUrl, 
+  title: project.title,
+  isShortVideo: project.category === 'short'
+});
 }
 };
 
 return (
 <section className="py-12 sm:py-20 bg-background" id="portfolio">
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-{/* Header */}
-<div className="text-center mb-12 sm:mb-16 animate-fade-in">
-<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-My <span className="gradient-text">Portfolio</span>
-</h2>
+        {/* Header */}
+        <div className="text-center mb-12 sm:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+            My <span className="gradient-text">Portfolio</span>
+          </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
             Showcasing my video editing projects and creative work. Each project reflects my passion for storytelling and visual creativity.
           </p>
+        </div>
 
-{/* Filter buttons */}  
-<div className="flex flex-wrap justify-center gap-3 sm:gap-4">  
-{filters.map((filter) => (  
-<button  
-key={filter.id}  
-onClick={() => setActiveFilter(filter.id)}  
-className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base ${  
-activeFilter === filter.id  
-? 'bg-primary text-primary-foreground shadow-lg transform scale-105'  
-: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:scale-105'  
-}`}  
->  
-{filter.name}  
-</button>  
-))}  
-</div>  
-</div>  
-
-{/* Projects Grid */}  
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">  
-{filteredProjects.map((project, index) => (  
+        {/* Long Videos Section */}
+        <div className="mb-16">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-center">
+            Long <span className="text-blue-500">videos</span>
+          </h3>
+          <p className="text-muted-foreground text-center mb-8">Extended content with cinematic storytelling</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {longVideos.map((project, index) => (
 <article  
 key={project.id}  
 className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in ${
@@ -141,8 +162,8 @@ role="article"
 aria-label={`Project: ${project.title}`}
 onClick={() => handleProjectClick(project)}
 >  
-{/* Video Thumbnail for video projects */}
-{project.category === 'video' && (
+                {/* Video Thumbnail */}
+                {(project.category === 'long' || project.category === 'short') && (
 <div className="relative overflow-hidden">
 <img 
 src={project.thumbnail} 
@@ -211,13 +232,9 @@ Ready to Watch
 {project.status.charAt(0).toUpperCase() + project.status.slice(1)}  
 </span>  
 </div>  
-<div className="ml-2 sm:ml-4 flex-shrink-0">  
-{project.category === 'video' ? (  
-<Play className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 group-hover:scale-110 transition-transform duration-300" />  
-) : (  
-<Github className="h-6 w-6 sm:h-8 sm:w-8 text-amber-500 group-hover:scale-110 transition-transform duration-300" />  
-)}  
-</div>  
+                <div className="ml-2 sm:ml-4 flex-shrink-0">  
+                  <Play className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 group-hover:scale-110 transition-transform duration-300" />  
+                </div>
 </div>  
 
 {/* Project details */}  
@@ -253,10 +270,58 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
 ))}  
 </div>  
 </div>  
-</div>
-</article>  
-))}  
-</div>
+                </div>
+              </article>  
+            ))}  
+          </div>
+        </div>
+
+        {/* Short Videos Section */}
+        <div className="mb-16">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-center">
+            Short <span className="text-blue-500">videos</span>
+          </h3>
+          <p className="text-muted-foreground text-center mb-8">Quick impactful content for social media</p>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {shortVideos.map((project, index) => (
+              <article  
+                key={project.id}  
+                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover:-translate-y-1 animate-fade-in cursor-pointer
+                dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+                role="article"
+                aria-label={`Project: ${project.title}`}
+                onClick={() => handleProjectClick(project)}
+              >  
+                {/* Video Thumbnail - 9:16 ratio */}
+                <div className="relative overflow-hidden">
+                  <img 
+                    src={project.thumbnail} 
+                    alt={`${project.title} thumbnail`}
+                    className="w-full aspect-[9/16] object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                      <Play className="h-6 w-6 text-white" fill="white" />
+                    </div>
+                  </div>
+                  {project.status === 'completed' && (
+                    <div className="absolute top-2 right-2">
+                      <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                        Ready
+                      </span>
+                    </div>
+                  )}
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <h4 className="text-white text-sm font-semibold mb-1 line-clamp-2">{project.title}</h4>
+                    <p className="text-white/80 text-xs">{project.duration}</p>
+                  </div>
+                </div>
+              </article>  
+            ))}  
+          </div>
+        </div>
 
 {/* Call to action */}  
 <div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-6 sm:p-8 hover:shadow-xl transition-all duration-300">  
@@ -277,13 +342,14 @@ Get In Touch
 </div>  
 </div>
 
-{/* Video Player Modal */}
-<VideoPlayer
-isOpen={!!selectedVideo}
-onClose={() => setSelectedVideo(null)}
-videoUrl={selectedVideo?.url || ''}
-title={selectedVideo?.title || ''}
-/>
+        {/* Video Player Modal */}
+        <VideoPlayer
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoUrl={selectedVideo?.url || ''}
+          title={selectedVideo?.title || ''}
+          isShortVideo={selectedVideo?.isShortVideo || false}
+        />
 </section>
 );
 };
