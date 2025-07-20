@@ -24,37 +24,6 @@ detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals wi
 features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
 {
-id: 3,
-title: "Islamic Motivation Video",
-description: "Inspiring Islamic content with beautiful visuals",
-category: "long",
-status: "completed",
-tools: ["CapCut", "Canva"],
-duration: "2:15 min",
-type: "Motivational Video",
-videoUrl: "https://youtu.be/example3",
-thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
-features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
-},
-{
-id: 4,
-title: "Wedding Highlights Reel",
-description: "Beautiful wedding moments captured in cinematic style",
-category: "long",
-status: "completed",
-tools: ["DaVinci Resolve", "After Effects"],
-duration: "4:30 min",
-type: "Wedding Video",
-videoUrl: "https://youtu.be/example4",
-thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=450&fit=crop&crop=center",
-detailedDescription: "A cinematic wedding highlights reel capturing the most precious moments of a couple's special day with professional editing and color grading.",
-features: ["Cinematic color grading", "Smooth transitions", "Emotional storytelling"]
-}
-];
-
-const shortVideos = [
-{
 id: 2,
 title: "Surah An-Nisa(75-76)",
 description: "Advanced Quranic reel",
@@ -67,6 +36,37 @@ videoUrl: "https://vt.tiktok.com/ZSHg1ULVHakoD-jhTIP/",
 thumbnail: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=1067&fit=crop&crop=center",
 detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
 features: ["Advanced effects", "Smooth transition", "Inspirational content"]
+},
+{
+id: 3,
+title: "Islamic Motivation Video",
+description: "Inspiring Islamic content with beautiful visuals",
+category: "long",
+status: "completed",
+tools: ["CapCut", "Canva"],
+duration: "2:15 min",
+type: "Motivational Video",
+videoUrl: "https://youtu.be/example3",
+thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&h=450&fit=crop&crop=center",
+detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
+features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
+}
+];
+
+const shortVideos = [
+{
+id: 4,
+title: "Islamic Reminder",
+description: "Islamic Reminder",
+category: "short",
+status: "completed",
+tools: ["Capcut", "Inshot"],
+duration: "25 sec",
+type: "Shorts",
+videoUrl: "https://youtube.com/shorts/D4LESkLR4rA?si=ukWrR2Qxh9WTU_xT",
+thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=450&fit=crop&crop=center",
+detailedDescription: "A cinematic wedding highlights reel capturing the most precious moments of a couple's special day with professional editing and color grading.",
+features: ["Cinematic color grading", "Smooth transitions", "Emotional storytelling"]
 },
 {
 id: 5,
