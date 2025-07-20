@@ -88,13 +88,6 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
         }`}>
           {embedUrl ? (
             <>
-              {isYouTube && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <div className="bg-red-600 rounded-full p-4 opacity-80">
-                    <Youtube className="h-8 w-8 text-white" fill="white" />
-                  </div>
-                </div>
-              )}
               <iframe
                 src={embedUrl}
                 title={title}
