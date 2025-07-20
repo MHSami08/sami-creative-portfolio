@@ -131,7 +131,7 @@ setSelectedVideo({
 };
 
 return (
-<section className="py-12 sm:py-20 bg-background" id="portfolio">
+<section className="py-0 bg-background" id="portfolio">
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 animate-fade-in">
@@ -168,10 +168,10 @@ onClick={() => handleProjectClick(project)}
 <img 
 src={project.thumbnail} 
 alt={`${project.title} thumbnail`}
-className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
 />
 <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-<div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+<div className="bg-red-600/90 backdrop-blur-sm rounded-full p-4 group-hover:scale-110 transition-transform duration-300">
 <Play className="h-8 w-8 text-white" fill="white" />
 </div>
 </div>
@@ -283,11 +283,11 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
           </h3>
           <p className="text-muted-foreground text-center mb-8">Quick impactful content for social media</p>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="max-w-2xl mx-auto space-y-6">
             {shortVideos.map((project, index) => (
               <article  
                 key={project.id}  
-                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover:-translate-y-1 animate-fade-in cursor-pointer
+                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in cursor-pointer
                 dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 role="article"
@@ -295,15 +295,15 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                 onClick={() => handleProjectClick(project)}
               >  
                 {/* Video Thumbnail - 9:16 ratio */}
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden mx-auto max-w-sm">
                   <img 
                     src={project.thumbnail} 
                     alt={`${project.title} thumbnail`}
                     className="w-full aspect-[9/16] object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                      <Play className="h-6 w-6 text-white" fill="white" />
+                    <div className="bg-red-600/90 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+                      <Play className="h-8 w-8 text-white" fill="white" />
                     </div>
                   </div>
                   {project.status === 'completed' && (
