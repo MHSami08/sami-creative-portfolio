@@ -28,28 +28,14 @@ const SEARCH_DATA: SearchItem[] = [
     url: 'https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO',
     keywords: ['nasheed', 'islamic', 'video', 'editing', 'qalbi', 'madina']
   },
-  {
-    id: 'c-tutorial',
-    title: 'C Programming Tutorial Series',
-    description: 'Educational content explaining C programming basics',
-    category: 'project',
-    keywords: ['programming', 'c', 'tutorial', 'education', 'coding']
-  },
-  {
-    id: 'calculator',
-    title: 'Simple Calculator in C',
-    description: 'A basic calculator program demonstrating C fundamentals',
-    category: 'project',
-    keywords: ['c', 'calculator', 'programming', 'console', 'math']
-  },
   // Sections
   {
     id: 'about',
     title: 'About Me',
-    description: 'Learn about Masrafi Haque Sami\'s background',
+    description: 'Learn about MH Sami\'s background',
     category: 'section',
     section: '#about',
-    keywords: ['about', 'bio', 'background', 'masrafi', 'sami']
+    keywords: ['about', 'bio', 'background', 'sami']
   },
   {
     id: 'portfolio',
@@ -82,13 +68,6 @@ const SEARCH_DATA: SearchItem[] = [
     description: 'Professional video editing with Alight Motion',
     category: 'skill',
     keywords: ['video', 'editing', 'alight motion', 'motion graphics']
-  },
-  {
-    id: 'programming',
-    title: 'Programming',
-    description: 'C programming and software development',
-    category: 'skill',
-    keywords: ['programming', 'c', 'development', 'coding']
   }
 ];
 
@@ -233,7 +212,7 @@ const SearchDialog = ({ isOpen, onClose }: SearchDialogProps) => {
             <div className="border-t pt-4">
               <p className="text-xs text-muted-foreground mb-2">Quick tips:</p>
               <div className="flex flex-wrap gap-2">
-                {['projects', 'islamic', 'programming', 'video editing', 'contact'].map((tip) => (
+                {['projects', 'islamic', 'video editing', 'contact'].map((tip) => (
                   <button
                     key={tip}
                     onClick={() => setQuery(tip)}
