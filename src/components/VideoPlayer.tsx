@@ -7,7 +7,7 @@ interface VideoPlayerProps {
   onClose: () => void;
   videoUrl: string;
   title: string;
-  isShortVideo: boolean;
+  isShortVideo?: boolean;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -15,30 +15,32 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   onClose,
   videoUrl,
   title,
-  isShortVideo
+  isShortVideo = false,
 }) => {
   if (!isOpen) return null;
 
-  // Helper function to get YouTube embed URL
+  // Parse YouTube URLs
   const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.includes('youtu.be') 
-      ? url.split('youtu.be/')[1]?.split('?')[0]
-      : url.split('v=')[1]?.split('&')[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : null;
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/);
+    return match ? `https://www.youtube.com/embed/${match[1]}?autoplay=1` : null;
   };
 
-  // Helper function to get Vimeo embed URL
+  // Parse Vimeo URLs
   const getVimeoEmbedUrl = (url: string) => {
-    const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
-    return videoId ? `https://player.vimeo.com/video/${videoId}?autoplay=1` : null;
+    const match = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    return match ? `https://player.vimeo.com/video/${match[1]}?autoplay=1` : null;
   };
 
   const embedUrl = getYouTubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
   const aspectRatio = isShortVideo ? 'aspect-[9/16]' : 'aspect-video';
-  const maxWidth = isShortVideo ? 'max-w-md' : 'max-w-4xl';
+  
+  // Responsive width classes
+  const maxWidth = isShortVideo
+    ? 'max-w-sm md:max-w-md lg:max-w-lg'
+    : 'max-w-lg md:max-w-2xl lg:max-w-4xl';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-300">
       <div className={`relative bg-background rounded-lg shadow-xl ${maxWidth} w-full`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
@@ -61,6 +63,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
               src={embedUrl}
               title={title}
               className={`w-full ${aspectRatio} rounded-lg border-0`}
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
