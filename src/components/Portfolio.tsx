@@ -91,7 +91,7 @@ status: "completed",
 tools: ["CapCut", "Canva"],
 duration: "0:45 min",
 type: "Quote Reel",
-videoUrl: "N/A",
+videoUrl: "https://vt.tiktok.com/ZSHgwaxVRktCn-IGq72/",
 thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
 detailedDescription: "Short inspirational Islamic quote with beautiful typography and background.",
 features: ["Typography animation", "Background effects", "Quote presentation"]
