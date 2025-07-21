@@ -32,7 +32,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
 
   const embedUrl = getYouTubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
-  const aspectRatio = isShortVideo ? 'aspect-[9/16]' : 'aspect-video';
+  const aspectRatioClass = isShortVideo ? 'aspect-[9/16]' : 'aspect-video';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4 transition-opacity duration-300">
@@ -41,12 +41,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           relative bg-background rounded-lg shadow-xl
           w-full max-w-full
           sm:max-w-[95vw] md:max-w-[85vw] lg:max-w-[70vw]
-          max-h-[90vh] sm:max-h-[85vh]
-          flex flex-col
+          max-h-[90vh] flex flex-col
         `}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
           <h3 className="text-lg font-semibold text-foreground truncate pr-4">{title}</h3>
           <Button
             variant="ghost"
@@ -59,19 +58,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           </Button>
         </div>
 
-        {/* Video Content */}
-        <div className={`flex-grow p-4 ${aspectRatio}`}>
+        {/* Video Container */}
+        <div className={`flex-grow ${aspectRatioClass} bg-black`}>
           {embedUrl ? (
             <iframe
               src={embedUrl}
               title={title}
-              className="w-full h-full rounded-lg border-0"
+              className="w-full h-full rounded-b-lg border-0"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
-            <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
+            <div className="w-full h-full bg-muted rounded-b-lg flex items-center justify-center">
               <p className="text-muted-foreground">Unable to load video</p>
             </div>
           )}
