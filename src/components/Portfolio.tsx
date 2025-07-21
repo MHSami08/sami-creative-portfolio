@@ -73,12 +73,26 @@ videoUrl: "N/A",
 thumbnail: "https://i.postimg.cc/Kcpm7w7r/Screenshot-2025-07-21-09-21-06-578-com-camerasideas-instashot-edit.jpg",
 detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
 features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
+},
+{
+id: 4,
+title: "Islamic Motivation Video",
+description: "Inspiring Islamic content with beautiful visuals",
+category: "long",
+status: "completed",
+tools: ["CapCut", "Canva"],
+duration: "2:15 min",
+type: "Motivational Video",
+videoUrl: "N/A",
+thumbnail: "https://i.postimg.cc/Kcpm7w7r/Screenshot-2025-07-21-09-21-06-578-com-camerasideas-instashot-edit.jpg",
+detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
+features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
 }
 ];
 
 const shortVideos = [
 {
-id: 4,
+id: 5,
 title: "We compare to the yesterday,we don't compare to Zero",
 description: "Islamic Reminder",
 category: "short",
@@ -92,7 +106,7 @@ detailedDescription: "A  beautiful Islamic short about gratification.",
 features: [" caption edit", "Smooth transitions"]
 },
 {
-id: 5,
+id: 6,
 title: "Islamic Reminder about DEATH",
 description: " high quality video edit",
 category: "short",
@@ -106,7 +120,21 @@ detailedDescription: "Short reel for depressed muslim.",
 features: ["Advance effect", "Background effects"]
 },
 {
-id: 6,
+id: 7,
+title: "Daily Reminder",
+description: "Short Islamic reminder for daily reflection",
+category: "short",
+status: "completed",
+tools: ["Inshot", "Alight Motion"],
+duration: "1:00 min",
+type: "Reminder Reel",
+videoUrl: "N/A",
+thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
+detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
+features: ["Text animation", "Islamic imagery", "Spiritual content"]
+},
+{
+id: 8,
 title: "Daily Reminder",
 description: "Short Islamic reminder for daily reflection",
 category: "short",
