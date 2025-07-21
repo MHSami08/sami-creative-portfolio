@@ -19,7 +19,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type = 'person', data }) =>
           "url": seoConfig.siteUrl,
           "image": seoConfig.defaultImage,
           "sameAs": [seoConfig.social.youtube],
-          "jobTitle": "Content Creator & Developer",
+          "jobTitle": "Content Creator",
           "worksFor": {
             "@type": "Organization",
             "name": "MH_officialYT"
@@ -27,14 +27,12 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type = 'person', data }) =>
           "knowsAbout": [
             "Islamic Content Creation",
             "Video Editing", 
-            "C Programming",
             "Motion Graphics",
-            "Educational Content"
           ],
           "hasOccupation": {
             "@type": "Occupation",
-            "name": "Content Creator and Programmer",
-            "description": "Creates Islamic educational content and programming tutorials"
+            "name": "Content Creator",
+            "description": "Creates Islamic educational content"
           }
         };
 
