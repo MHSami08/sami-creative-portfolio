@@ -34,7 +34,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4 transition-opacity duration-300">
-      <div className={`relative bg-background rounded-lg shadow-xl w-full sm:w-[90%] md:w-[80%] lg:w-[70%]`}>
+      <div className={`relative bg-background rounded-lg shadow-xl w-full sm:w-[90%] md:w-[85%] lg:w-[90%]`}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h3 className="text-lg font-semibold text-foreground truncate pr-4">{title}</h3>
