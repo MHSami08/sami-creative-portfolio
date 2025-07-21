@@ -20,7 +20,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   if (!isOpen) return null;
 
   const getYouTubeEmbedUrl = (url: string) => {
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/);
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/
+    );
     return match ? `https://www.youtube.com/embed/${match[1]}?autoplay=1` : null;
   };
 
@@ -34,7 +36,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4 transition-opacity duration-300">
-      <div className={`relative bg-background rounded-lg shadow-xl w-full sm:w-[90%] md:w-[85%] lg:w-[90%]`}>
+      <div
+        className={`
+          relative bg-background rounded-lg shadow-xl
+          w-full max-w-full
+          sm:max-w-[95vw] md:max-w-[85vw] lg:max-w-[70vw]
+          max-h-[90vh] sm:max-h-[85vh]
+          flex flex-col
+        `}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           <h3 className="text-lg font-semibold text-foreground truncate pr-4">{title}</h3>
@@ -50,18 +60,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </div>
 
         {/* Video Content */}
-        <div className="p-4">
+        <div className={`flex-grow p-4 ${aspectRatio}`}>
           {embedUrl ? (
             <iframe
               src={embedUrl}
               title={title}
-              className={`w-full ${aspectRatio} rounded-lg border-0`}
+              className="w-full h-full rounded-lg border-0"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
-            <div className={`w-full ${aspectRatio} bg-muted rounded-lg flex items-center justify-center`}>
+            <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
               <p className="text-muted-foreground">Unable to load video</p>
             </div>
           )}
