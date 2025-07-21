@@ -8,6 +8,20 @@ const Portfolio = () => {
 const [activeFilter, setActiveFilter] = useState('all');
 const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
 
+// Helper function to get YouTube embed URL
+const getYouTubeEmbedUrl = (url: string) => {
+  const videoId = url.includes('youtu.be') 
+    ? url.split('youtu.be/')[1]?.split('?')[0]
+    : url.split('v=')[1]?.split('&')[0];
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+};
+
+// Helper function to get Vimeo embed URL
+const getVimeoEmbedUrl = (url: string) => {
+  const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
+  return videoId ? `https://player.vimeo.com/video/${videoId}` : null;
+};
+
 const longVideos = [
 {
 id: 1,
@@ -19,7 +33,7 @@ tools: ["VN Video Editor", "Alight motion"],
 duration: "3:29 min",
 type: "Nasheed Video",
 videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
-thumbnail: "https://imgur.com/a/R9AMXOT",
+thumbnail: "https://img.youtube.com/vi/9ovxlUmrAEA/maxresdefault.jpg",
 detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
 features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
 },
@@ -33,7 +47,7 @@ tools: ["Inshot", "Node video"],
 duration: "1:27 min",
 type: "Quranic reel",
 videoUrl: "https://youtu.be/1QN3Mid2gog?si=3G8n-4q1JdX5FOMH",
-thumbnail: "https://imgur.com/a/9xCpPCm",
+thumbnail: "https://img.youtube.com/vi/1QN3Mid2gog/maxresdefault.jpg",
 detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
 features: ["Advanced effects", "Smooth transition", "Inspirational content"]
 },
@@ -46,8 +60,8 @@ status: "completed",
 tools: ["CapCut", "Canva"],
 duration: "2:15 min",
 type: "Motivational Video",
-videoUrl: "https://youtu.be/example3",
-thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=800&h=450&fit=crop&crop=center",
+videoUrl: "https://youtu.be/dQw4w9WgXcQ",
+thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
 detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
 features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
 }
@@ -63,8 +77,8 @@ status: "completed",
 tools: ["Capcut", "Inshot"],
 duration: "25 sec",
 type: "Shorts",
-videoUrl: "https://youtube.com/shorts/D4LESkLR4rA?si=ukWrR2Qxh9WTU_xT",
-thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=450&fit=crop&crop=center",
+videoUrl: "https://vimeo.com/123456789",
+thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=1067&fit=crop&crop=center",
 detailedDescription: "A  beautiful Islamic short about gratification.",
 features: [" caption edit", "Smooth transitions"]
 },
@@ -77,7 +91,7 @@ status: "completed",
 tools: ["CapCut", "Canva"],
 duration: "0:45 min",
 type: "Quote Reel",
-videoUrl: "https://www.tiktok.com/@example/video/1234567890",
+videoUrl: "https://vimeo.com/987654321",
 thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&h=1067&fit=crop&crop=center",
 detailedDescription: "Short inspirational Islamic quote with beautiful typography and background.",
 features: ["Typography animation", "Background effects", "Quote presentation"]
@@ -91,7 +105,7 @@ status: "completed",
 tools: ["Inshot", "Alight Motion"],
 duration: "1:00 min",
 type: "Reminder Reel",
-videoUrl: "https://www.tiktok.com/@example/video/9876543210",
+videoUrl: "https://vimeo.com/456789123",
 thumbnail: "https://images.unsplash.com/photo-1564769625392-651b2049ce4b?w=600&h=1067&fit=crop&crop=center",
 detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
 features: ["Text animation", "Islamic imagery", "Spiritual content"]
@@ -162,26 +176,38 @@ role="article"
 aria-label={`Project: ${project.title}`}
 onClick={() => handleProjectClick(project)}
 >  
-                {/* Video Thumbnail */}
-                {(project.category === 'long' || project.category === 'short') && (
+                {/* YouTube Video Embed for Long Videos */}
+                {project.category === 'long' && project.status === 'completed' && (
 <div className="relative overflow-hidden">
-<img 
-src={project.thumbnail} 
-alt={`${project.title} thumbnail`}
-className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-/>
-<div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-<div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
-<Play className="h-8 w-8 text-white" fill="white" />
-</div>
-</div>
-{project.status === 'completed' && (
-<div className="absolute top-3 right-3">
-<span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-Ready to Watch
-</span>
-</div>
-)}
+                  {getYouTubeEmbedUrl(project.videoUrl) ? (
+                    <iframe
+                      src={getYouTubeEmbedUrl(project.videoUrl)}
+                      title={project.title}
+                      className="w-full h-48 border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <>
+                      <img 
+                        src={project.thumbnail} 
+                        alt={`${project.title} thumbnail`}
+                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+                          <Play className="h-8 w-8 text-white" fill="white" />
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {project.status === 'completed' && (
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                        Ready to Watch
+                      </span>
+                    </div>
+                  )}
 </div>
 )}
 
@@ -294,18 +320,30 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                 aria-label={`Project: ${project.title}`}
                 onClick={() => handleProjectClick(project)}
               >  
-                {/* Video Thumbnail - 9:16 ratio */}
+                {/* Vimeo Video Embed for Short Videos */}
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={project.thumbnail} 
-                    alt={`${project.title} thumbnail`}
-                    className="w-full aspect-[9/16] object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                      <Play className="h-6 w-6 text-white" fill="white" />
-                    </div>
-                  </div>
+                  {getVimeoEmbedUrl(project.videoUrl) ? (
+                    <iframe
+                      src={getVimeoEmbedUrl(project.videoUrl)}
+                      title={project.title}
+                      className="w-full aspect-[9/16] border-0"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <>
+                      <img 
+                        src={project.thumbnail} 
+                        alt={`${project.title} thumbnail`}
+                        className="w-full aspect-[9/16] object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                          <Play className="h-6 w-6 text-white" fill="white" />
+                        </div>
+                      </div>
+                    </>
+                  )}
                   {project.status === 'completed' && (
                     <div className="absolute top-2 right-2">
                       <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">

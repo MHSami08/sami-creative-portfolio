@@ -12,12 +12,18 @@ interface VideoPlayerProps {
 
 const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }: VideoPlayerProps) => {
   const getEmbedUrl = (url: string) => {
-    // YouTube
+    // YouTube - handle both regular and shorts URLs
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
       const videoId = url.includes('youtu.be') 
         ? url.split('youtu.be/')[1]?.split('?')[0]
         : url.split('v=')[1]?.split('&')[0];
       return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    }
+    
+    // Vimeo
+    if (url.includes('vimeo.com')) {
+      const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
+      return videoId ? `https://player.vimeo.com/video/${videoId}?autoplay=1` : null;
     }
 
     // Default fallback
@@ -72,7 +78,7 @@ const VideoPlayer = ({ isOpen, onClose, videoUrl, title, isShortVideo = false }:
               title={title}
               className="w-full h-full"
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
             />
           ) : (
