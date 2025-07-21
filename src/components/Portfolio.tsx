@@ -78,7 +78,7 @@ tools: ["Capcut", "Inshot"],
 duration: "25 sec",
 type: "Shorts",
 videoUrl: "https://vimeo.com/1102973135",
-thumbnail: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=1067&fit=crop&crop=center",
+thumbnail: "https://i.postimg.cc/LsPVDcZq/IMG-20250721-093048.jpg",
 detailedDescription: "A  beautiful Islamic short about gratification.",
 features: [" caption edit", "Smooth transitions"]
 },
