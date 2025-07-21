@@ -294,8 +294,8 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
             {shortVideos.map((project, index) => (
               <article  
                 key={project.id}  
-                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] hover:-translate-y-1 animate-fade-in cursor-pointer
-                dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg`}
+                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/5 animate-fade-in cursor-pointer
+                hover:border-primary/30 dark:hover:border-cyan-400/50`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 role="article"
                 aria-label={`Project: ${project.title}`}
@@ -306,7 +306,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                   <img 
                     src={project.thumbnail} 
                     alt={`${project.title} thumbnail`}
-                    className="w-full aspect-[9/16] object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full aspect-[9/16] object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   {project.status === 'completed' && (
                     <div className="absolute top-2 right-2">
