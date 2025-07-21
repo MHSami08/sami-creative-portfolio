@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
-import VideoPlayer from './VideoPlayer';
 
 const Portfolio = () => {
 const [activeFilter, setActiveFilter] = useState('all');
