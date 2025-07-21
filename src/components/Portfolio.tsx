@@ -176,31 +176,18 @@ role="article"
 aria-label={`Project: ${project.title}`}
 onClick={() => handleProjectClick(project)}
 >  
-                {/* YouTube Video Embed for Long Videos */}
-                {project.category === 'long' && project.status === 'completed' && (
-<div className="relative overflow-hidden">
-                  {getYouTubeEmbedUrl(project.videoUrl) ? (
-                    <iframe
-                      src={getYouTubeEmbedUrl(project.videoUrl)}
-                      title={project.title}
-                      className="w-full h-48 border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <>
-                      <img 
-                        src={project.thumbnail} 
-                        alt={`${project.title} thumbnail`}
-                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                        <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
-                          <Play className="h-8 w-8 text-white" fill="white" />
-                        </div>
-                      </div>
-                    </>
-                  )}
+                {/* Video Thumbnail for Long Videos */}
+                <div className="relative overflow-hidden">
+                  <img 
+                    src={project.thumbnail} 
+                    alt={`${project.title} thumbnail`}
+                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+                      <Play className="h-8 w-8 text-white" fill="white" />
+                    </div>
+                  </div>
                   {project.status === 'completed' && (
                     <div className="absolute top-3 right-3">
                       <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
@@ -208,8 +195,7 @@ onClick={() => handleProjectClick(project)}
                       </span>
                     </div>
                   )}
-</div>
-)}
+                </div>
 
 <div className="p-4 sm:p-6">
 {/* Project header */}  
