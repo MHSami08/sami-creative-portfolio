@@ -39,22 +39,18 @@ const Hero = () => {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
                 <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400 animate-pulse" />
-                <p className="text-blue-400 dark:text-blue-300 font-amiri text-base sm:text-lg font-bold">بسم الله الرحمن الرحيم</p>
+                <p className="text-blue-400 dark:text-blue-300 text-base sm:text-lg font-bold">Assalamu Alaikum</p>
                 <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400 animate-pulse" />
               </div>
             </div>
 
             {/* Improved typography with better flow */}
             <div className="space-y-4 lg:space-y-6">
-              <div className="space-y-2">
-                <p className="text-blue-400 dark:text-blue-300 text-lg sm:text-xl md:text-2xl font-amiri font-medium">السلام عليكم</p>
-                <p className="text-muted-foreground text-base sm:text-lg md:text-xl">Assalamu Alaikum,</p>
-              </div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                <span className="text-muted-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl block mb-2">I'm</span>
+                
                 <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
-                  Masrafi Haque Sami
+                  I am MH Sami
                 </span>
               </h1>
               
