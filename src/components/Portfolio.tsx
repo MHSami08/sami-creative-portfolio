@@ -84,17 +84,17 @@ features: [" caption edit", "Smooth transitions"]
 },
 {
 id: 5,
-title: "Islamic Short Quote",
-description: "Motivational Islamic quote reel",
+title: "Islamic Reminder about DEATH",
+description: " high quality video edit",
 category: "short",
 status: "completed",
-tools: ["CapCut", "Canva"],
-duration: "0:45 min",
+tools: ["Inshot", "VN Video Editor"],
+duration: "40 sec",
 type: "Quote Reel",
-videoUrl: "https://vt.tiktok.com/ZSHgwaxVRktCn-IGq72/",
-thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
-detailedDescription: "Short inspirational Islamic quote with beautiful typography and background.",
-features: ["Typography animation", "Background effects", "Quote presentation"]
+videoUrl: "https://vimeo.com/1103086200",
+thumbnail: "https://i.postimg.cc/DyC92Tkw/Screenshot-2025-07-21-16-43-12-493-com-camerasideas-instashot-edit.jpg",
+detailedDescription: "Short reel for depressed muslim.",
+features: ["Advance effect", "Background effects"]
 },
 {
 id: 6,
