@@ -69,13 +69,18 @@ export const usePerformanceOptimization = () => {
 
   // Monitor Core Web Vitals
   const monitorPerformance = useCallback(() => {
-    if ('web-vital' in window) {
-      // Monitor LCP, FID, CLS
-      new PerformanceObserver((entryList) => {
-        for (const entry of entryList.getEntries()) {
-          console.log(`${entry.entryType}:`, entry);
-        }
-      }).observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+    if (typeof window !== 'undefined' && 'PerformanceObserver' in window) {
+      try {
+        // Monitor basic performance metrics
+        new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries()) {
+            console.log(`Performance ${entry.entryType}:`, entry);
+          }
+        }).observe({ entryTypes: ['navigation', 'resource'] });
+      } catch (error) {
+        // Silently fail if performance monitoring is not supported
+        console.warn('Performance monitoring not supported:', error);
+      }
     }
   }, []);
 
