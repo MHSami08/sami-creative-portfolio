@@ -92,7 +92,7 @@ tools: ["CapCut", "Canva"],
 duration: "0:45 min",
 type: "Quote Reel",
 videoUrl: "N/A",
-thumbnail: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=600&h=1067&fit=crop&crop=center",
+thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
 detailedDescription: "Short inspirational Islamic quote with beautiful typography and background.",
 features: ["Typography animation", "Background effects", "Quote presentation"]
 },
@@ -106,7 +106,7 @@ tools: ["Inshot", "Alight Motion"],
 duration: "1:00 min",
 type: "Reminder Reel",
 videoUrl: "N/A",
-thumbnail: "https://images.unsplash.com/photo-1564769625392-651b2049ce4b?w=600&h=1067&fit=crop&crop=center",
+thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
 detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
 features: ["Text animation", "Islamic imagery", "Spiritual content"]
 }
