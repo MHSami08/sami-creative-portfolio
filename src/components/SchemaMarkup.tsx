@@ -15,7 +15,7 @@ const SchemaMarkup: React.FC<SchemaMarkupProps> = ({ type = 'person', data }) =>
           "@type": "Person",
           "name": "Masrafi Haque Sami",
           "alternateName": "MH_officialYT",
-          "description": "Islamic Content Creator, Video Editor, and C Programming Educator",
+          "description": "Islamic Content Creator, Video Editor",
           "url": seoConfig.siteUrl,
           "image": seoConfig.defaultImage,
           "sameAs": [seoConfig.social.youtube],
