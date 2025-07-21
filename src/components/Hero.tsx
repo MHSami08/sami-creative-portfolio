@@ -64,10 +64,11 @@ const Hero = () => {
               {/* Quranic verse */}
               <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
                 <p className="text-blue-400 dark:text-blue-300 font-amiri text-base sm:text-lg font-medium text-center mb-2">
-                  "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"
+                  "لَا إِلَٰهَ إِلَّا ٱللَّٰهُ مُحَمَّدٌ رَسُولُ ٱللَّٰهِ"
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground text-center">
-                  "Indeed, Allah is with the patient ones" - Quran 2:253
+                  There is no god but Allah,
+                  Muhammad(Sa.) is the messenger of Allah
                 </p>
               </div>
             </div>
