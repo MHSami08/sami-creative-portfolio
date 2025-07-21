@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X, Search, Volume2, VolumeX } from 'lucide-react';
 import Hero from '../components/Hero';
@@ -65,13 +64,14 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      
       {/* Enhanced Navigation with better mobile layout */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-emerald-400/20 shadow-lg shadow-emerald-500/5">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12 sm:h-16">
             <div className="flex-shrink-0 min-w-0">
               <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
-                Masrafi Haque Sami
+                MH Sami
               </h1>
             </div>
             
@@ -217,7 +217,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
-              © 2025 Masrafi Haque Sami. All rights reserved. 
+              © 2025 MH Sami. All rights reserved. 
               <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
             </p>
           </div>
