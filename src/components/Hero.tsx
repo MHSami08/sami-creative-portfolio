@@ -50,7 +50,7 @@ const Hero = () => {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
                 
                 <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
-                  I am MH Sami
+                  I'm MH Sami
                 </span>
               </h1>
               
@@ -64,10 +64,10 @@ const Hero = () => {
               {/* Quranic verse */}
               <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
                 <p className="text-blue-400 dark:text-blue-300 font-amiri text-base sm:text-lg font-medium text-center mb-2">
-                  "وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا"
+                  "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground text-center">
-                  "And whoever saves a life, it is as if he has saved all of mankind" - Quran 5:32
+                  "Indeed, Allah is with the patient ones" - Quran 2:253
                 </p>
               </div>
             </div>
