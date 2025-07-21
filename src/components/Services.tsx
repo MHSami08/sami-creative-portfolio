@@ -16,16 +16,6 @@ const Services = () => {
       borderColor: "border-blue-500/20"
     },
     {
-      icon: Code,
-      title: "C Programming",
-      description: "Basic programming solutions and simple applications as I develop my coding skills.",
-      features: ["Basic algorithms", "Simple applications", "Code optimization", "Problem solving"],
-      status: "Learning",
-      color: "from-amber-500 to-amber-600",
-      bgColor: "bg-amber-500/10",
-      borderColor: "border-amber-500/20"
-    },
-    {
       icon: Palette,
       title: "Content Creation",
       description: "Helping create meaningful, halal content that resonates with Muslim audiences.",
