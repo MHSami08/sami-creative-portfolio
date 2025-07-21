@@ -61,7 +61,7 @@ tools: ["CapCut", "Canva"],
 duration: "2:15 min",
 type: "Motivational Video",
 videoUrl: "N/A",
-thumbnail: "Empty",
+thumbnail: "https://i.postimg.cc/Kcpm7w7r/Screenshot-2025-07-21-09-21-06-578-com-camerasideas-instashot-edit.jpg",
 detailedDescription: "An uplifting Islamic motivational video designed to inspire and remind viewers of their faith and purpose.",
 features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
 }
