@@ -34,13 +34,13 @@ const About = () => {
     {
       year: "2025",
       title: "Learning Phase",
-      description: "Currently learning video editing and C programming",
+      description: "Currently learning Video Editing",
       status: "current"
     },
     {
       year: "2026",
       title: "Future Goals",
-      description: "Planning to offer professional editing services",
+      description: "Planning to offer Professional Editing services",
       status: "future"
     }
   ];
