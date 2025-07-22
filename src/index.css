@@ -230,6 +230,11 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Hover scale variants */
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
 }
 
 /* Performance: Optimize font loading */

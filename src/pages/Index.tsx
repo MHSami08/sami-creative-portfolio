@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X, Search, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, Search, Volume2, VolumeX } from 'lucide-react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Portfolio from '../components/Portfolio';
@@ -10,27 +10,15 @@ import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const Index = () => {
-  const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
 
   useEffect(() => {
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    }
+    // Force dark mode
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
   }, []);
-
-  const toggleDarkMode = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-    document.documentElement.classList.toggle('dark');
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    playSound('click');
-  };
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -39,9 +27,14 @@ const Index = () => {
     { name: 'My Aim', href: '#myaim' },
     { name: 'Services', href: '#services' },
     { name: 'Contact', href: '#contact' },
+    { name: "Developer's Space", href: '/developer-space' },
   ];
 
   const scrollToSection = (href: string) => {
+    if (href === '/developer-space') {
+      window.location.href = '/developer-space';
+      return;
+    }
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
@@ -122,19 +115,6 @@ const Index = () => {
                 )}
               </button>
 
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={toggleDarkMode}
-                onMouseEnter={() => playSound('hover')}
-                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
-                aria-label="Toggle dark mode"
-              >
-                {isDark ? (
-                  <Sun className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-amber-400 group-hover:rotate-180 transition-transform duration-300" />
-                ) : (
-                  <Moon className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
-                )}
-              </button>
 
               {/* Mobile menu button */}
               <div className="md:hidden">

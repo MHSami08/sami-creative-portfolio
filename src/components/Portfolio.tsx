@@ -316,14 +316,14 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
           <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-center">
             Short <span className="text-blue-500">videos</span>
           </h3>
-          <p className="text-muted-foreground text-center mb-8">Quick impactful content for social media</p>
+          <p className="text-muted-foreground text-center mb-8">Quick impactful content</p>
           
-          <div className="grid grid-cols-1 max-w-sm mx-auto gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 max-w-sm md:max-w-4xl mx-auto gap-6 sm:gap-8">
             {shortVideos.map((project, index) => (
               <article  
                 key={project.id}  
-                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/5 animate-fade-in cursor-pointer
-                hover:border-primary/30 dark:hover:border-cyan-400/50`}
+                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-200 ease-out hover:shadow-md cursor-pointer
+                hover:border-primary/20`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 role="article"
                 aria-label={`Project: ${project.title}`}
@@ -334,7 +334,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                   <img 
                     src={project.thumbnail} 
                     alt={`${project.title} thumbnail`}
-                    className="w-full aspect-[9/16] object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="w-full aspect-[9/16] object-cover transition-transform duration-200 group-hover:scale-102"
                   />
                   {project.status === 'completed' && (
                     <div className="absolute top-2 right-2">
@@ -344,8 +344,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                     </div>
                   )}
                   <div className="p-4">
-                    <h4 className="text-foreground text-lg font-semibold mb-2 line-clamp-2">{project.title}</h4>
-                    <p className="text-muted-foreground text-sm mb-2">{project.description}</p>
+                    <h4 className="text-foreground text-base font-semibold mb-1 line-clamp-2">{project.title}</h4>
                     <div className="flex justify-between items-center text-xs text-muted-foreground">
                       <span>{project.type}</span>
                       <span>{project.duration}</span>
@@ -358,22 +357,21 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
         </div>
 
 {/* Call to action */}  
-<div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-6 sm:p-8 hover:shadow-xl transition-all duration-300">  
-<h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">  
-Interested in Collaboration?  
+<div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-6 hover:shadow-lg transition-all duration-300">  
+<h3 className="text-xl font-bold mb-3">  
+Ready to Collaborate?  
 </h3>  
-<p className="text-muted-foreground mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">  
-I'm always open to learning opportunities and small projects.   
-Feel free to reach out if you'd like to work together or have any suggestions!  
+<p className="text-muted-foreground mb-4 max-w-lg mx-auto text-sm leading-relaxed">  
+Open for projects and collaborations. Let's create something amazing together!  
 </p>  
 <Button   
 onClick={scrollToContact}  
-className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base hover:scale-105 transition-all duration-200"  
+className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 text-sm hover:scale-105 transition-all duration-200"  
 aria-label="Contact me for collaboration"
 >  
 Get In Touch  
 </Button>  
-</div>  
+</div>
 </div>
 
         {/* Video Player Modal */}
