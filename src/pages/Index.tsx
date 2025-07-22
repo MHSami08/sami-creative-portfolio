@@ -8,6 +8,9 @@ import Contact from '../components/Contact';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,13 +33,18 @@ const Index = () => {
     { name: "Developer's Space", href: '/developer-space' },
   ];
 
-  const scrollToSection = (href: string) => {
-    if (href === '/developer-space') {
-      // Use React Router navigation instead of window.location
-      window.history.pushState({}, '', '/developer-space');
-      window.location.reload();
-      return;
-    }
+const scrollToSection = (href: string) => {
+  if (href === '/developer-space') {
+    // Use React Router navigation instead of reloading the page
+    navigate('/developer-space');
+    return;
+  }
+  const element = document.querySelector(href);
+  element?.scrollIntoView({ behavior: 'smooth' });
+  setIsMenuOpen(false);
+  playSound('navigation');
+};
+  
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
