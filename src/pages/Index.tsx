@@ -32,7 +32,6 @@ const Index = () => {
 
   const scrollToSection = (href: string) => {
     if (href === '/developer-space') {
-      // Navigate to developer space using proper routing
       window.location.href = '/developer-space';
       return;
     }

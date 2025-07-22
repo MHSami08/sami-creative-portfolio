@@ -2,7 +2,7 @@ export const seoConfig = {
   siteName: "MH_officialYT Portfolio",
   defaultTitle: "Masrafi Haque Sami - Islamic Content Creator & Developer",
   defaultDescription: "Professional Islamic content creator specializing in video editing, nasheed production, and C programming education. Explore my portfolio of Islamic videos and educational content.",
-  siteUrl: "https://mhofficialyt-portfolio.vercel.app",
+  siteUrl: "https://masrafi-portfolio.lovable.app",
   defaultImage: "https://i.postimg.cc/MKJvV52X/Screenshot-2025-06-16-22-41-45-730-com-alightcreative-motion-edit.jpg",
   author: "Masrafi Haque Sami",
   keywords: [
