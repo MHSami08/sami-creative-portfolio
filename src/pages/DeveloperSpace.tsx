@@ -296,6 +296,17 @@ const DeveloperSpace = () => {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Portfolio
             </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                window.history.pushState({}, '', '/');
+                window.location.reload();
+              }}
+              className="md:hidden"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Home
+            </Button>
             <Button variant="destructive" onClick={handleLogout}>
               Logout
             </Button>

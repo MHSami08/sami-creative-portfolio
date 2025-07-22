@@ -32,7 +32,9 @@ const Index = () => {
 
   const scrollToSection = (href: string) => {
     if (href === '/developer-space') {
-      window.location.href = '/developer-space';
+      // Use React Router navigation instead of window.location
+      window.history.pushState({}, '', '/developer-space');
+      window.location.reload();
       return;
     }
     const element = document.querySelector(href);

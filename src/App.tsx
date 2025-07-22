@@ -18,6 +18,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/developer-space" element={<DeveloperSpace />} />
+          <Route path="/developer-space/*" element={<DeveloperSpace />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
