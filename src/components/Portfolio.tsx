@@ -115,7 +115,7 @@ tools: ["Inshot", "VN Video Editor"],
 duration: "40 sec",
 type: "Quote Reel",
 videoUrl: "https://vimeo.com/1103527078",
-thumbnail: "https://i.postimg.cc/DyC92Tkw/Screenshot-2025-07-21-16-43-12-493-com-camerasideas-instashot-edit.jpg",
+thumbnail: "https://i.postimg.cc/ydzp33HG/thumb.jpg",
 detailedDescription: "Short reel for depressed muslim.",
 features: ["Advance effect", "Background effects"]
 },
