@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://masrafi-portfolio.lovable.app/sitemap.xml
+Sitemap: https://mhofficialyt-portfolio.vercel.app/sitemap.xml
 
 # Popular crawlers
 User-agent: Googlebot
