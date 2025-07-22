@@ -34,6 +34,80 @@ const DeveloperSpace = () => {
   // Simple password protection
   const ADMIN_PASSWORD = "admin123"; // In production, this should be more secure
 
+  // Initial projects from your existing portfolio
+  const initialProjects: VideoProject[] = [
+    {
+      id: 1,
+      title: "Qalbi Fil Madina Vocals Only",
+      description: "A beautiful Islamic Slowed & reverb nasheed",
+      category: "long",
+      status: "completed",
+      tools: ["VN Video Editor", "Alight motion"],
+      duration: "3:29 min",
+      type: "Nasheed Video",
+      videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
+      thumbnail: "https://img.youtube.com/vi/9ovxlUmrAEA/maxresdefault.jpg",
+      detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
+      features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
+    },
+    {
+      id: 2,
+      title: "Surah An-Nisa(75-76)",
+      description: "Advanced Quranic reel",
+      category: "long",
+      status: "completed",
+      tools: ["Inshot", "Node video"],
+      duration: "1:27 min",
+      type: "Quranic reel",
+      videoUrl: "https://youtu.be/1QN3Mid2gog?si=3G8n-4q1JdX5FOMH",
+      thumbnail: "https://img.youtube.com/vi/1QN3Mid2gog/sddefault.jpg",
+      detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
+      features: ["Advanced effects", "Smooth transition", "Inspirational content"]
+    },
+    {
+      id: 5,
+      title: "We compare to the yesterday,we don't compare to Zero",
+      description: "Islamic Reminder",
+      category: "short",
+      status: "completed",
+      tools: ["Capcut", "Inshot"],
+      duration: "25 sec",
+      type: "Shorts",
+      videoUrl: "https://vimeo.com/1102973135",
+      thumbnail: "https://i.postimg.cc/LsPVDcZq/IMG-20250721-093048.jpg",
+      detailedDescription: "A beautiful Islamic short about gratification.",
+      features: ["Caption edit", "Smooth transitions"]
+    },
+    {
+      id: 6,
+      title: "Islamic Reminder about DEATH",
+      description: "High quality video edit",
+      category: "short",
+      status: "completed",
+      tools: ["Inshot", "VN Video Editor"],
+      duration: "40 sec",
+      type: "Quote Reel",
+      videoUrl: "https://vimeo.com/1103527078",
+      thumbnail: "https://i.postimg.cc/ydzp33HG/thumb.jpg",
+      detailedDescription: "Short reel for depressed muslim.",
+      features: ["Advance effect", "Background effects"]
+    },
+    {
+      id: 8,
+      title: "Daily Reminder",
+      description: "Short Islamic reminder for daily reflection",
+      category: "short",
+      status: "completed",
+      tools: ["Inshot", "Alight Motion"],
+      duration: "1:00 min",
+      type: "Reminder Reel",
+      videoUrl: "N/A",
+      thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
+      detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
+      features: ["Text animation", "Islamic imagery", "Spiritual content"]
+    }
+  ];
+
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
@@ -58,10 +132,14 @@ const DeveloperSpace = () => {
       setIsAuthenticated(true);
     }
 
-    // Load projects from localStorage
+    // Load projects from localStorage, if none exist, use initial projects
     const savedProjects = localStorage.getItem('video_projects');
     if (savedProjects) {
       setProjects(JSON.parse(savedProjects));
+    } else {
+      // Initialize with existing portfolio projects
+      setProjects(initialProjects);
+      localStorage.setItem('video_projects', JSON.stringify(initialProjects));
     }
   }, []);
 
