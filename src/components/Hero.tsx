@@ -30,7 +30,14 @@ const Hero = () => {
          <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
           <Sparkles className="w-6 h-6 text-amber-400" />
         </div>
+        
+        {/* Additional cyber elements - Responsive */}
+          <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div> 
+        <div className="hidden md:block absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+      </div>
 
+      <div className="relative z-10 max-w-7xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Enhanced Content */}
           <div className="text-center lg:text-left space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1">
             {/* Islamic greeting with cyber styling */}
