@@ -81,7 +81,7 @@ return (
                 <p className="text-muted-foreground">No long videos available yet.</p>
               </div>
             ) : (
-            {longVideos.map((project, index) => (
+            longVideos.map((project, index) => (
 <article  
 key={project.id}  
 className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in ${
@@ -195,8 +195,8 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
 </div>  
                 </div>
               </article>  
-            ))}  
-            )}
+            ))  
+            )
           </div>
         </div>
 
@@ -213,7 +213,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                 <p className="text-muted-foreground">No short videos available yet.</p>
               </div>
             ) : (
-            {shortVideos.map((project, index) => (
+            shortVideos.map((project, index) => (
               <article  
                 key={project.id}  
                 className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-200 ease-out hover:shadow-md ${
@@ -247,8 +247,8 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                   </div>
                 </div>
               </article>  
-            ))}  
-            )}
+            ))  
+            )
           </div>
         </div>
 
