@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import VideoPlayer from '@/components/VideoPlayer';
+import { useProjects } from '@/hooks/useProjects';
+import { VideoProject } from '@/utils/projectManager';
 
 const Portfolio = () => {
-const [activeFilter, setActiveFilter] = useState('all');
-const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
+  const { projects, loading, longVideos, shortVideos } = useProjects();
 
   // Helper function for auto thumbline
   const getYouTubeThumbnail = (url: string) => {
@@ -31,130 +33,6 @@ const getVimeoEmbedUrl = (url: string) => {
   return videoId ? `https://player.vimeo.com/video/${videoId}` : null;
 };
 
-const longVideos = [
-{
-id: 1,
-title: "Qalbi Fil Madina Vocals Only",
-description: "A beautiful Islamic Slowed & reverb nasheed",
-category: "long",
-status: "completed",
-tools: ["VN Video Editor", "Alight motion"],
-duration: "3:29 min",
-type: "Nasheed Video",
-videoUrl: "https://youtu.be/9ovxlUmrAEA?si=gj3cnKNddsWvqspO",
-thumbnail: "https://img.youtube.com/vi/9ovxlUmrAEA/maxresdefault.jpg",
-detailedDescription: "An inspiring Islamic nasheed featuring beautiful vocals with slowed and reverb effects. This project showcases video editing skills and attention to audio-visual harmony.",
-features: ["High-quality audio processing", "Professional video editing", "Islamic content creation"]
-},
-{
-id: 2,
-title: "Surah An-Nisa(75-76)",
-description: "Advanced Quranic reel",
-category: "long",
-status: "completed",
-tools: ["Inshot", "Node video"],
-duration: "1:27 min",
-type: "Quranic reel",
-videoUrl: "https://youtu.be/1QN3Mid2gog?si=3G8n-4q1JdX5FOMH",
-thumbnail: "https://img.youtube.com/vi/1QN3Mid2gog/sddefault.jpg",
-detailedDescription: "Beautiful quranic inspirational reel to spread positive messages.",
-features: ["Advanced effects", "Smooth transition", "Inspirational content"]
-},
-{
-id: 3,
-title: "N/A",
-description: "N/A",
-category: "long",
-status: "completed",
-tools: ["N/A", "N/A"],
-duration: "N/A",
-type: "N/A",
-videoUrl: "N/A",
-thumbnail: "N/A",
-detailedDescription: "N/A.",
-features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
-},
-{
-id: 4,
-title: "N/A",
-description: "N/A",
-category: "long",
-status: "completed",
-tools: ["N/A", "N/A"],
-duration: "N/A",
-type: "N/A",
-videoUrl: "N/A",
-thumbnail: "N/A",
-detailedDescription: "N/A.",
-features: ["Emotional storytelling", "Professional transitions", "Islamic calligraphy"]
-}
-];
-
-const shortVideos = [
-{
-id: 5,
-title: "We compare to the yesterday,we don't compare to Zero",
-description: "Islamic Reminder",
-category: "short",
-status: "completed",
-tools: ["Capcut", "Inshot"],
-duration: "25 sec",
-type: "Shorts",
-videoUrl: "https://vimeo.com/1102973135",
-thumbnail: "https://i.postimg.cc/LsPVDcZq/IMG-20250721-093048.jpg",
-detailedDescription: "A  beautiful Islamic short about gratification.",
-features: [" caption edit", "Smooth transitions"]
-},
-{
-id: 6,
-title: "Islamic Reminder about DEATH",
-description: " high quality video edit",
-category: "short",
-status: "completed",
-tools: ["Inshot", "VN Video Editor"],
-duration: "40 sec",
-type: "Quote Reel",
-videoUrl: "https://vimeo.com/1103527078",
-thumbnail: "https://i.postimg.cc/ydzp33HG/thumb.jpg",
-detailedDescription: "Short reel for depressed muslim.",
-features: ["Advance effect", "Background effects"]
-},
-{
-id: 7,
-title: "N/A",
-description: "N/A",
-category: "short",
-status: "completed",
-tools: ["N/A", "N/A"],
-duration: "N/A",
-type: "N/A",
-videoUrl: "N/A",
-thumbnail: "N/A",
-detailedDescription: "N/A",
-features: ["Text animation", "Islamic imagery", "Spiritual content"]
-},
-{
-id: 8,
-title: "Daily Reminder",
-description: "Short Islamic reminder for daily reflection",
-category: "short",
-status: "completed",
-tools: ["Inshot", "Alight Motion"],
-duration: "1:00 min",
-type: "Reminder Reel",
-videoUrl: "N/A",
-thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
-detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
-features: ["Text animation", "Islamic imagery", "Spiritual content"]
-}
-];
-
-const allProjects = [...longVideos, ...shortVideos];
-
-const filteredProjects = activeFilter === 'all'
-? allProjects
-: allProjects.filter(project => project.category === activeFilter);
-
 const getStatusColor = (status: string) => {
 switch (status) {
 case 'planned': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
@@ -171,8 +49,8 @@ element.scrollIntoView({ behavior: 'smooth' });
 }
 };
 
-const handleProjectClick = (project: typeof allProjects[0]) => {
-if (project.status === 'completed' && project.videoUrl) {
+const handleProjectClick = (project: VideoProject) => {
+if (project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A') {
 setSelectedVideo({ 
   url: project.videoUrl, 
   title: project.title,
@@ -181,6 +59,11 @@ setSelectedVideo({
 }
 };
 
+if (loading) {
+return <div className="py-20 text-center">
+<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+</div>;
+}
 return (
 <section className="py-12 sm:py-20 bg-background" id="portfolio">
 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -193,6 +76,11 @@ return (
           <p className="text-muted-foreground text-center mb-8">Extended content with cinematic storytelling</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {longVideos.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground">No long videos available yet.</p>
+              </div>
+            ) : (
             {longVideos.map((project, index) => (
 <article  
 key={project.id}  
@@ -308,6 +196,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                 </div>
               </article>  
             ))}  
+            )}
           </div>
         </div>
 
@@ -319,15 +208,21 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
           <p className="text-muted-foreground text-center mb-8">Quick impactful content</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 max-w-sm md:max-w-4xl mx-auto gap-6 sm:gap-8">
+            {shortVideos.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <p className="text-muted-foreground">No short videos available yet.</p>
+              </div>
+            ) : (
             {shortVideos.map((project, index) => (
               <article  
                 key={project.id}  
-                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-200 ease-out hover:shadow-md cursor-pointer
-                hover:border-primary/20`}
+                className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-200 ease-out hover:shadow-md ${
+                  project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' ? 'cursor-pointer' : 'cursor-default'
+                } hover:border-primary/20`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 role="article"
                 aria-label={`Project: ${project.title}`}
-                onClick={() => handleProjectClick(project)}
+                onClick={() => project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
               >  
                 {/* Short Video Thumbnail */}
                 <div className="relative overflow-hidden">
@@ -353,6 +248,7 @@ className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-md text-xs sm:te
                 </div>
               </article>  
             ))}  
+            )}
           </div>
         </div>
 
