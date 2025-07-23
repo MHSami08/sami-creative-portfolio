@@ -1,7 +1,7 @@
 // Enhanced authentication system
 export class AuthManager {
   private static instance: AuthManager;
-  private readonly ADMIN_PASSWORD = "MHSami@2025!"; // More secure password
+  private readonly ADMIN_PASSWORD = "MHSami@08!"; // More secure password
   private readonly AUTH_KEY = 'mh_dev_auth';
   private readonly SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
