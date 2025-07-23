@@ -10,13 +10,27 @@ const Portfolio = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
   const { projects, loading, longVideos, shortVideos } = useProjects();
 
-  // Helper function for auto thumbline
+  // Helper function for auto thumbnail
   const getYouTubeThumbnail = (url: string) => {
     const videoId = url.includes('youtu.be')
       ? url.split('youtu.be/')[1]?.split('?')[0]
       : url.split('v=')[1]?.split('&')[0];
 
     return videoId ? `https://img.youtube.com/vi/${videoId}/sddefault.jpg` : '';
+  };
+
+  const getVimeoThumbnail = (url: string) => {
+    const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
+    return videoId ? `https://vumbnail.com/${videoId}.jpg` : '';
+  };
+
+  const getAutoThumbnail = (url: string) => {
+    if (url?.includes('youtu')) {
+      return getYouTubeThumbnail(url);
+    } else if (url?.includes('vimeo')) {
+      return getVimeoThumbnail(url);
+    }
+    return null;
   };
 
   // Helper function to get YouTube embed URL
@@ -98,7 +112,7 @@ const Portfolio = () => {
                   {/* Video Thumbnail for Long Videos */}
                   <div className="relative overflow-hidden">
                     <img 
-                      src={project.videoUrl.includes('youtu') ? getYouTubeThumbnail(project.videoUrl) : project.thumbnail}
+                      src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
                       alt={`${project.title} thumbnail`}
                       className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
                     />
