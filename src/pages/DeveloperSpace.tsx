@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,8 +21,14 @@ const DeveloperSpace = () => {
   
   const { toast } = useToast();
   const auth = useAuth();
-  const { projects, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
+  const { projects, loading, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
   const isAuthenticated = auth.isAuthenticated();
+
+  // Debug: Log projects when they change
+  useEffect(() => {
+    console.log('Projects in Developer Space:', projects);
+    console.log('Loading state:', loading);
+  }, [projects, loading]);
 
   // Update session time every minute
   useEffect(() => {
@@ -250,6 +256,21 @@ const DeveloperSpace = () => {
               <Button variant="outline" onClick={() => window.location.href = '/'} className="border-blue-400/30">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Portfolio
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  if (confirm('This will reset all projects to defaults. Continue?')) {
+                    const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
+                    projectManager.resetToDefaults();
+                    window.location.reload();
+                  }
+                }}
+                className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Reset
               </Button>
               
               <Button variant="destructive" onClick={handleLogout}>
