@@ -14,4 +14,4 @@ This project is built with:
 
 ## How do I deploy this project?
 
-I used vercel.com to deploy this project .
+I used https://vercel.com to deploy this project .
