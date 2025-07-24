@@ -8,13 +8,11 @@ import Contact from '../components/Contact';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
-import { useContent } from '../hooks/useContent';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
-  const { content } = useContent();
 
   useEffect(() => {
     // Force dark mode
@@ -66,14 +64,14 @@ const Index = () => {
           <div className="flex justify-between items-center h-12 sm:h-16">
             <div className="flex-shrink-0 min-w-0">
               <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
-                {content?.navigation.brandName || 'MH Sami'}
+                MH Sami
               </h1>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
-                {(content?.navigation.menuItems || navItems).map((item) => (
+                {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw, Home, User, Briefcase, MessageCircle, Target, Navigation, Palette, Globe, FileText, Download, Upload } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,10 +11,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useProjects } from '@/hooks/useProjects';
 import { useAuth } from '@/utils/auth';
 import { VideoProject } from '@/utils/projectManager';
-import { useContent } from '@/hooks/useContent';
-import { SiteContent } from '@/utils/contentManager';
-import ContentEditor from '@/components/ContentEditor';
-import SiteSettings from '@/components/SiteSettings';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
@@ -22,14 +18,10 @@ const DeveloperSpace = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingProject, setEditingProject] = useState<VideoProject | null>(null);
   const [sessionTime, setSessionTime] = useState(0);
-  const [activeSection, setActiveSection] = useState('dashboard');
-  const [editingContent, setEditingContent] = useState<any>(null);
-  const [isEditingContent, setIsEditingContent] = useState(false);
   
   const { toast } = useToast();
   const auth = useAuth();
   const { projects, loading, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
-  const { content, updateSection, resetToDefaults, exportContent, importContent } = useContent();
   const isAuthenticated = auth.isAuthenticated();
 
   // Debug: Log projects when they change
@@ -233,162 +225,21 @@ const DeveloperSpace = () => {
     />;
   }
 
-  // Main Dashboard with Navigation
+  // Main Dashboard
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       
-      <div className="flex">
-        {/* Navigation Sidebar */}
-        <div className="w-64 fixed left-0 top-0 h-full bg-background/80 backdrop-blur-xl border-r border-border/50 z-20">
-          <div className="p-6">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Settings className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="font-bold text-foreground">Dev Space</h2>
-                <p className="text-xs text-muted-foreground">Site Manager</p>
-              </div>
+      <div className="relative z-10 p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Developer's Space
+              </h1>
+              <p className="text-muted-foreground mt-1">Manage your video portfolio • {projects.length} projects</p>
             </div>
-
-            <nav className="space-y-2">
-              {/* Dashboard */}
-              <button
-                onClick={() => setActiveSection('dashboard')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                  activeSection === 'dashboard'
-                    ? 'bg-blue-500/20 text-blue-400 border border-blue-400/30'
-                    : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <BarChart3 className="w-4 h-4" />
-                Dashboard
-              </button>
-
-              {/* Content Sections */}
-              <div className="py-2">
-                <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SITE CONTENT</p>
-                
-                <button
-                  onClick={() => setActiveSection('hero')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'hero'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Home className="w-4 h-4" />
-                  Hero Section
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('about')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'about'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <User className="w-4 h-4" />
-                  About Me
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('services')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'services'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Briefcase className="w-4 h-4" />
-                  Services
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('myaim')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'myaim'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Target className="w-4 h-4" />
-                  My Aim
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('contact')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'contact'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Contact
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('navigation')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'navigation'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Navigation className="w-4 h-4" />
-                  Navigation
-                </button>
-              </div>
-
-              {/* Settings */}
-              <div className="py-2">
-                <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SETTINGS</p>
-                
-                <button
-                  onClick={() => setActiveSection('site-settings')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'site-settings'
-                      ? 'bg-purple-500/20 text-purple-400 border border-purple-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Globe className="w-4 h-4" />
-                  Site Settings
-                </button>
-              </div>
-            </nav>
-
-            {/* Bottom Actions */}
-            <div className="absolute bottom-6 left-6 right-6 space-y-2">
-              <Button variant="outline" onClick={() => window.location.href = '/'} className="w-full border-blue-400/30">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                View Site
-              </Button>
-              <Button variant="destructive" onClick={handleLogout} className="w-full">
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 ml-64 p-4 sm:p-6">
-          <div className="max-w-6xl mx-auto">
-            {/* Render different sections based on activeSection */}
-            {activeSection === 'dashboard' && (
-              <>
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                  <div>
-                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                      Developer's Space
-                    </h1>
-                    <p className="text-muted-foreground mt-1">Manage your video portfolio • {projects.length} projects</p>
-                  </div>
             
             <div className="flex flex-wrap items-center gap-2">
               {/* Session Timer */}
@@ -488,113 +339,26 @@ const DeveloperSpace = () => {
             </Card>
           </div>
 
-                {/* Projects Management */}
-                <Tabs defaultValue="all" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
-                    <TabsTrigger value="all">All Projects ({projects.length})</TabsTrigger>
-                    <TabsTrigger value="long">Long Videos ({longVideos.length})</TabsTrigger>
-                    <TabsTrigger value="short">Short Videos ({shortVideos.length})</TabsTrigger>
-                  </TabsList>
+          {/* Projects Management */}
+          <Tabs defaultValue="all" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
+              <TabsTrigger value="all">All Projects ({projects.length})</TabsTrigger>
+              <TabsTrigger value="long">Long Videos ({longVideos.length})</TabsTrigger>
+              <TabsTrigger value="short">Short Videos ({shortVideos.length})</TabsTrigger>
+            </TabsList>
 
-                  <TabsContent value="all">
-                    <ProjectGrid projects={projects} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                  
-                  <TabsContent value="long">
-                    <ProjectGrid projects={longVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                  
-                  <TabsContent value="short">
-                    <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                </Tabs>
-              </>
-            )}
-
-            {/* Content Sections */}
-            {activeSection === 'hero' && content && (
-              <ContentEditor 
-                title="Hero Section"
-                description="Edit the main hero section content"
-                content={content.hero}
-                onSave={(data) => updateSection('hero', data)}
-              />
-            )}
-
-            {activeSection === 'about' && content && (
-              <ContentEditor 
-                title="About Me Section"
-                description="Edit the about me content"
-                content={content.about}
-                onSave={(data) => updateSection('about', data)}
-              />
-            )}
-
-            {activeSection === 'services' && content && (
-              <ContentEditor 
-                title="Services Section"
-                description="Edit your services and offerings"
-                content={content.services}
-                onSave={(data) => updateSection('services', data)}
-              />
-            )}
-
-            {activeSection === 'myaim' && content && (
-              <ContentEditor 
-                title="My Aim Section"
-                description="Edit your goals and aspirations"
-                content={content.myAim}
-                onSave={(data) => updateSection('myAim', data)}
-              />
-            )}
-
-            {activeSection === 'contact' && content && (
-              <ContentEditor 
-                title="Contact Section"
-                description="Edit contact information and form labels"
-                content={content.contact}
-                onSave={(data) => updateSection('contact', data)}
-              />
-            )}
-
-            {activeSection === 'navigation' && content && (
-              <ContentEditor 
-                title="Navigation Menu"
-                description="Edit navigation items and brand name"
-                content={content.navigation}
-                onSave={(data) => updateSection('navigation', data)}
-              />
-            )}
-
-            {activeSection === 'site-settings' && (
-              <SiteSettings 
-                onExport={() => {
-                  const data = exportContent();
-                  const blob = new Blob([data], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'site-content.json';
-                  a.click();
-                  toast({ title: "Content Exported", description: "Site content has been downloaded" });
-                }}
-                onImport={(data) => {
-                  try {
-                    importContent(data);
-                    toast({ title: "Content Imported", description: "Site content has been updated" });
-                  } catch (error) {
-                    toast({ title: "Import Failed", description: "Invalid content format", variant: "destructive" });
-                  }
-                }}
-                onReset={() => {
-                  if (confirm('This will reset all content to defaults. Continue?')) {
-                    resetToDefaults();
-                    toast({ title: "Content Reset", description: "All content has been reset to defaults" });
-                  }
-                }}
-              />
-            )}
-          </div>
+            <TabsContent value="all">
+              <ProjectGrid projects={projects} onEdit={handleEditProject} onDelete={handleDeleteProject} />
+            </TabsContent>
+            
+            <TabsContent value="long">
+              <ProjectGrid projects={longVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
+            </TabsContent>
+            
+            <TabsContent value="short">
+              <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

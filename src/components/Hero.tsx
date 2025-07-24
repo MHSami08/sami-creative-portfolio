@@ -1,16 +1,11 @@
 import { ArrowRight, Play, Sparkles, Code, Video, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useContent } from '@/hooks/useContent';
 
 const Hero = () => {
-  const { content } = useContent();
-  
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  if (!content) return null;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-24 sm:pt-0">
@@ -44,7 +39,7 @@ const Hero = () => {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
                 <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400 animate-pulse" />
-                <p className="text-blue-400 dark:text-blue-300 text-base sm:text-lg font-bold">{content.hero.greeting}</p>
+                <p className="text-blue-400 dark:text-blue-300 text-base sm:text-lg font-bold">Assalamu Alaikum</p>
                 <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400 animate-pulse" />
               </div>
             </div>
@@ -55,21 +50,25 @@ const Hero = () => {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
                 
                 <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
-                  {content.hero.name}
+                  I'm MH Sami
                 </span>
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-                {content.hero.tagline}
+                A Passionate
+                <span className="text-blue-400 font-bold"> Video Editor </span>
+                 creating meaningful content following 
+                <span className="text-amber-400 font-bold"> Islamic principles</span>.
               </p>
 
               {/* Quranic verse */}
               <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
                 <p className="text-blue-400 dark:text-blue-300 font-amiri text-base sm:text-lg font-medium text-center mb-2">
-                  "{content.hero.islamicQuote}"
+                  "لَا إِلَٰهَ إِلَّا ٱللَّٰهُ مُحَمَّدٌ رَسُولُ ٱللَّٰهِ"
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground text-center">
-                  {content.hero.islamicQuoteTranslation}
+                  There is no god but Allah,
+                  Muhammad(Sa.) is the messenger of Allah
                 </p>
               </div>
             </div>
@@ -80,7 +79,7 @@ const Hero = () => {
                 onClick={() => scrollToSection('#portfolio')}
                 className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 border border-blue-400/30"
               >
-                <span>{content.hero.ctaButtons.primary}</span>
+                <span>View My Work</span>
                 <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               
@@ -90,26 +89,24 @@ const Hero = () => {
                 className="group border-2 border-cyan-400/50 text-cyan-400 dark:text-cyan-300 hover:bg-cyan-500 hover:text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold backdrop-blur-lg bg-background/20 transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/20"
               >
                 <Play className="mr-2 h-4 sm:h-5 w-4 sm:w-5 group-hover:scale-110 transition-transform" />
-                <span>{content.hero.ctaButtons.secondary}</span>
+                <span>Contact Me</span>
               </Button>
             </div>
 
             {/* Enhanced stats with cyber styling */}
             <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8">
-              {content.hero.stats.map((stat, index) => (
-                <div key={index} className={`text-center p-3 sm:p-4 rounded-2xl backdrop-blur-lg shadow-lg ${
-                  index === 0 ? 'bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-400/30 shadow-blue-500/10' :
-                  index === 1 ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 border border-cyan-400/30 shadow-cyan-500/10' :
-                  'bg-gradient-to-br from-amber-500/10 to-amber-600/10 border border-amber-400/30 shadow-amber-500/10'
-                }`}>
-                  <div className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r bg-clip-text text-transparent ${
-                    index === 0 ? 'from-blue-400 to-blue-500' :
-                    index === 1 ? 'from-cyan-400 to-cyan-500' :
-                    'from-amber-400 to-amber-500'
-                  }`}>{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground font-medium">{stat.label}</div>
-                </div>
-              ))}
+              <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 backdrop-blur-lg border border-blue-400/30 shadow-lg shadow-blue-500/10">
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">1+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Exp.</div>
+              </div>
+              <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 backdrop-blur-lg border border-cyan-400/30 shadow-lg shadow-cyan-500/10">
+                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">1</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Project</div>
+              </div>
+              <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 backdrop-blur-lg border border-amber-400/30 shadow-lg shadow-amber-500/10">
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">Best</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-medium">Quality</div>
+              </div>
             </div>
           </div>
 
@@ -125,8 +122,8 @@ const Hero = () => {
                 <div className="relative w-full h-full rounded-full bg-gradient-to-br from-emerald-500 to-green-600 p-1 shadow-2xl shadow-emerald-500/50">
                   <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden border-2 border-emerald-400/30">
                     <img 
-                      src={content.hero.profileImage}
-                      alt="Profile"
+                      src="https://i.postimg.cc/8zn3mQ1z/Screenshot-2025-06-16-22-41-45-730-com-alightcreative-motion-edit.jpg"
+                      alt="Masrafi Haque Sami"
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>
