@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw,CheckCircle,LayoutGrid,Video,Flim } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -286,7 +286,7 @@ const DeveloperSpace = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-white" />
+                    <LayoutGrid className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-blue-400">{projects.length}</p>
@@ -300,7 +300,7 @@ const DeveloperSpace = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
+                    <Video className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-emerald-400">{longVideos.length}</p>
@@ -328,7 +328,7 @@ const DeveloperSpace = () => {
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-white" />
+                    <CheckCircle className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
