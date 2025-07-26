@@ -14,11 +14,11 @@ const Hero = () => {
 
   return (
     <section className="w-full py-12 lg:py-20">
-      <div className="container grid items-center gap-6 px-4 md:grid-cols-2 md:gap-10">
-        
-        {/* Text Content */}
-        <div className="text-center space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1">
-          <div className="flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground">
+      <div className="container px-4 flex flex-col-reverse lg:flex-row items-center justify-center gap-10">
+
+        {/* ✅ Text section */}
+        <div className="flex flex-col items-center text-center space-y-6 max-w-2xl">
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <Sparkles className="h-4 w-4 text-yellow-400" />
             Assalamu Alaikum! I’m
           </div>
@@ -27,15 +27,12 @@ const Hero = () => {
             MH Sami
           </h1>
 
-          {/* ✅ Fixed: Centered paragraph */}
-          <div className="w-full px-4">
-            <p className="text-center mx-auto text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-              A passionate
-              <span className="text-blue-400 font-bold"> Video Editor </span>
-              creating meaningful content following
-              <span className="text-amber-400 font-bold"> Islamic principles</span>.
-            </p>
-          </div>
+          <p className="text-center text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed">
+            A passionate
+            <span className="text-blue-400 font-bold"> Video Editor </span>
+            creating meaningful content following
+            <span className="text-amber-400 font-bold"> Islamic principles</span>.
+          </p>
 
           <blockquote className="text-sm sm:text-base italic text-muted-foreground">
             “Indeed, Allah loves those who do things with excellence.” – Quran 2:195
@@ -55,12 +52,12 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Illustration Content */}
-        <div className="relative w-full h-full flex items-center justify-center order-1 lg:order-2 animate-fade-in">
+        {/* ✅ Illustration section */}
+        <div className="flex justify-center items-center w-full max-w-md md:max-w-lg lg:max-w-xl">
           <img
             src="/hero-illustration.svg"
             alt="Illustration"
-            className="w-full max-w-md md:max-w-lg lg:max-w-xl"
+            className="w-full h-auto"
           />
         </div>
       </div>
