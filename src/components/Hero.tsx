@@ -56,10 +56,10 @@ return (
 
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed"> 
           <p>
-            A Passionate  
-   <span className="text-blue-400 font-bold"> Video Editor </span>  
-             creating meaningful content following   
-            <span className="text-amber-400 font-bold"> Islamic principles</span>.  
+            A Passionate <span
+className="text-blue-400 font-bold"> Video Editor </span> creating meaningful content following <span
+className="text-amber-400 font-bold">
+Islamic principles</span>.
           </p>  
           </div> 
 
