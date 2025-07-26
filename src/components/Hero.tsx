@@ -53,13 +53,15 @@ const Hero = () => {
                   I'm MH Sami
                 </span>
               </h1>
-              
+
+              <div className="flex justify-center px-4">
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                 A Passionate
                 <span className="text-blue-400 font-bold"> Video Editor </span>
                  creating meaningful content following 
                 <span className="text-amber-400 font-bold"> Islamic principles</span>.
               </p>
+              </div>
 
               {/* Quranic verse */}
               <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
