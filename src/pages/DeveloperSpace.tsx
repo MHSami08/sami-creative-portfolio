@@ -155,11 +155,13 @@ const DeveloperSpace = () => {
   // Login Screen
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+
+<div className="min-h-screen bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20 flex items-center justify-center px-0">
+  <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+
+  <Card className="w-full h-full max-w-none rounded-none relative z-10 bg-card/80 backdrop-blur-xl border-blue-400/30 shadow-none">
         
-        <Card className="w-full relative z-10 bg-card/80 backdrop-blur-xl border-blue-400/30 shadow-2xl shadow-blue-500/10">
-          <CardHeader className="text-center pb-2">
+    <CardHeader className="text-center pb-2">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
               <Settings className="w-8 h-8 text-white" />
             </div>
