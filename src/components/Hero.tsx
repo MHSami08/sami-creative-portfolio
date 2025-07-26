@@ -56,10 +56,7 @@ return (
 
           <div className="flex justify-center px-4">  
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">  
-            A Passionate  
-            <span className="text-blue-400 font-bold"> Video Editor </span>  
-             creating meaningful content following   
-            <span className="text-amber-400 font-bold"> Islamic principles</span>.  
+            A Passionate <span className="text-blue-400 font-bold"> Video Editor </span> creating meaningful content following <span className="text-amber-400 font-bold"> Islamic principles</span>.  
           </p>  
           </div>  
 
