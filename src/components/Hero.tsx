@@ -11,9 +11,6 @@ return (
 <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-24 sm:pt-0">
 {/* Enhanced gradient background with cyber theme */}
 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-background to-cyan-900/20"></div>
-
-{/* Animated grid pattern with cyber accents */}  
-  <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/10_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/10_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>  
     
   {/* Floating geometric elements with cyber theme */}  
   <div className="absolute inset-0 overflow-hidden">  
