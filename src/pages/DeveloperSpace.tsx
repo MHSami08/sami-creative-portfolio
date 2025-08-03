@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw, Home, User, Briefcase, MessageCircle, Target, Navigation, Palette, Globe, FileText, Download, Upload } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw, Home, User, Briefcase, MessageCircle, Target, Navigation, Palette, Globe, FileText, Download, Upload, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,6 +15,7 @@ import { useContent } from '@/hooks/useContent';
 import { SiteContent } from '@/utils/contentManager';
 import ContentEditor from '@/components/ContentEditor';
 import SiteSettings from '@/components/SiteSettings';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
@@ -25,18 +26,14 @@ const DeveloperSpace = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [editingContent, setEditingContent] = useState<any>(null);
   const [isEditingContent, setIsEditingContent] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   const { toast } = useToast();
   const auth = useAuth();
   const { projects, loading, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
   const { content, updateSection, resetToDefaults, exportContent, importContent } = useContent();
   const isAuthenticated = auth.isAuthenticated();
-
-  // Debug: Log projects when they change
-  useEffect(() => {
-    console.log('Projects in Developer Space:', projects);
-    console.log('Loading state:', loading);
-  }, [projects, loading]);
+  const isMobile = useIsMobile();
 
   // Update session time every minute
   useEffect(() => {
@@ -46,7 +43,7 @@ const DeveloperSpace = () => {
       };
       
       updateSessionTime();
-      const interval = setInterval(updateSessionTime, 60000); // Update every minute
+      const interval = setInterval(updateSessionTime, 60000);
       
       return () => clearInterval(interval);
     }
@@ -134,14 +131,12 @@ const DeveloperSpace = () => {
       };
 
       if (projectToSave.id && projects.find(p => p.id === projectToSave.id)) {
-        // Update existing
         updateProject(projectToSave.id, projectToSave);
         toast({
           title: "Project Updated",
           description: "Your changes have been saved and will appear in the portfolio",
         });
       } else {
-        // Add new
         addProject(projectToSave);
         toast({
           title: "Project Created",
@@ -233,738 +228,607 @@ const DeveloperSpace = () => {
     />;
   }
 
+  // Navigation Sidebar Component
+  const Sidebar = () => (
+    <div className={`${isMobile ? 'fixed inset-y-0 left-0 transform transition-transform duration-300 ease-in-out z-50' : 'fixed left-0 top-0 h-full'} ${isMobile && !sidebarOpen ? '-translate-x-full' : 'translate-x-0'} w-64 bg-background/95 backdrop-blur-xl border-r border-border/50`}>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <Settings className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="font-bold text-foreground">Dev Space</h2>
+              <p className="text-xs text-muted-foreground">Site Manager</p>
+            </div>
+          </div>
+          {isMobile && (
+            <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(false)}>
+              <X className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
+
+        <nav className="space-y-2">
+          {/* Dashboard */}
+          <button
+            onClick={() => {
+              setActiveSection('dashboard');
+              if (isMobile) setSidebarOpen(false);
+            }}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+              activeSection === 'dashboard'
+                ? 'bg-blue-500/20 text-blue-400 border border-blue-400/30'
+                : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <BarChart3 className="w-4 h-4" />
+            Dashboard
+          </button>
+
+          {/* Content Sections */}
+          <div className="py-2">
+            <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SITE CONTENT</p>
+            
+            {[
+              { id: 'hero', icon: Home, label: 'Hero Section' },
+              { id: 'about', icon: User, label: 'About Me' },
+              { id: 'services', icon: Briefcase, label: 'Services' },
+              { id: 'myaim', icon: Target, label: 'My Aim' },
+              { id: 'contact', icon: MessageCircle, label: 'Contact' },
+              { id: 'navigation', icon: Navigation, label: 'Navigation' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setActiveSection(item.id);
+                  if (isMobile) setSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                  activeSection === item.id
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
+                    : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <item.icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Settings */}
+          <div className="py-2">
+            <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SETTINGS</p>
+            
+            <button
+              onClick={() => {
+                setActiveSection('site-settings');
+                if (isMobile) setSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                activeSection === 'site-settings'
+                  ? 'bg-purple-500/20 text-purple-400 border border-purple-400/30'
+                  : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Globe className="w-4 h-4" />
+              Site Settings
+            </button>
+          </div>
+        </nav>
+
+        {/* Bottom Actions */}
+        <div className="absolute bottom-6 left-6 right-6 space-y-2">
+          <Button variant="outline" onClick={() => window.location.href = '/'} className="w-full border-blue-400/30">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            View Site
+          </Button>
+          <Button variant="destructive" onClick={handleLogout} className="w-full">
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+
   // Main Dashboard with Navigation
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       
-      <div className="flex">
-        {/* Navigation Sidebar */}
-        <div className="w-64 fixed left-0 top-0 h-full bg-background/80 backdrop-blur-xl border-r border-border/50 z-20">
-          <div className="p-6">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Settings className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className="font-bold text-foreground">Dev Space</h2>
-                <p className="text-xs text-muted-foreground">Site Manager</p>
-              </div>
+      {/* Mobile overlay */}
+      {isMobile && sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <Sidebar />
+      
+      {/* Mobile Header */}
+      {isMobile && (
+        <div className="fixed top-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-xl border-b border-border/50 z-30 flex items-center px-4">
+          <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(true)}>
+            <Menu className="w-5 h-5" />
+          </Button>
+          <h1 className="ml-3 font-bold text-lg">Developer's Space</h1>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className={`flex-1 ${isMobile ? 'pt-16' : 'ml-64'} p-4 sm:p-6`}>
+        <div className="max-w-6xl mx-auto">
+          {/* Render different sections based on activeSection */}
+          {activeSection === 'dashboard' && (
+            <>
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                  <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                    Developer's Space
+                  </h1>
+                  <p className="text-muted-foreground mt-1">Manage your video portfolio • {projects.length} projects</p>
+                </div>
+          
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Session Timer */}
+            <div className="flex items-center gap-2 px-3 py-2 bg-blue-500/10 rounded-lg border border-blue-400/30">
+              <Clock className="w-4 h-4 text-blue-400" />
+              <span className="text-sm text-blue-400 font-medium">{sessionTime}m left</span>
             </div>
-
-            <nav className="space-y-2">
-              {/* Dashboard */}
-              <button
-                onClick={() => setActiveSection('dashboard')}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                  activeSection === 'dashboard'
-                    ? 'bg-blue-500/20 text-blue-400 border border-blue-400/30'
-                    : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <BarChart3 className="w-4 h-4" />
-                Dashboard
-              </button>
-
-              {/* Content Sections */}
-              <div className="py-2">
-                <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SITE CONTENT</p>
-                
-                <button
-                  onClick={() => setActiveSection('hero')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'hero'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Home className="w-4 h-4" />
-                  Hero Section
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('about')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'about'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <User className="w-4 h-4" />
-                  About Me
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('services')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'services'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Briefcase className="w-4 h-4" />
-                  Services
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('myaim')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'myaim'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Target className="w-4 h-4" />
-                  My Aim
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('contact')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'contact'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Contact
-                </button>
-
-                <button
-                  onClick={() => setActiveSection('navigation')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'navigation'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Navigation className="w-4 h-4" />
-                  Navigation
-                </button>
-              </div>
-
-              {/* Settings */}
-              <div className="py-2">
-                <p className="text-xs font-medium text-muted-foreground mb-2 px-3">SETTINGS</p>
-                
-                <button
-                  onClick={() => setActiveSection('site-settings')}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                    activeSection === 'site-settings'
-                      ? 'bg-purple-500/20 text-purple-400 border border-purple-400/30'
-                      : 'hover:bg-muted/50 text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Globe className="w-4 h-4" />
-                  Site Settings
-                </button>
-              </div>
-            </nav>
-
-            {/* Bottom Actions */}
-            <div className="absolute bottom-6 left-6 right-6 space-y-2">
-              <Button variant="outline" onClick={() => window.location.href = '/'} className="w-full border-blue-400/30">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                View Site
-              </Button>
-              <Button variant="destructive" onClick={handleLogout} className="w-full">
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            </div>
+            
+            <Button onClick={handleAddProject} className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Project
+            </Button>
+            
+            <Button variant="outline" onClick={() => window.location.href = '/'} className="border-blue-400/30">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Portfolio
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                if (confirm('This will reset all projects to defaults. Continue?')) {
+                  const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
+                  projectManager.resetToDefaults();
+                  window.location.reload();
+                }
+              }}
+              className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Reset
+            </Button>
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 ml-64 p-4 sm:p-6">
-          <div className="max-w-6xl mx-auto">
-            {/* Render different sections based on activeSection */}
-            {activeSection === 'dashboard' && (
-              <>
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                  <div>
-                    <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                      Developer's Space
-                    </h1>
-                    <p className="text-muted-foreground mt-1">Manage your video portfolio • {projects.length} projects</p>
-                  </div>
-            
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Session Timer */}
-              <div className="flex items-center gap-2 px-3 py-2 bg-blue-500/10 rounded-lg border border-blue-400/30">
-                <Clock className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-blue-400 font-medium">{sessionTime}m left</span>
+        {/* Projects Display */}
+        {loading ? (
+          <div className="grid gap-6">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <CardContent className="p-6">
+                  <div className="h-6 bg-muted rounded mb-4"></div>
+                  <div className="h-4 bg-muted rounded mb-2"></div>
+                  <div className="h-4 bg-muted rounded w-3/4"></div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Long Form Videos */}
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Play className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">Long Form Videos</h2>
+                  <p className="text-muted-foreground">Featured documentary and narrative projects</p>
+                </div>
               </div>
-              
-              <Button onClick={handleAddProject} className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Project
-              </Button>
-              
-              <Button variant="outline" onClick={() => window.location.href = '/'} className="border-blue-400/30">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Portfolio
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  if (confirm('This will reset all projects to defaults. Continue?')) {
-                    const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
-                    projectManager.resetToDefaults();
-                    window.location.reload();
-                  }
-                }}
-                className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
-              >
-                <RotateCcw className="mr-2 h-4 w-4" />
-                Reset
-              </Button>
-              
-              <Button variant="destructive" onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
+
+              {longVideos.length === 0 ? (
+                <Card className="border-dashed border-2 border-blue-300 dark:border-blue-800">
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <Play className="w-12 h-12 text-blue-400 mb-4" />
+                    <h3 className="text-lg font-semibold text-blue-400 mb-2">No Long Form Videos</h3>
+                    <p className="text-muted-foreground text-center mb-4">
+                      Add your first long form video project to showcase your documentary and narrative work.
+                    </p>
+                    <Button onClick={handleAddProject} className="bg-gradient-to-r from-blue-500 to-blue-600">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Create Long Form Project
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-6">
+                  {longVideos.map((project) => (
+                    <ProjectCard 
+                      key={project.id} 
+                      project={project} 
+                      onEdit={handleEditProject}
+                      onDelete={handleDeleteProject}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Short Form Videos */}
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">Short Form Videos</h2>
+                  <p className="text-muted-foreground">Social media and quick content projects</p>
+                </div>
+              </div>
+
+              {shortVideos.length === 0 ? (
+                <Card className="border-dashed border-2 border-purple-300 dark:border-purple-800">
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <Users className="w-12 h-12 text-purple-400 mb-4" />
+                    <h3 className="text-lg font-semibold text-purple-400 mb-2">No Short Form Videos</h3>
+                    <p className="text-muted-foreground text-center mb-4">
+                      Add your first short form video project to showcase your social media content.
+                    </p>
+                    <Button onClick={handleAddProject} className="bg-gradient-to-r from-purple-500 to-purple-600">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Create Short Form Project
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid gap-6">
+                  {shortVideos.map((project) => (
+                    <ProjectCard 
+                      key={project.id} 
+                      project={project} 
+                      onEdit={handleEditProject}
+                      onDelete={handleDeleteProject}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+        )}
+      </>
+    )}
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-blue-400">{projects.length}</p>
-                    <p className="text-xs text-muted-foreground">Total Projects</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border-emerald-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-emerald-400">{longVideos.length}</p>
-                    <p className="text-xs text-muted-foreground">Long Videos</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-purple-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-purple-400">{shortVideos.length}</p>
-                    <p className="text-xs text-muted-foreground">Short Videos</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border-amber-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
-                    <p className="text-xs text-muted-foreground">Completed</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+    {/* Content Editing Sections */}
+    {(activeSection === 'hero' || 
+      activeSection === 'about' || 
+      activeSection === 'services' || 
+      activeSection === 'myaim' || 
+      activeSection === 'contact' || 
+      activeSection === 'navigation') && content && (
+      <ContentEditor 
+        section={activeSection as keyof SiteContent}
+        content={content}
+        onUpdate={updateSection}
+      />
+    )}
 
-                {/* Projects Management */}
-                <Tabs defaultValue="all" className="space-y-6">
-                  <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
-                    <TabsTrigger value="all">All Projects ({projects.length})</TabsTrigger>
-                    <TabsTrigger value="long">Long Videos ({longVideos.length})</TabsTrigger>
-                    <TabsTrigger value="short">Short Videos ({shortVideos.length})</TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent value="all">
-                    <ProjectGrid projects={projects} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                  
-                  <TabsContent value="long">
-                    <ProjectGrid projects={longVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                  
-                  <TabsContent value="short">
-                    <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                  </TabsContent>
-                </Tabs>
-              </>
-            )}
-
-            {/* Content Sections */}
-            {activeSection === 'hero' && content && (
-              <ContentEditor 
-                title="Hero Section"
-                description="Edit the main hero section content"
-                content={content.hero}
-                onSave={(data) => updateSection('hero', data)}
-              />
-            )}
-
-            {activeSection === 'about' && content && (
-              <ContentEditor 
-                title="About Me Section"
-                description="Edit the about me content"
-                content={content.about}
-                onSave={(data) => updateSection('about', data)}
-              />
-            )}
-
-            {activeSection === 'services' && content && (
-              <ContentEditor 
-                title="Services Section"
-                description="Edit your services and offerings"
-                content={content.services}
-                onSave={(data) => updateSection('services', data)}
-              />
-            )}
-
-            {activeSection === 'myaim' && content && (
-              <ContentEditor 
-                title="My Aim Section"
-                description="Edit your goals and aspirations"
-                content={content.myAim}
-                onSave={(data) => updateSection('myAim', data)}
-              />
-            )}
-
-            {activeSection === 'contact' && content && (
-              <ContentEditor 
-                title="Contact Section"
-                description="Edit contact information and form labels"
-                content={content.contact}
-                onSave={(data) => updateSection('contact', data)}
-              />
-            )}
-
-            {activeSection === 'navigation' && content && (
-              <ContentEditor 
-                title="Navigation Menu"
-                description="Edit navigation items and brand name"
-                content={content.navigation}
-                onSave={(data) => updateSection('navigation', data)}
-              />
-            )}
-
-            {activeSection === 'site-settings' && (
-              <SiteSettings 
-                onExport={() => {
-                  const data = exportContent();
-                  const blob = new Blob([data], { type: 'application/json' });
-                  const url = URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'site-content.json';
-                  a.click();
-                  toast({ title: "Content Exported", description: "Site content has been downloaded" });
-                }}
-                onImport={(data) => {
-                  try {
-                    importContent(data);
-                    toast({ title: "Content Imported", description: "Site content has been updated" });
-                  } catch (error) {
-                    toast({ title: "Import Failed", description: "Invalid content format", variant: "destructive" });
-                  }
-                }}
-                onReset={() => {
-                  if (confirm('This will reset all content to defaults. Continue?')) {
-                    resetToDefaults();
-                    toast({ title: "Content Reset", description: "All content has been reset to defaults" });
-                  }
-                }}
-              />
-            )}
-          </div>
+    {/* Site Settings */}
+    {activeSection === 'site-settings' && (
+      <SiteSettings 
+        onExport={exportContent}
+        onImport={importContent}
+        onReset={resetToDefaults}
+      />
+    )}
         </div>
       </div>
     </div>
   );
 };
 
-// Project Grid Component
-const ProjectGrid = ({ 
-  projects, 
-  onEdit, 
-  onDelete 
-}: { 
-  projects: VideoProject[];
+// Project Card Component
+const ProjectCard = ({ project, onEdit, onDelete }: { 
+  project: VideoProject; 
   onEdit: (project: VideoProject) => void;
   onDelete: (id: number) => void;
 }) => {
-  if (projects.length === 0) {
-    return (
-      <Card className="p-12 text-center bg-card/50 border-dashed border-2 border-muted-foreground/20">
-        <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
-          <Plus className="w-8 h-8 text-muted-foreground" />
-        </div>
-        <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
-        <p className="text-muted-foreground">Create your first project to get started</p>
-      </Card>
-    );
-  }
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project) => (
-        <Card key={project.id} className="group hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm border-border/50 hover:border-primary/30">
-          <CardHeader className="pb-2">
-            <div className="flex justify-between items-start gap-2">
-              <div className="flex-1 min-w-0">
-                <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
-                  {project.title || 'Untitled Project'}
-                </CardTitle>
-                <div className="flex items-center gap-2 mt-2">
-                  <Badge variant={project.category === 'long' ? 'default' : 'secondary'} className="text-xs">
-                    {project.category}
-                  </Badge>
-                  <Badge 
-                    variant="outline" 
-                    className={`text-xs ${
-                      project.status === 'completed' ? 'border-emerald-400 text-emerald-400' :
-                      project.status === 'learning' ? 'border-amber-400 text-amber-400' :
-                      'border-blue-400 text-blue-400'
-                    }`}
-                  >
-                    {project.status}
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex gap-1">
-                <Button size="sm" variant="ghost" onClick={() => onEdit(project)} className="opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Edit className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="ghost" onClick={() => onDelete(project.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive">
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
+    <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 bg-card/50 backdrop-blur-sm">
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-3 mb-3">
+              <h3 className="text-xl font-semibold text-foreground group-hover:text-blue-400 transition-colors line-clamp-1">
+                {project.title || 'Untitled Project'}
+              </h3>
+              <Badge 
+                variant={project.status === 'completed' ? 'default' : 
+                        project.status === 'learning' ? 'secondary' : 'outline'}
+                className="shrink-0"
+              >
+                {project.status}
+              </Badge>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {project.thumbnail && project.thumbnail !== 'N/A' && (
-              <div className="relative overflow-hidden rounded-lg">
-                <img 
-                  src={project.thumbnail} 
-                  alt={project.title}
-                  className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                {project.videoUrl && project.videoUrl !== 'N/A' && (
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                      <Play className="w-6 h-6 text-white ml-1" />
-                    </div>
-                  </div>
+            
+            <p className="text-muted-foreground mb-4 line-clamp-2">
+              {project.description || 'No description provided'}
+            </p>
+            
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+              {project.duration && (
+                <div className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  <span>{project.duration}</span>
+                </div>
+              )}
+              {project.type && (
+                <div className="flex items-center gap-1">
+                  <FileText className="w-4 h-4" />
+                  <span>{project.type}</span>
+                </div>
+              )}
+              <Badge variant="outline" className="text-xs">
+                {project.category === 'long' ? 'Long Form' : 'Short Form'}
+              </Badge>
+            </div>
+            
+            {project.tools && project.tools.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-4">
+                {project.tools.slice(0, 5).map((tool, index) => (
+                  <Badge key={index} variant="secondary" className="text-xs">
+                    {tool}
+                  </Badge>
+                ))}
+                {project.tools.length > 5 && (
+                  <Badge variant="secondary" className="text-xs">
+                    +{project.tools.length - 5} more
+                  </Badge>
                 )}
               </div>
             )}
-            
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground line-clamp-2">
-                {project.description || 'No description available'}
-              </p>
-              
-              <div className="flex justify-between items-center text-xs text-muted-foreground">
-                <span>{project.type || 'Unknown type'}</span>
-                <span>{project.duration || 'No duration'}</span>
-              </div>
-              
-              {project.tools.length > 0 && (
-                <div className="flex flex-wrap gap-1">
-                  {project.tools.slice(0, 3).map((tool, idx) => (
-                    <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">
-                      {tool}
-                    </span>
-                  ))}
-                  {project.tools.length > 3 && (
-                    <span className="px-2 py-1 bg-muted text-muted-foreground rounded text-xs">
-                      +{project.tools.length - 3} more
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-            
-            <div className="text-xs text-muted-foreground pt-2 border-t">
-              Updated: {new Date(project.updatedAt).toLocaleDateString()}
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+          </div>
+          
+          {/* Actions */}
+          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onEdit(project)}
+              className="hover:bg-blue-500/10 hover:border-blue-400"
+            >
+              <Edit className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onDelete(project.id)}
+              className="hover:bg-destructive/10 hover:border-destructive"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
-// Enhanced Project Editor Component
+// Project Editor Component
 const ProjectEditor = ({ 
   project, 
   onSave, 
   onCancel 
 }: { 
-  project: VideoProject;
-  onSave: (project: any) => void;
+  project: VideoProject; 
+  onSave: (project: VideoProject) => void;
   onCancel: () => void;
 }) => {
   const [formData, setFormData] = useState({
     ...project,
-    tools: project.tools.join(', '),
-    features: project.features.join(', ')
+    tools: Array.isArray(project.tools) ? project.tools.join(', ') : project.tools || '',
+    features: Array.isArray(project.features) ? project.features.join(', ') : project.features || ''
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.title.trim()) newErrors.title = 'Title is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
-    if (!formData.type.trim()) newErrors.type = 'Type is required';
-    if (!formData.duration.trim()) newErrors.duration = 'Duration is required';
-    if (!formData.thumbnail.trim()) newErrors.thumbnail = 'Thumbnail URL is required';
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      onSave(formData);
-    }
+    
+    // Convert string fields back to arrays
+    const processedData = {
+      ...formData,
+      tools: typeof formData.tools === 'string' 
+        ? formData.tools.split(',').map((tool: string) => tool.trim()).filter(Boolean)
+        : formData.tools,
+      features: typeof formData.features === 'string'
+        ? formData.features.split(',').map((feature: string) => feature.trim()).filter(Boolean)
+        : formData.features
+    };
+    
+    onSave(processedData as VideoProject);
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
-    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10 p-4">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-      
-      <div className="max-w-5xl mx-auto relative z-10">
-        <div className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10 p-4 sm:p-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 mb-8">
+          <Button variant="outline" onClick={onCancel}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
           <div>
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              {project.id && project.title ? 'Edit Project' : 'Create New Project'}
+              {project.id ? 'Edit Project' : 'Create New Project'}
             </h1>
-            <p className="text-muted-foreground">
-              {project.id && project.title ? 'Update your project details' : 'Add a new project to your portfolio'}
-            </p>
+            <p className="text-muted-foreground">Configure your video project details</p>
           </div>
-          <Button variant="outline" onClick={onCancel} className="border-red-400/30 text-red-400 hover:bg-red-500/10">
-            <X className="mr-2 h-4 w-4" />
-            Cancel
-          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column */}
-            <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Basic Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="title" className="text-sm font-medium">Project Title *</Label>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Edit className="w-5 h-5" />
+                Basic Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="title">Project Title *</Label>
                   <Input
                     id="title"
                     value={formData.title}
-                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    onChange={(e) => handleChange('title', e.target.value)}
                     placeholder="Enter project title"
-                    className={`mt-1 ${errors.title ? 'border-red-500' : ''}`}
+                    required
                   />
-                  {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
                 </div>
-
-                <div>
-                  <Label htmlFor="description" className="text-sm font-medium">Description *</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => handleInputChange('description', e.target.value)}
-                    placeholder="Brief description of your project"
-                    className={`mt-1 ${errors.description ? 'border-red-500' : ''}`}
-                    rows={3}
-                  />
-                  {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+                
+                <div className="space-y-2">
+                  <Label htmlFor="category">Category *</Label>
+                  <select
+                    id="category"
+                    value={formData.category}
+                    onChange={(e) => handleChange('category', e.target.value)}
+                    className="w-full h-10 px-3 py-2 text-sm bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+                    required
+                  >
+                    <option value="long">Long Form Video</option>
+                    <option value="short">Short Form Video</option>
+                  </select>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="category" className="text-sm font-medium">Category *</Label>
-                    <select
-                      id="category"
-                      value={formData.category}
-                      onChange={(e) => handleInputChange('category', e.target.value)}
-                      className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background"
-                    >
-                      <option value="long">Long Video</option>
-                      <option value="short">Short Video</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="status" className="text-sm font-medium">Status *</Label>
-                    <select
-                      id="status"
-                      value={formData.status}
-                      onChange={(e) => handleInputChange('status', e.target.value)}
-                      className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background"
-                    >
-                      <option value="planned">Planned</option>
-                      <option value="learning">In Progress</option>
-                      <option value="completed">Completed</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="type" className="text-sm font-medium">Project Type *</Label>
-                    <Input
-                      id="type"
-                      value={formData.type}
-                      onChange={(e) => handleInputChange('type', e.target.value)}
-                      placeholder="e.g., Nasheed Video, Quote Reel"
-                      className={`mt-1 ${errors.type ? 'border-red-500' : ''}`}
-                    />
-                    {errors.type && <p className="text-red-500 text-xs mt-1">{errors.type}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="duration" className="text-sm font-medium">Duration *</Label>
-                    <Input
-                      id="duration"
-                      value={formData.duration}
-                      onChange={(e) => handleInputChange('duration', e.target.value)}
-                      placeholder="e.g., 3:29 min, 25 sec"
-                      className={`mt-1 ${errors.duration ? 'border-red-500' : ''}`}
-                    />
-                    {errors.duration && <p className="text-red-500 text-xs mt-1">{errors.duration}</p>}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Right Column */}
-            <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Media & Links</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="videoUrl" className="text-sm font-medium">Video URL</Label>
-                  <Input
-                    id="videoUrl"
-                    value={formData.videoUrl}
-                    onChange={(e) => handleInputChange('videoUrl', e.target.value)}
-                    placeholder="https://youtu.be/... or https://vimeo.com/..."
-                    className="mt-1"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">Leave empty if video is not ready</p>
-                </div>
-
-                <div>
-                  <Label htmlFor="thumbnail" className="text-sm font-medium">Thumbnail URL *</Label>
-                  <Input
-                    id="thumbnail"
-                    value={formData.thumbnail}
-                    onChange={(e) => handleInputChange('thumbnail', e.target.value)}
-                    placeholder="https://..."
-                    className={`mt-1 ${errors.thumbnail ? 'border-red-500' : ''}`}
-                  />
-                  {errors.thumbnail && <p className="text-red-500 text-xs mt-1">{errors.thumbnail}</p>}
-                  {formData.thumbnail && (
-                    <div className="mt-2">
-                      <img 
-                        src={formData.thumbnail} 
-                        alt="Thumbnail preview" 
-                        className="w-full max-w-xs aspect-video object-cover rounded border"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="tools" className="text-sm font-medium">Tools Used</Label>
-                  <Input
-                    id="tools"
-                    value={formData.tools}
-                    onChange={(e) => handleInputChange('tools', e.target.value)}
-                    placeholder="VN Video Editor, Alight Motion, Capcut"
-                    className="mt-1"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">Separate multiple tools with commas</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Full Width Cards */}
-          <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-            <CardHeader>
-              <CardTitle className="text-lg">Additional Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="detailedDescription" className="text-sm font-medium">Detailed Description</Label>
+              <div className="space-y-2">
+                <Label htmlFor="description">Short Description *</Label>
                 <Textarea
-                  id="detailedDescription"
-                  value={formData.detailedDescription}
-                  onChange={(e) => handleInputChange('detailedDescription', e.target.value)}
-                  placeholder="Detailed description that will appear in hover cards and project details"
-                  className="mt-1"
-                  rows={4}
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => handleChange('description', e.target.value)}
+                  placeholder="Brief description of the project"
+                  rows={3}
+                  required
                 />
               </div>
 
-              <div>
-                <Label htmlFor="features" className="text-sm font-medium">Key Features</Label>
+              <div className="space-y-2">
+                <Label htmlFor="detailedDescription">Detailed Description</Label>
                 <Textarea
-                  id="features"
-                  value={formData.features}
-                  onChange={(e) => handleInputChange('features', e.target.value)}
-                  placeholder="High-quality audio processing, Professional video editing, Islamic content creation"
-                  className="mt-1"
-                  rows={3}
+                  id="detailedDescription"
+                  value={formData.detailedDescription}
+                  onChange={(e) => handleChange('detailedDescription', e.target.value)}
+                  placeholder="Detailed description including goals, challenges, solutions..."
+                  rows={6}
                 />
-                <p className="text-xs text-muted-foreground mt-1">Separate multiple features with commas</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="duration">Duration</Label>
+                  <Input
+                    id="duration"
+                    value={formData.duration}
+                    onChange={(e) => handleChange('duration', e.target.value)}
+                    placeholder="e.g., 5:30, 2 hours"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="type">Project Type</Label>
+                  <Input
+                    id="type"
+                    value={formData.type}
+                    onChange={(e) => handleChange('type', e.target.value)}
+                    placeholder="e.g., Documentary, Commercial"
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="status">Status</Label>
+                  <select
+                    id="status"
+                    value={formData.status}
+                    onChange={(e) => handleChange('status', e.target.value)}
+                    className="w-full h-10 px-3 py-2 text-sm bg-background border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="planned">Planned</option>
+                    <option value="learning">Learning</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4 justify-end">
-            <Button type="button" variant="outline" onClick={onCancel} className="border-red-400/30 text-red-400 hover:bg-red-500/10">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Globe className="w-5 h-5" />
+                Media & Tools
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="videoUrl">Video URL</Label>
+                <Input
+                  id="videoUrl"
+                  value={formData.videoUrl}
+                  onChange={(e) => handleChange('videoUrl', e.target.value)}
+                  placeholder="YouTube, Vimeo, or direct video URL"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="thumbnail">Thumbnail URL</Label>
+                <Input
+                  id="thumbnail"
+                  value={formData.thumbnail}
+                  onChange={(e) => handleChange('thumbnail', e.target.value)}
+                  placeholder="Custom thumbnail URL (leave empty for auto-generated)"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="tools">Tools Used</Label>
+                <Input
+                  id="tools"
+                  value={formData.tools}
+                  onChange={(e) => handleChange('tools', e.target.value)}
+                  placeholder="e.g., After Effects, Premiere Pro, DaVinci Resolve (separate with commas)"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="features">Key Features</Label>
+                <Textarea
+                  id="features"
+                  value={formData.features}
+                  onChange={(e) => handleChange('features', e.target.value)}
+                  placeholder="Key features or achievements (separate with commas)"
+                  rows={3}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="flex justify-end gap-4">
+            <Button type="button" variant="outline" onClick={onCancel}>
               Cancel
             </Button>
-            <Button type="submit" className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-8">
+            <Button type="submit" className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700">
               <Save className="mr-2 h-4 w-4" />
-              Save Project
+              {project.id ? 'Update Project' : 'Create Project'}
             </Button>
           </div>
         </form>

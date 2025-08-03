@@ -1,249 +1,134 @@
 import { useState } from 'react';
-import { Save, X, Plus, Trash2 } from 'lucide-react';
+import { Save, Edit3, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { SiteContent } from '@/utils/contentManager';
 
 interface ContentEditorProps {
-  title: string;
-  description: string;
-  content: any;
-  onSave: (data: any) => void;
+  section: keyof SiteContent;
+  content: SiteContent;
+  onUpdate: (section: keyof SiteContent, data: any) => void;
 }
 
-const ContentEditor = ({ title, description, content, onSave }: ContentEditorProps) => {
-  const [formData, setFormData] = useState(content);
+const ContentEditor = ({ section, content, onUpdate }: ContentEditorProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState<any>(null);
   const { toast } = useToast();
 
+  const getSectionTitle = () => {
+    switch (section) {
+      case 'hero': return 'Hero Section';
+      case 'navigation': return 'Navigation Menu';
+      default: return 'Content Editor';
+    }
+  };
+
+  const handleEdit = () => {
+    setEditData(JSON.parse(JSON.stringify(content[section])));
+    setIsEditing(true);
+  };
+
   const handleSave = () => {
-    onSave(formData);
+    onUpdate(section, editData);
+    setIsEditing(false);
+    setEditData(null);
     toast({
       title: "Content Updated",
-      description: "Your changes have been saved and will appear on the live site",
+      description: `${getSectionTitle()} has been updated successfully`,
     });
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditData(null);
   };
 
   const updateField = (path: string, value: any) => {
-    setFormData((prev: any) => {
-      const keys = path.split('.');
-      const newData = { ...prev };
-      let current = newData;
-      
-      for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) current[keys[i]] = {};
-        current = current[keys[i]];
-      }
-      
-      current[keys[keys.length - 1]] = value;
-      return newData;
-    });
-  };
-
-  const addArrayItem = (path: string, defaultItem: any) => {
-    const current = getNestedValue(formData, path) || [];
-    updateField(path, [...current, defaultItem]);
-  };
-
-  const removeArrayItem = (path: string, index: number) => {
-    const current = getNestedValue(formData, path) || [];
-    updateField(path, current.filter((_: any, i: number) => i !== index));
-  };
-
-  const updateArrayItem = (path: string, index: number, value: any) => {
-    const current = getNestedValue(formData, path) || [];
-    const newArray = [...current];
-    newArray[index] = value;
-    updateField(path, newArray);
-  };
-
-  const getNestedValue = (obj: any, path: string) => {
-    return path.split('.').reduce((current, key) => current?.[key], obj);
-  };
-
-  const renderField = (key: string, value: any, path = '') => {
-    const fullPath = path ? `${path}.${key}` : key;
-
-    if (Array.isArray(value)) {
-      return (
-        <div key={fullPath} className="space-y-3">
-          <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium capitalize">{key.replace(/([A-Z])/g, ' $1')}</Label>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                if (key === 'menuItems') {
-                  addArrayItem(fullPath, { name: '', href: '' });
-                } else if (key === 'stats') {
-                  addArrayItem(fullPath, { value: '', label: '' });
-                } else if (key === 'values' || key === 'principles' || key === 'goals') {
-                  addArrayItem(fullPath, { title: '', description: '' });
-                } else if (key === 'timeline') {
-                  addArrayItem(fullPath, { year: '', title: '', description: '', status: 'future' });
-                } else if (key === 'services') {
-                  addArrayItem(fullPath, { title: '', description: '', features: [], status: '' });
-                } else if (key === 'contactInfo') {
-                  addArrayItem(fullPath, { type: '', value: '', label: '' });
-                } else {
-                  addArrayItem(fullPath, '');
-                }
-              }}
-              className="h-8"
-            >
-              <Plus className="w-3 h-3 mr-1" />
-              Add
-            </Button>
-          </div>
-          <div className="space-y-2">
-            {value.map((item: any, index: number) => (
-              <div key={index} className="flex gap-2 items-start">
-                <div className="flex-1">
-                  {typeof item === 'string' ? (
-                    <Input
-                      value={item}
-                      onChange={(e) => updateArrayItem(fullPath, index, e.target.value)}
-                      placeholder={`${key} item ${index + 1}`}
-                    />
-                  ) : (
-                    <Card className="p-3 bg-muted/30">
-                      <div className="space-y-2">
-                        {Object.entries(item).map(([subKey, subValue]) => (
-                          <div key={subKey}>
-                            <Label className="text-xs text-muted-foreground capitalize">
-                              {subKey.replace(/([A-Z])/g, ' $1')}
-                            </Label>
-                            {subKey === 'features' && Array.isArray(subValue) ? (
-                              <Textarea
-                                value={(subValue as string[]).join(', ')}
-                                onChange={(e) => {
-                                  const features = e.target.value.split(',').map(f => f.trim()).filter(Boolean);
-                                  const newItem = { ...item, [subKey]: features };
-                                  updateArrayItem(fullPath, index, newItem);
-                                }}
-                                placeholder="Feature 1, Feature 2, Feature 3"
-                                rows={2}
-                              />
-                            ) : subKey === 'status' ? (
-                              <select
-                                value={subValue as string}
-                                onChange={(e) => {
-                                  const newItem = { ...item, [subKey]: e.target.value };
-                                  updateArrayItem(fullPath, index, newItem);
-                                }}
-                                className="w-full px-2 py-1 text-sm border border-input rounded bg-background"
-                              >
-                                <option value="completed">Completed</option>
-                                <option value="current">Current</option>
-                                <option value="future">Future</option>
-                                <option value="Learning">Learning</option>
-                                <option value="Planning">Planning</option>
-                              </select>
-                            ) : (
-                              <Input
-                                value={subValue as string}
-                                onChange={(e) => {
-                                  const newItem = { ...item, [subKey]: e.target.value };
-                                  updateArrayItem(fullPath, index, newItem);
-                                }}
-                                className="text-sm"
-                              />
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </Card>
-                  )}
-                </div>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => removeArrayItem(fullPath, index)}
-                  className="text-red-500 hover:text-red-600 h-8 w-8 p-0"
-                >
-                  <Trash2 className="w-3 h-3" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
+    const keys = path.split('.');
+    const newData = { ...editData };
+    let current = newData;
+    
+    for (let i = 0; i < keys.length - 1; i++) {
+      current = current[keys[i]];
     }
-
-    if (typeof value === 'object' && value !== null) {
-      return (
-        <Card key={fullPath} className="p-4 bg-muted/30">
-          <h4 className="font-medium mb-3 capitalize">{key.replace(/([A-Z])/g, ' $1')}</h4>
-          <div className="space-y-4">
-            {Object.entries(value).map(([subKey, subValue]) =>
-              renderField(subKey, subValue, fullPath)
-            )}
-          </div>
-        </Card>
-      );
-    }
-
-    return (
-      <div key={fullPath} className="space-y-2">
-        <Label htmlFor={fullPath} className="text-sm font-medium capitalize">
-          {key.replace(/([A-Z])/g, ' $1')}
-        </Label>
-        {key.includes('description') || key.includes('Description') || key === 'subtitle' ? (
-          <Textarea
-            id={fullPath}
-            value={value || ''}
-            onChange={(e) => updateField(fullPath, e.target.value)}
-            rows={3}
-            className="resize-none"
-          />
-        ) : (
-          <Input
-            id={fullPath}
-            value={value || ''}
-            onChange={(e) => updateField(fullPath, e.target.value)}
-          />
-        )}
-      </div>
-    );
+    current[keys[keys.length - 1]] = value;
+    
+    setEditData(newData);
   };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-            {title}
-          </h1>
-          <p className="text-muted-foreground mt-1">{description}</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Home className="w-5 h-5" />
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {getSectionTitle()}
+            </h1>
+            <p className="text-muted-foreground">Customize your {getSectionTitle().toLowerCase()} content</p>
+          </div>
         </div>
-        <Button onClick={handleSave} className="bg-gradient-to-r from-emerald-500 to-emerald-600">
-          <Save className="mr-2 h-4 w-4" />
-          Save Changes
-        </Button>
+        
+        {!isEditing && (
+          <Button onClick={handleEdit} className="bg-gradient-to-r from-blue-500 to-blue-600">
+            <Edit3 className="mr-2 h-4 w-4" />
+            Edit Content
+          </Button>
+        )}
       </div>
 
-      {/* Content Form */}
-      <Card className="bg-card/80 backdrop-blur-sm">
-        <CardHeader>
-          <CardTitle>Edit Content</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {Object.entries(content).map(([key, value]) =>
-            renderField(key, value)
+      {isEditing ? (
+        <div className="space-y-6">
+          {section === 'hero' && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Hero Content</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label>Name</Label>
+                  <Input value={editData.name} onChange={(e) => updateField('name', e.target.value)} />
+                </div>
+                <div>
+                  <Label>Tagline</Label>
+                  <Textarea value={editData.tagline} onChange={(e) => updateField('tagline', e.target.value)} rows={2} />
+                </div>
+                <div>
+                  <Label>Primary Button Text</Label>
+                  <Input value={editData.ctaButtons.primary} onChange={(e) => updateField('ctaButtons.primary', e.target.value)} />
+                </div>
+                <div>
+                  <Label>Secondary Button Text</Label>
+                  <Input value={editData.ctaButtons.secondary} onChange={(e) => updateField('ctaButtons.secondary', e.target.value)} />
+                </div>
+              </CardContent>
+            </Card>
           )}
-        </CardContent>
-      </Card>
-
-      {/* Save Button */}
-      <div className="flex justify-end">
-        <Button onClick={handleSave} className="bg-gradient-to-r from-emerald-500 to-emerald-600 px-8">
-          <Save className="mr-2 h-4 w-4" />
-          Save Changes
-        </Button>
-      </div>
+          
+          <div className="flex justify-end gap-4">
+            <Button variant="outline" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave} className="bg-gradient-to-r from-emerald-500 to-emerald-600">
+              <Save className="mr-2 h-4 w-4" />
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>Current Content</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>Click "Edit Content" to customize this section.</p>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

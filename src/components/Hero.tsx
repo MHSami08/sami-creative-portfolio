@@ -27,8 +27,8 @@ const Hero = () => {
         
         {/* Cyber-style floating elements - Hidden on small screens */}
         
-         <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
-          <Sparkles className="w-6 h-6 text-amber-400" />
+        <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-blue-500/20 backdrop-blur-lg rounded-xl border border-blue-400/30 animate-pulse shadow-lg shadow-blue-500/20">
+          <Sparkles className="w-6 h-6 text-blue-400" />
         </div>
         
         {/* Additional cyber elements - Responsive */}
@@ -136,19 +136,17 @@ const Hero = () => {
         <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 sm:w-12 h-8 sm:h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center animate-float shadow-xl shadow-blue-500/50 border border-blue-300/50 hover:scale-110 transition-transform duration-300">
           <Sparkles className="w-4 sm:w-6 h-4 sm:h-6 text-white animate-pulse" />
         </div>
-        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center animate-float shadow-xl shadow-cyan-500/50 border border-cyan-300/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '1s' }}>
+        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-r from-green-400 to-green-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-xl shadow-green-500/50 border border-green-300/50 hover:scale-110 transition-transform duration-300">
           <Video className="w-3 sm:w-5 h-3 sm:h-5 text-white" />
         </div>
         <div className="absolute top-8 sm:top-12 left-4 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-amber-400 to-amber-500 rounded-md sm:rounded-lg flex items-center justify-center animate-float shadow-lg shadow-amber-500/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '2s' }}>
           <Code className="w-3 sm:w-4 h-3 sm:h-4 text-white animate-spin" style={{ animationDuration: '8s' }} />
         </div>
-        <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-md sm:rounded-lg flex items-center justify-center animate-float shadow-lg shadow-blue-500/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '1.5s' }}>
-          <Target className="w-3 sm:w-4 h-3 sm:h-4 text-white animate-pulse" />
+        <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-md sm:rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/50 hover:scale-110 transition-transform duration-300">
+          <Target className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
         </div>
         
-        {/* Additional floating elements for better visual appeal */}
-        <div className="absolute top-1/2 -left-2 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-float opacity-70 hover:opacity-100 transition-opacity" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-3/4 -right-2 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-float opacity-60 hover:opacity-100 transition-opacity" style={{ animationDelay: '4s' }}></div>
+        {/* Removed distracting yellow and green dots */}
               </div>
             </div>
           </div>
