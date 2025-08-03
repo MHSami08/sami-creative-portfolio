@@ -155,13 +155,11 @@ const DeveloperSpace = () => {
   // Login Screen
   if (!isAuthenticated) {
     return (
-
-<div className="min-h-screen bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20 flex items-center justify-center px-0">
-  <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-
-  <Card className="w-full h-full max-w-none rounded-none relative z-10 bg-card/80 backdrop-blur-xl border-blue-400/30 shadow-none">
+      <div className="min-h-screen bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20 flex items-center justify-center p-4">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
         
-    <CardHeader className="text-center pb-2">
+        <Card className="w-full max-w-md relative z-10 bg-card/80 backdrop-blur-xl border-blue-400/30 shadow-2xl shadow-blue-500/10">
+          <CardHeader className="text-center pb-2">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
               <Settings className="w-8 h-8 text-white" />
             </div>
@@ -284,62 +282,63 @@ const DeveloperSpace = () => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                    <LayoutGrid className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-blue-400">{projects.length}</p>
-                    <p className="text-xs text-muted-foreground">Total Projects</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <Card className="bg-gradient-to-r from-yellow-500/10 to-yellow-600/10 border-yellow-400/30">
+  <CardContent className="p-4">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+        <LayoutGrid className="w-5 h-5 text-white" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-yellow-400">{projects.length}</p>
+        <p className="text-xs text-muted-foreground">All Projects</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
             
-            <Card className="bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border-emerald-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Video className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-emerald-400">{longVideos.length}</p>
-                    <p className="text-xs text-muted-foreground">Long Videos</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-400/30">
+  <CardContent className="p-4">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+        <Video className="w-5 h-5 text-white" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-blue-400">{longVideos.length}</p>
+        <p className="text-xs text-muted-foreground">Long Videos</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
             
             <Card className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-purple-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <Flim className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-purple-400">{shortVideos.length}</p>
-                    <p className="text-xs text-muted-foreground">Short Videos</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+  <CardContent className="p-4">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+        <Film className="w-5 h-5 text-white" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-purple-400">{shortVideos.length}</p>
+        <p className="text-xs text-muted-foreground">Short Videos</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
             
-            <Card className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border-amber-400/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
-                    <p className="text-xs text-muted-foreground">Completed</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+            <Card className="bg-gradient-to-r from-green-500/10 to-green-600/10 border-green-400/30">
+  <CardContent className="p-4">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+        <CheckCircle className="w-5 h-5 text-white" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold text-green-400">
+          {projects.filter(p => p.status === 'completed').length}
+        </p>
+        <p className="text-xs text-muted-foreground">Completed</p>
+      </div>
+    </div>
+  </CardContent>
+</Card>
 
           {/* Projects Management */}
           <Tabs defaultValue="all" className="space-y-6">
