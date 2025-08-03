@@ -17,8 +17,8 @@ const Hero = () => {
       
       {/* Floating geometric elements with cyber theme */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-48 sm:w-72 h-48 sm:h-72 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-48 sm:w-72 h-48 sm:h-72 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl" style={{ animationDelay: '2s' }}></div>
         
         {/* Cyber-style floating elements - Hidden on small screens */}
         
@@ -26,13 +26,6 @@ const Hero = () => {
           <Sparkles className="w-6 h-6 text-amber-400" />
         </div>
         
-        {/* Additional cyber elements - Responsive */}
-          <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div> 
-        <div className="hidden md:block absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Enhanced Content */}
           <div className="text-center lg:text-left space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1">
             {/* Islamic greeting with cyber styling */}
