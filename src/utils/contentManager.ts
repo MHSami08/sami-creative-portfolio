@@ -312,10 +312,15 @@ class ContentManager {
   importContent(contentJson: string): void {
     try {
       const imported = JSON.parse(contentJson);
+      // Validate the imported content has the required structure
+      if (!imported || typeof imported !== 'object') {
+        throw new Error('Invalid content structure');
+      }
       this.content = { ...defaultContent, ...imported };
       this.saveContent();
     } catch (error) {
-      throw new Error('Invalid content format');
+      console.error('Import error:', error);
+      throw new Error('Invalid content format. Please ensure you are importing a valid JSON file.');
     }
   }
 }

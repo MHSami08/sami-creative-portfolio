@@ -28,8 +28,14 @@ const SiteSettings = ({ onExport, onImport, onReset }: SiteSettingsProps) => {
 
   const handleImport = () => {
     if (importData.trim()) {
-      onImport(importData.trim());
-      setImportData('');
+      try {
+        onImport(importData.trim());
+        setImportData('');
+        // Show success message
+        alert('Content imported successfully!');
+      } catch (error) {
+        alert('Failed to import content. Please check the JSON format.');
+      }
     }
   };
 
@@ -133,7 +139,12 @@ const SiteSettings = ({ onExport, onImport, onReset }: SiteSettingsProps) => {
               This action cannot be undone.
             </p>
             <Button 
-              onClick={onReset} 
+              onClick={() => {
+                if (confirm('This will permanently delete all your custom content and restore the site to its default state. This action cannot be undone. Are you sure?')) {
+                  onReset();
+                  alert('Site content has been reset to defaults.');
+                }
+              }} 
               variant="destructive"
               className="bg-red-500 hover:bg-red-600"
             >
