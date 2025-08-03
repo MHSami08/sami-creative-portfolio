@@ -27,8 +27,7 @@ return (
     </div>  
       
     {/* Additional cyber elements - Responsive */}  
-      <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div>   
-    <div className="hidden md:block absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>  
+      
   </div>  
 
   <div className="relative z-10 max-w-7xl mx-auto w-full">  
