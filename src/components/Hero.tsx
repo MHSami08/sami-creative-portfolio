@@ -124,11 +124,22 @@ const Hero = () => {
                 {/* Profile picture container */}
                 <div className="relative w-full h-full rounded-full bg-gradient-to-br from-emerald-500 to-green-600 p-1 shadow-2xl shadow-emerald-500/50">
                   <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden border-2 border-emerald-400/30">
-                    <img 
-                      src={content.hero.profileImage}
-                      alt="Profile"
-                      className="w-full h-full object-cover rounded-full"
-                    />
+                    {content.hero.profileImage ? (
+                      <img 
+                        src={content.hero.profileImage}
+                        alt="MH Sami Profile Picture"
+                        className="w-full h-full object-cover rounded-full"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/400x400/10b981/ffffff?text=MH+Sami';
+                        }}
+                        loading="eager"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                        <span className="text-emerald-600 dark:text-emerald-400 text-2xl font-bold">MH</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 

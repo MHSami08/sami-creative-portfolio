@@ -94,18 +94,24 @@ const SearchDialog = ({ isOpen, onClose }: SearchDialogProps) => {
 
   // Handle navigation to sections or external URLs
   const handleResultClick = (item: SearchItem) => {
-    playSound('click');
-    
-    if (item.url) {
-      // External link
-      window.open(item.url, '_blank', 'noopener,noreferrer');
-    } else if (item.section) {
-      // Internal section
-      const element = document.querySelector(item.section);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        onClose();
+    try {
+      playSound('click');
+      
+      if (item.url) {
+        // External link
+        window.open(item.url, '_blank', 'noopener,noreferrer');
+      } else if (item.section) {
+        // Internal section
+        const element = document.querySelector(item.section);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          onClose();
+        } else {
+          console.warn('Section not found:', item.section);
+        }
       }
+    } catch (error) {
+      console.error('Search result click error:', error);
     }
   };
 
