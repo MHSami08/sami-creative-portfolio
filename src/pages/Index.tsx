@@ -137,7 +137,7 @@ const Index = () => {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/90 backdrop-blur-xl border-t border-emerald-400/20 rounded-b-2xl">
-                {navItems.map((item) => (
+                {(content?.navigation.menuItems || navItems).map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
@@ -199,8 +199,8 @@ const Index = () => {
         <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
-              © 2025 MH Sami. All rights reserved. 
-              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
+              {content?.footer.copyright || '© 2025 MH Sami. All rights reserved.'}
+              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">{content?.footer.arabicText || 'جزاك الله خيرا'}</span>
             </p>
           </div>
         </div>

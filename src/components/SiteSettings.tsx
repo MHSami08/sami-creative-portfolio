@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
 interface SiteSettingsProps {
-  onExport: () => void;
+  onExport: () => string;
   onImport: (data: string) => void;
   onReset: () => void;
 }
@@ -64,7 +64,22 @@ const SiteSettings = ({ onExport, onImport, onReset }: SiteSettingsProps) => {
             <p className="text-sm text-muted-foreground">
               Download your complete site content as a JSON file for backup or migration.
             </p>
-            <Button onClick={onExport} className="w-full" variant="outline">
+            <Button 
+              onClick={() => {
+                const content = onExport();
+                const blob = new Blob([content], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `site-content-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }} 
+              className="w-full" 
+              variant="outline"
+            >
               <Download className="mr-2 h-4 w-4" />
               Export Site Content
             </Button>

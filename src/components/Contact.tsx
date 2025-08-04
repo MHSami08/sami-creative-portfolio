@@ -7,8 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import emailjs from '@emailjs/browser';
+import { useContent } from '@/hooks/useContent';
 
 const Contact = () => {
+  const { content } = useContent();
+  
+  if (!content) return null;
+
   // State for form handling
   const [formData, setFormData] = useState({
     name: '',
@@ -118,12 +123,11 @@ const Contact = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              Let's Connect
+              {content.contact.title}
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            I'd love to hear from you! Whether you have a project idea, want to collaborate, 
-            or just want to say hello, feel free to reach out.
+            {content.contact.subtitle}
           </p>
         </div>
 
@@ -151,7 +155,7 @@ const Contact = () => {
                   {/* Name Input */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Full Name *
+                      {content.contact.formLabels.name} *
                     </label>
                     <Input
                       id="name"
@@ -168,7 +172,7 @@ const Contact = () => {
                   {/* Email Input */}
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
+                      {content.contact.formLabels.email} *
                     </label>
                     <Input
                       id="email"
@@ -185,7 +189,7 @@ const Contact = () => {
                   {/* Message Input */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                      Message *
+                      {content.contact.formLabels.message} *
                     </label>
                     <Textarea
                       id="message"
@@ -206,7 +210,7 @@ const Contact = () => {
                     className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 text-lg rounded-xl font-semibold shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/30"
                   >
                     <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? 'Sending...' : content.contact.formLabels.submit}
                   </Button>
                 </form>
               )}

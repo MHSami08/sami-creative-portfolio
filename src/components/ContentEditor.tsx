@@ -24,7 +24,7 @@ const ContentEditor = ({ section, content, onUpdate }: ContentEditorProps) => {
       case 'hero': return 'Hero Section';
       case 'about': return 'About Section';
       case 'services': return 'Services Section';
-      case 'myaim': return 'My Aim Section';
+      case 'myAim': return 'My Aim Section';
       case 'contact': return 'Contact Section';
       case 'navigation': return 'Navigation Menu';
       default: return 'Content Editor';
@@ -310,6 +310,14 @@ const ContentEditor = ({ section, content, onUpdate }: ContentEditorProps) => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
+                    <Label>Bismillah Text</Label>
+                    <Input 
+                      value={editData.bismillah || ''} 
+                      onChange={(e) => updateField('bismillah', e.target.value)} 
+                      placeholder="Bismillah in Arabic"
+                    />
+                  </div>
+                  <div>
                     <Label>Title</Label>
                     <Input 
                       value={editData.title || ''} 
@@ -366,63 +374,183 @@ const ContentEditor = ({ section, content, onUpdate }: ContentEditorProps) => {
                   </div>
                 </CardContent>
               </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Call-to-Action Section</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label>CTA Title</Label>
+                    <Input 
+                      value={editData.cta?.title || ''} 
+                      onChange={(e) => updateField('cta.title', e.target.value)} 
+                      placeholder="Call-to-action title"
+                    />
+                  </div>
+                  <div>
+                    <Label>CTA Description</Label>
+                    <Textarea 
+                      value={editData.cta?.description || ''} 
+                      onChange={(e) => updateField('cta.description', e.target.value)} 
+                      rows={3}
+                      placeholder="Call-to-action description"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Primary Button Text</Label>
+                      <Input 
+                        value={editData.cta?.buttons?.primary || ''} 
+                        onChange={(e) => updateField('cta.buttons.primary', e.target.value)} 
+                        placeholder="Primary button"
+                      />
+                    </div>
+                    <div>
+                      <Label>Secondary Button Text</Label>
+                      <Input 
+                        value={editData.cta?.buttons?.secondary || ''} 
+                        onChange={(e) => updateField('cta.buttons.secondary', e.target.value)} 
+                        placeholder="Secondary button"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           )}
 
           {/* Contact Section Editor */}
           {section === 'contact' && editData && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Section Title</Label>
-                  <Input 
-                    value={editData.title || ''} 
-                    onChange={(e) => updateField('title', e.target.value)} 
-                    placeholder="Contact section title"
-                  />
-                </div>
-                <div>
-                  <Label>Subtitle</Label>
-                  <Textarea 
-                    value={editData.subtitle || ''} 
-                    onChange={(e) => updateField('subtitle', e.target.value)} 
-                    rows={2}
-                    placeholder="Contact section subtitle"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Contact Information</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label>Section Title</Label>
+                    <Input 
+                      value={editData.title || ''} 
+                      onChange={(e) => updateField('title', e.target.value)} 
+                      placeholder="Contact section title"
+                    />
+                  </div>
+                  <div>
+                    <Label>Subtitle</Label>
+                    <Textarea 
+                      value={editData.subtitle || ''} 
+                      onChange={(e) => updateField('subtitle', e.target.value)} 
+                      rows={2}
+                      placeholder="Contact section subtitle"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Form Labels</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Name Field Label</Label>
+                      <Input 
+                        value={editData.formLabels?.name || ''} 
+                        onChange={(e) => updateField('formLabels.name', e.target.value)} 
+                        placeholder="Your Name"
+                      />
+                    </div>
+                    <div>
+                      <Label>Email Field Label</Label>
+                      <Input 
+                        value={editData.formLabels?.email || ''} 
+                        onChange={(e) => updateField('formLabels.email', e.target.value)} 
+                        placeholder="Your Email"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Message Field Label</Label>
+                      <Input 
+                        value={editData.formLabels?.message || ''} 
+                        onChange={(e) => updateField('formLabels.message', e.target.value)} 
+                        placeholder="Your Message"
+                      />
+                    </div>
+                    <div>
+                      <Label>Submit Button Text</Label>
+                      <Input 
+                        value={editData.formLabels?.submit || ''} 
+                        onChange={(e) => updateField('formLabels.submit', e.target.value)} 
+                        placeholder="Send Message"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           )}
 
           {/* My Aim Section Editor */}
-          {section === 'myaim' && editData && (
-            <Card>
-              <CardHeader>
-                <CardTitle>My Aim Content</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Title</Label>
-                  <Input 
-                    value={editData.title || ''} 
-                    onChange={(e) => updateField('title', e.target.value)} 
-                    placeholder="My Aim section title"
-                  />
-                </div>
-                <div>
-                  <Label>Subtitle</Label>
-                  <Textarea 
-                    value={editData.subtitle || ''} 
-                    onChange={(e) => updateField('subtitle', e.target.value)} 
-                    rows={3}
-                    placeholder="My Aim section subtitle"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+          {section === 'myAim' && editData && (
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>My Aim Content</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label>Title</Label>
+                    <Input 
+                      value={editData.title || ''} 
+                      onChange={(e) => updateField('title', e.target.value)} 
+                      placeholder="My Aim section title"
+                    />
+                  </div>
+                  <div>
+                    <Label>Subtitle</Label>
+                    <Textarea 
+                      value={editData.subtitle || ''} 
+                      onChange={(e) => updateField('subtitle', e.target.value)} 
+                      rows={3}
+                      placeholder="My Aim section subtitle"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Goals</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {editData.goals?.map((goal: any, index: number) => (
+                    <div key={index} className="grid grid-cols-1 gap-4 p-4 border rounded-lg">
+                      <div>
+                        <Label>Goal Title</Label>
+                        <Input 
+                          value={goal.title || ''} 
+                          onChange={(e) => updateArrayField('goals', index, 'title', e.target.value)} 
+                          placeholder="Goal title"
+                        />
+                      </div>
+                      <div>
+                        <Label>Goal Description</Label>
+                        <Textarea 
+                          value={goal.description || ''} 
+                          onChange={(e) => updateArrayField('goals', index, 'description', e.target.value)} 
+                          rows={2}
+                          placeholder="Goal description"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
           )}
           
           <div className="flex justify-end gap-4">
@@ -481,7 +609,7 @@ const ContentEditor = ({ section, content, onUpdate }: ContentEditorProps) => {
                 </div>
               )}
               
-              {section === 'myaim' && (
+              {section === 'myAim' && (
                 <div className="space-y-2">
                   <p><strong>Title:</strong> {content.myAim.title}</p>
                   <p><strong>Subtitle:</strong> {content.myAim.subtitle}</p>

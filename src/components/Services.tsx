@@ -2,48 +2,25 @@
 import { Video, Code, Palette, Zap, Clock, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useContent } from '@/hooks/useContent';
 
 const Services = () => {
-  const services = [
-    {
-      icon: Video,
-      title: "Video Editing",
-      description: "Creative and Islamic-friendly content editing for social media, YouTube, and personal projects.",
-      features: ["Basic cuts and transitions", "Color correction", "Audio synchronization", "Islamic-compliant content"],
-      status: "Learning",
-      color: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/20"
-    },
-    {
-      icon: Palette,
-      title: "Content Creation",
-      description: "Helping create meaningful, halal content that resonates with Muslim audiences.",
-      features: ["Social media content", "Educational videos", "Islamic themes", "Community projects"],
-      status: "Planning",
-      color: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20"
-    }
-  ];
+  const { content } = useContent();
+  
+  if (!content) return null;
 
-  const principles = [
-    {
-      icon: Shield,
-      title: "Halal Content Only",
-      description: "All projects must align with Islamic principles and values."
-    },
-    {
-      icon: Clock,
-      title: "Timely Delivery",
-      description: "Committed to meeting deadlines and maintaining trust."
-    },
-    {
-      icon: Zap,
-      title: "Continuous Learning",
-      description: "Always improving skills to provide better service quality."
-    }
-  ];
+  const services = content.services.services.map((service, index) => ({
+    ...service,
+    icon: index === 0 ? Video : Palette,
+    color: index === 0 ? "from-blue-500 to-blue-600" : "from-purple-500 to-purple-600",
+    bgColor: index === 0 ? "bg-blue-500/10" : "bg-purple-500/10",
+    borderColor: index === 0 ? "border-blue-500/20" : "border-purple-500/20"
+  }));
+
+  const principles = content.services.principles.map((principle, index) => ({
+    ...principle,
+    icon: index === 0 ? Shield : index === 1 ? Clock : Zap
+  }));
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -61,12 +38,11 @@ const Services = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
-              What I Plan to Offer
+              {content.services.title}
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            I am learning video editing and plan to offer creative, Islamic-friendly content editing services 
-            in the near future. Feel free to reach out for collaboration or small projects.
+            {content.services.subtitle}
           </p>
         </div>
 
@@ -128,26 +104,25 @@ const Services = () => {
         <div className="text-center bg-background/70 backdrop-blur-sm rounded-3xl p-12 border border-border/50">
           <h3 className="text-3xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
-              Ready to Collaborate?
+              {content.services.cta.title}
             </span>
           </h3>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Whether you have a small project or want to discuss future collaborations, 
-            I'd love to hear from you. Let's create something meaningful together, In shaa Allah.
+            {content.services.cta.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               onClick={() => scrollToSection('#contact')}
               className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              Get In Touch
+              {content.services.cta.buttons.primary}
             </Button>
             <Button 
               variant="outline"
               onClick={() => scrollToSection('#portfolio')}
               className="border-2 border-amber-500/50 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white px-8 py-4 text-lg rounded-xl font-semibold backdrop-blur-sm bg-background/50 transition-all duration-300 hover:scale-105"
             >
-              View Portfolio
+              {content.services.cta.buttons.secondary}
             </Button>
           </div>
         </div>

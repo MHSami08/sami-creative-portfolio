@@ -274,7 +274,7 @@ const DeveloperSpace = () => {
               { id: 'hero', icon: Home, label: 'Hero Section' },
               { id: 'about', icon: User, label: 'About Me' },
               { id: 'services', icon: Briefcase, label: 'Services' },
-              { id: 'myaim', icon: Target, label: 'My Aim' },
+              { id: 'myAim', icon: Target, label: 'My Aim' },
               { id: 'contact', icon: MessageCircle, label: 'Contact' },
               { id: 'navigation', icon: Navigation, label: 'Navigation' },
             ].map((item) => (
@@ -510,7 +510,7 @@ const DeveloperSpace = () => {
     {(activeSection === 'hero' || 
       activeSection === 'about' || 
       activeSection === 'services' || 
-      activeSection === 'myaim' || 
+      activeSection === 'myAim' || 
       activeSection === 'contact' || 
       activeSection === 'navigation') && content && (
       <ContentEditor 
@@ -521,7 +521,7 @@ const DeveloperSpace = () => {
     )}
 
     {/* Site Settings */}
-    {activeSection === 'site-settings' && (
+    {activeSection === 'site-settings' && content && (
       <SiteSettings 
         onExport={exportContent}
         onImport={importContent}
