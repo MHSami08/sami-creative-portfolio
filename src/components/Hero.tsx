@@ -27,13 +27,13 @@ const Hero = () => {
         
         {/* Cyber-style floating elements - Hidden on small screens */}
         
-        <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-blue-500/20 backdrop-blur-lg rounded-xl border border-blue-400/30 animate-pulse shadow-lg shadow-blue-500/20">
+        <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-blue-500/20 backdrop-blur-lg rounded-xl border border-blue-400/30 shadow-lg shadow-blue-500/20">
           <Sparkles className="w-6 h-6 text-blue-400" />
         </div>
         
         {/* Additional cyber elements - Responsive */}
-          <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div> 
-        <div className="hidden md:block absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+          <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full"></div> 
+        <div className="hidden md:block absolute bottom-1/3 left-32 w-2 h-12 bg-gradient-to-t from-cyan-400/50 to-transparent rounded-full" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full">
@@ -43,9 +43,9 @@ const Hero = () => {
             {/* Islamic greeting with cyber styling */}
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
-                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400 animate-pulse" />
+                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400" />
                 <p className="text-blue-400 dark:text-blue-300 text-base sm:text-lg font-bold">{content.hero.greeting}</p>
-                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400 animate-pulse" />
+                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400" />
               </div>
             </div>
 
