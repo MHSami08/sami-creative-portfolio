@@ -145,13 +145,13 @@ const Hero = () => {
                 
         {/* Enhanced floating decorations - Responsive sizing */}
         <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 sm:w-12 h-8 sm:h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center animate-float shadow-xl shadow-blue-500/50 border border-blue-300/50 hover:scale-110 transition-transform duration-300">
-          <Sparkles className="w-4 sm:w-6 h-4 sm:h-6 text-white animate-pulse" />
+          <Sparkles className="w-4 sm:w-6 h-4 sm:h-6 text-white" />
         </div>
         <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-r from-green-400 to-green-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-xl shadow-green-500/50 border border-green-300/50 hover:scale-110 transition-transform duration-300">
           <Video className="w-3 sm:w-5 h-3 sm:h-5 text-white" />
         </div>
         <div className="absolute top-8 sm:top-12 left-4 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-amber-400 to-amber-500 rounded-md sm:rounded-lg flex items-center justify-center animate-float shadow-lg shadow-amber-500/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '2s' }}>
-          <Code className="w-3 sm:w-4 h-3 sm:h-4 text-white animate-spin" style={{ animationDuration: '8s' }} />
+          <Code className="w-3 sm:w-4 h-3 sm:h-4 text-white style={{ animationDuration: '8s' }} />
         </div>
         <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-md sm:rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/50 hover:scale-110 transition-transform duration-300">
           <Target className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
