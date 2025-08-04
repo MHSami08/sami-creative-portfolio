@@ -20,7 +20,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   if (!isOpen) return null;
 
   const getYouTubeEmbedUrl = (url: string) => {
-    if (!url || typeof url !== 'string') return null;
     const match = url.match(
       /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/
     );
@@ -28,7 +27,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
 
   const getVimeoEmbedUrl = (url: string) => {
-    if (!url || typeof url !== 'string') return null;
     const match = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
     return match ? `https://player.vimeo.com/video/${match[1]}?autoplay=1` : null;
   };
@@ -70,14 +68,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              loading="lazy"
             />
           ) : (
             <div className="w-full h-full bg-muted rounded-b-lg flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-muted-foreground mb-2">Unable to load video</p>
-                <p className="text-sm text-muted-foreground">Please check the video URL</p>
-              </div>
+              <p className="text-muted-foreground">Unable to load video</p>
             </div>
           )}
         </div>
