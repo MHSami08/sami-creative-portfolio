@@ -1,22 +1,49 @@
 
 import { BookOpen, Heart, Award, Users, Target } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { useContent } from '@/hooks/useContent';
 
 const About = () => {
-  const { content } = useContent();
-  
-  if (!content) return null;
+  const values = [
+    {
+      icon: Heart,
+      title: "Sincerity (Ikhlas)",
+      description: "Everything I do is for the sake of Allah",
+      color: "from-red-500 to-pink-500"
+    },
+    {
+      icon: Award,
+      title: "Simplicity",
+      description: "Finding beauty in modest and humble approaches",
+      color: "from-amber-500 to-orange-500"
+    },
+    {
+      icon: Target,
+      title: "Dedication",
+      description: "Committed to continuous learning and improvement",
+      color: "from-blue-500 to-blue-600"
+    }
+  ];
 
-  const values = content.about.values.map((value, index) => ({
-    ...value,
-    icon: index === 0 ? Heart : index === 1 ? Award : Target,
-    color: index === 0 ? "from-red-500 to-pink-500" : 
-           index === 1 ? "from-amber-500 to-orange-500" : 
-           "from-blue-500 to-blue-600"
-  }));
-
-  const timeline = content.about.timeline;
+  const timeline = [
+    {
+      year: "2025",
+      title: "SSC Examination",
+      description: "Successfully completed Secondary School Certificate",
+      status: "completed"
+    },
+    {
+      year: "2025",
+      title: "Learning Phase",
+      description: "Currently learning Video Editing",
+      status: "current"
+    },
+    {
+      year: "2026",
+      title: "Future Goals",
+      description: "Planning to offer Professional Editing services",
+      status: "future"
+    }
+  ];
 
   return (
     <section className="py-20 bg-gradient-to-br from-blue-50/30 via-background to-purple-50/30 dark:from-blue-900/10 dark:via-background dark:to-purple-900/10 relative overflow-hidden">
@@ -31,17 +58,22 @@ const About = () => {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
               <BookOpen className="w-5 h-5 text-blue-400" />
-              <p className="text-blue-400 dark:text-blue-300 font-amiri text-lg font-medium">{content.about.bismillah}</p>
+              <p className="text-blue-400 dark:text-blue-300 font-amiri text-lg font-medium">بسم الله الرحمن الرحيم</p>
             </div>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">{content.about.title}</span>
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">About Me</span>
           </h2>
           <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed">
-            {content.about.description.map((desc, index) => (
-              <p key={index}>{desc}</p>
-            ))}
+            <p>
+              I am an ordinary Muslim, passionate about <span className="text-blue-400 font-semibold">EDITING</span>. 
+              Though I am at the beginning of my journey, I am deeply committed to growing and sharing my creative work.
+            </p>
+            <p>
+              My goal is to create content that is both <span className="text-amber-400 font-semibold">meaningful and halal</span>, 
+              contributing positively to our community while honing my technical skills.
+            </p>
           </div>
         </div>
 
@@ -121,26 +153,21 @@ const About = () => {
 
         {/* Enhanced Stats Section */}
         <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {content.about.statsSection.map((stat, index) => {
-            const colors = [
-              { color: "from-blue-400 to-blue-500", bgColor: "from-blue-500/10 to-blue-600/10" },
-              { color: "from-purple-400 to-purple-500", bgColor: "from-purple-500/10 to-purple-600/10" },
-              { color: "from-amber-400 to-amber-500", bgColor: "from-amber-500/10 to-amber-600/10" },
-              { color: "from-emerald-400 to-emerald-500", bgColor: "from-emerald-500/10 to-emerald-600/10" }
-            ];
-            const colorScheme = colors[index % colors.length];
-            
-            return (
-              <Card key={index} className={`text-center bg-gradient-to-br ${colorScheme.bgColor} backdrop-blur-lg border border-blue-400/30 hover:shadow-xl transition-all duration-300 group hover:scale-105`}>
-                <CardContent className="p-6">
-                  <div className={`text-3xl font-bold bg-gradient-to-r ${colorScheme.color} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}>
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
-                </CardContent>
-              </Card>
-            );
-          })}
+          {[
+            { label: "Learning Hours", value: "100+", color: "from-blue-400 to-blue-500", bgColor: "from-blue-500/10 to-blue-600/10" },
+            { label: "Projects Planned", value: "5+", color: "from-purple-400 to-purple-500", bgColor: "from-purple-500/10 to-purple-600/10" },
+            { label: "Skills Growing", value: "2", color: "from-amber-400 to-amber-500", bgColor: "from-amber-500/10 to-amber-600/10" },
+            { label: "Years Ahead", value: "Many", color: "from-emerald-400 to-emerald-500", bgColor: "from-emerald-500/10 to-emerald-600/10" }
+          ].map((stat, index) => (
+            <Card key={index} className={`text-center bg-gradient-to-br ${stat.bgColor} backdrop-blur-lg border border-blue-400/30 hover:shadow-xl transition-all duration-300 group hover:scale-105`}>
+              <CardContent className="p-6">
+                <div className={`text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300`}>
+                  {stat.value}
+                </div>
+                <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

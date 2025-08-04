@@ -8,13 +8,11 @@ import Contact from '../components/Contact';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
-import { useContent } from '../hooks/useContent';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
-  const { content } = useContent();
 
   useEffect(() => {
     // Force dark mode
@@ -33,22 +31,14 @@ const Index = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    try {
     if (href === '/developer-space') {
       window.location.href = '/developer-space';
       return;
     }
     const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        console.warn('Section not found:', href);
-      }
+    element?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
     playSound('navigation');
-    } catch (error) {
-      console.error('Scroll to section error:', error);
-    }
   };
 
   // Keyboard shortcut for search (Ctrl/Cmd + K)
@@ -59,12 +49,6 @@ const Index = () => {
         setIsSearchOpen(true);
         playSound('click');
       }
-      
-      if (!href.startsWith('#')) {
-        console.warn('Invalid section href:', href);
-        return;
-      }
-      
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -80,14 +64,14 @@ const Index = () => {
           <div className="flex justify-between items-center h-12 sm:h-16">
             <div className="flex-shrink-0 min-w-0">
               <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
-                {content?.navigation.brandName || 'MH Sami'}
+                MH Sami
               </h1>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
-                {(content?.navigation.menuItems || navItems).map((item) => (
+                {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
@@ -151,7 +135,7 @@ const Index = () => {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/90 backdrop-blur-xl border-t border-emerald-400/20 rounded-b-2xl">
-                {(content?.navigation.menuItems || navItems).map((item) => (
+                {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
@@ -213,8 +197,8 @@ const Index = () => {
         <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
-              {content?.footer.copyright || '© 2025 MH Sami. All rights reserved.'}
-              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">{content?.footer.arabicText || 'جزاك الله خيرا'}</span>
+              © 2025 MH Sami. All rights reserved. 
+              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
             </p>
           </div>
         </div>
