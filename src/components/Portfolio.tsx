@@ -64,7 +64,7 @@ const Portfolio = () => {
   };
 
   const handleProjectClick = (project: VideoProject) => {
-    if (project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A') {
+    if (project.status === 'completed' && project.videoUrl && project.videoUrl.trim() !== '' && project.videoUrl !== 'N/A') {
       setSelectedVideo({ 
         url: project.videoUrl, 
         title: project.title,
@@ -111,11 +111,21 @@ const Portfolio = () => {
                 >  
                   {/* Video Thumbnail for Long Videos */}
                   <div className="relative overflow-hidden">
-                    <img 
-                      src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
-                      alt={`${project.title} thumbnail`}
-                      className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+                    {(getAutoThumbnail(project.videoUrl) || project.thumbnail) ? (
+                      <img 
+                        src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
+                        alt={`${project.title} thumbnail`}
+                        className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/640x360/1f2937/9ca3af?text=No+Image';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full aspect-video bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                        <span className="text-gray-500 dark:text-gray-400">No thumbnail available</span>
+                      </div>
+                    )}
                     {project.status === 'completed' && (
                       <div className="absolute top-3 right-3">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
@@ -243,11 +253,21 @@ const Portfolio = () => {
                 >  
                   {/* Short Video Thumbnail */}
                   <div className="relative overflow-hidden">
-                    <img 
-                      src={project.thumbnail} 
-                      alt={`${project.title} thumbnail`}
-                      className="w-full aspect-[9/16] object-cover transition-transform duration-200 group-hover:scale-102"
-                    />
+                    {project.thumbnail ? (
+                      <img 
+                        src={project.thumbnail} 
+                        alt={`${project.title} thumbnail`}
+                        className="w-full aspect-[9/16] object-cover transition-transform duration-200 group-hover:scale-102"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/360x640/1f2937/9ca3af?text=No+Image';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full aspect-[9/16] bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                        <span className="text-gray-500 dark:text-gray-400 text-sm">No thumbnail</span>
+                      </div>
+                    )}
                     {project.status === 'completed' && (
                       <div className="absolute top-2 right-2">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">

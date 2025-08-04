@@ -1,8 +1,13 @@
 
 import { Target, Users, Globe, Heart, Star, Lightbulb } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useContent } from '@/hooks/useContent';
 
 const MyAim = () => {
+  const { content } = useContent();
+  
+  if (!content) return null;
+
   return (
     <section className="py-20 bg-gradient-to-br from-emerald-50/30 via-background to-blue-50/30 dark:from-emerald-900/10 dark:via-background dark:to-blue-900/10 relative overflow-hidden">
       {/* Background effects */}
@@ -17,7 +22,7 @@ const MyAim = () => {
             <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-full border border-emerald-400/30 backdrop-blur-lg shadow-xl shadow-emerald-500/10">
               <Target className="w-6 h-6 text-emerald-400 animate-pulse" />
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                MY AIM
+                {content.myAim.title}
               </h2>
               <Target className="w-6 h-6 text-blue-400 animate-pulse" />
             </div>
@@ -35,12 +40,7 @@ const MyAim = () => {
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-xl md:text-2xl text-foreground leading-relaxed font-medium">
-                      My aim is to serve the 
-                      <span className="text-emerald-400 font-bold"> Muslim Ummah </span>
-                      with my work and skills. So that we can face challenges of the world and be a 
-                      <span className="text-blue-400 font-bold"> developed Nation </span>
-                      with 
-                      <span className="text-amber-400 font-bold"> faith and technology</span>.
+                      {content.myAim.subtitle}
                     </p>
                   </div>
                 </div>
@@ -71,42 +71,31 @@ const MyAim = () => {
 
         {/* Vision cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
-            {
-              icon: Users,
-              title: "Serve the Ummah",
-              description: "Using my skills to benefit the Muslim community worldwide",
-              color: "from-emerald-500 to-emerald-600",
-              bgColor: "from-emerald-500/10 to-emerald-600/10",
-              borderColor: "border-emerald-400/30"
-            },
-            {
-              icon: Globe,
-              title: "Global Impact",
-              description: "Contributing to making the Muslim world a developed force",
-              color: "from-blue-500 to-blue-600",
-              bgColor: "from-blue-500/10 to-blue-600/10",
-              borderColor: "border-blue-400/30"
-            },
-            {
-              icon: Lightbulb,
-              title: "Faith & Technology",
-              description: "Combining Islamic values with modern technological advancement",
-              color: "from-amber-500 to-amber-600",
-              bgColor: "from-amber-500/10 to-amber-600/10",
-              borderColor: "border-amber-400/30"
-            }
-          ].map((item, index) => (
-            <Card key={index} className={`group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${item.bgColor} backdrop-blur-lg border ${item.borderColor} hover:scale-105 hover:rotate-1`}>
-              <CardContent className="p-8 text-center">
-                <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <item.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-4">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+          {content.myAim.goals.map((goal, index) => {
+            const icons = [Users, Globe, Lightbulb];
+            const colors = [
+              { color: "from-emerald-500 to-emerald-600", bgColor: "from-emerald-500/10 to-emerald-600/10", borderColor: "border-emerald-400/30" },
+              { color: "from-blue-500 to-blue-600", bgColor: "from-blue-500/10 to-blue-600/10", borderColor: "border-blue-400/30" },
+              { color: "from-amber-500 to-amber-600", bgColor: "from-amber-500/10 to-amber-600/10", borderColor: "border-amber-400/30" }
+            ];
+            const item = {
+              ...goal,
+              icon: icons[index % icons.length],
+              ...colors[index % colors.length]
+            };
+            
+            return (
+              <Card key={index} className={`group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${item.bgColor} backdrop-blur-lg border ${item.borderColor} hover:scale-105 hover:rotate-1`}>
+                <CardContent className="p-8 text-center">
+                  <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <item.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-4">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         {/* Hadith section */}
