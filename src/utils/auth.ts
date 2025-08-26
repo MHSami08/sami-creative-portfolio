@@ -21,6 +21,12 @@ export class AuthManager {
       if (!authData) return false;
 
       const { timestamp, authenticated } = JSON.parse(authData);
+      
+      if (typeof timestamp !== 'number' || typeof authenticated !== 'boolean') {
+        this.logout();
+        return false;
+      }
+      
       const now = Date.now();
 
       // Check if session has expired
@@ -38,6 +44,10 @@ export class AuthManager {
 
   // Authenticate user
   authenticate(password: string): boolean {
+    if (!password || typeof password !== 'string') {
+      return false;
+    }
+    
     if (password === this.ADMIN_PASSWORD) {
       const authData = {
         authenticated: true,
@@ -61,11 +71,17 @@ export class AuthManager {
       if (!authData) return 0;
 
       const { timestamp } = JSON.parse(authData);
+      
+      if (typeof timestamp !== 'number') {
+        return 0;
+      }
+      
       const elapsed = Date.now() - timestamp;
       const remaining = this.SESSION_DURATION - elapsed;
 
       return Math.max(0, Math.floor(remaining / (60 * 1000)));
     } catch (error) {
+      console.error('Session time error:', error);
       return 0;
     }
   }

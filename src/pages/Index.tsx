@@ -8,11 +8,13 @@ import Contact from '../components/Contact';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
+import { useContent } from '../hooks/useContent';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
+  const { content } = useContent();
 
   useEffect(() => {
     // Force dark mode
@@ -31,14 +33,22 @@ const Index = () => {
   ];
 
   const scrollToSection = (href: string) => {
+    try {
     if (href === '/developer-space') {
       window.location.href = '/developer-space';
       return;
     }
     const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        console.warn('Section not found:', href);
+      }
     setIsMenuOpen(false);
     playSound('navigation');
+    } catch (error) {
+      console.error('Scroll to section error:', error);
+    }
   };
 
   // Keyboard shortcut for search (Ctrl/Cmd + K)
@@ -49,6 +59,12 @@ const Index = () => {
         setIsSearchOpen(true);
         playSound('click');
       }
+      
+      if (!href.startsWith('#')) {
+        console.warn('Invalid section href:', href);
+        return;
+      }
+      
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -56,28 +72,27 @@ const Index = () => {
   }, [playSound]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground smooth-scroll">
+    <div className="min-h-screen bg-background text-foreground">
       
-      {/* Enhanced Navigation with glass morphism */}
-      <nav className="fixed top-0 w-full z-50 glass-card border-b border-white/10 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-14 sm:h-18">
-            <div className="flex-shrink-0 min-w-0 animate-slide-in-left">
-              <h1 className="text-base sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent truncate animate-shimmer">
-                MH Sami
+      {/* Enhanced Navigation with better mobile layout */}
+      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-emerald-400/20 shadow-lg shadow-emerald-500/5">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-12 sm:h-16">
+            <div className="flex-shrink-0 min-w-0">
+              <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
+                {content?.navigation.brandName || 'MH Sami'}
               </h1>
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:block animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="ml-10 flex items-baseline space-x-2 lg:space-x-4">
-                {navItems.map((item, index) => (
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
+                {(content?.navigation.menuItems || navItems).map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     onMouseEnter={() => playSound('hover')}
-                    className="apple-button text-foreground hover:text-blue-400 px-3 lg:px-4 py-2 lg:py-3 rounded-xl text-sm font-medium transition-all duration-500 hover:scale-105 animate-slide-in-right"
-                    style={{ animationDelay: `${0.1 * index}s` }}
+                    className="text-foreground hover:text-emerald-400 px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-emerald-500/10"
                   >
                     {item.name}
                   </button>
@@ -85,18 +100,18 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2 sm:space-x-3 animate-scale-in" style={{ animationDelay: '0.4s' }}>
+            <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Search Button */}
               <button
                 onClick={() => {
                   setIsSearchOpen(true);
                   playSound('click');
                 }}
-                className="apple-button p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl transition-all duration-500 shadow-lg hover:shadow-2xl group animate-glow-pulse"
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Search (Ctrl+K)"
                 title="Search (Ctrl+K)"
               >
-                <Search className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-400 group-hover:scale-125 transition-all duration-300" />
+                <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
               </button>
 
               {/* Sound Toggle */}
@@ -105,14 +120,14 @@ const Index = () => {
                   const newState = toggleSound();
                   playSound('click');
                 }}
-                className="apple-button p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl transition-all duration-500 shadow-lg hover:shadow-2xl group"
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
                 aria-label="Toggle sound effects"
                 title="Toggle sound effects"
               >
                 {soundEnabled ? (
-                  <Volume2 className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-purple-400 group-hover:scale-125 transition-all duration-300 animate-pulse-scale" />
+                  <Volume2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
                 ) : (
-                  <VolumeX className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-gray-400 group-hover:scale-125 transition-all duration-300" />
+                  <VolumeX className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-gray-400 group-hover:scale-110 transition-transform duration-300" />
                 )}
               </button>
 
@@ -124,12 +139,9 @@ const Index = () => {
                     setIsMenuOpen(!isMenuOpen);
                     playSound('click');
                   }}
-                  className="apple-button p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-500 shadow-lg group"
+                  className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg"
                 >
-                  {isMenuOpen ? 
-                    <X className="h-4 w-4 sm:h-5 sm:w-5 text-pink-400 group-hover:scale-125 transition-all duration-300 animate-pulse-scale" /> : 
-                    <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 group-hover:scale-125 transition-all duration-300" />
-                  }
+                  {isMenuOpen ? <X className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400" /> : <Menu className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-emerald-400" />}
                 </button>
               </div>
             </div>
@@ -137,14 +149,13 @@ const Index = () => {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden animate-slide-in-right">
-              <div className="px-3 pt-3 pb-4 space-y-2 sm:px-4 glass-card border-t border-white/10 rounded-b-3xl">
-                {navItems.map((item, index) => (
+            <div className="md:hidden">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/90 backdrop-blur-xl border-t border-emerald-400/20 rounded-b-2xl">
+                {(content?.navigation.menuItems || navItems).map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="apple-button text-foreground hover:text-blue-400 block px-5 py-4 rounded-2xl text-base font-medium w-full text-left transition-all duration-500 hover:scale-105 animate-fade-in-up"
-                    style={{ animationDelay: `${0.05 * index}s` }}
+                    className="text-foreground hover:text-emerald-400 block px-4 py-3 rounded-xl text-base font-medium w-full text-left transition-all duration-300 hover:bg-emerald-500/10"
                   >
                     {item.name}
                   </button>
@@ -157,10 +168,9 @@ const Index = () => {
                     setIsMenuOpen(false);
                     playSound('click');
                   }}
-                  className="apple-button text-foreground hover:text-purple-400 flex items-center gap-4 px-5 py-4 rounded-2xl text-base font-medium w-full text-left transition-all duration-500 hover:scale-105 animate-fade-in-up"
-                  style={{ animationDelay: `${0.05 * navItems.length}s` }}
+                  className="text-foreground hover:text-emerald-400 flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium w-full text-left transition-all duration-300 hover:bg-emerald-500/10"
                 >
-                  <Search className="h-5 w-5 animate-pulse-scale" />
+                  <Search className="h-5 w-5" />
                   Search
                 </button>
               </div>
@@ -176,36 +186,35 @@ const Index = () => {
       />
 
       {/* Main Content */}
-      <main className="pt-14 sm:pt-18">
+      <main className="pt-12 sm:pt-16">
         
-        <section id="home" className="animate-fade-in">
+        <section id="home">
           <Hero />
         </section>
-        <section id="portfolio" className="py-12 sm:py-20 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+        <section id="portfolio" className="py-8 sm:py-16">
           <Portfolio />
         </section>
-        <section id="about" className="py-12 sm:py-20 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+        <section id="about" className="py-8 sm:py-16">
           <About />
         </section>
-        <section id="myaim" className="py-12 sm:py-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+        <section id="myaim" className="py-8 sm:py-16">
           <MyAim />
         </section>
-        <section id="services" className="py-12 sm:py-20 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+        <section id="services" className="py-8 sm:py-16">
           <Services />
         </section>
-        <section id="contact" className="py-12 sm:py-20 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+        <section id="contact" className="py-8 sm:py-16">
           <Contact />
         </section>
       </main>
 
-      {/* Footer with glass morphism */}
-      <footer className="glass-card border-t border-white/10 animate-fade-in-up">
-        <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-4">
-            <div className="w-16 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-full mx-auto animate-shimmer"></div>
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-emerald-900/10 to-blue-900/10 border-t border-emerald-400/20 backdrop-blur-lg">
+        <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
-              © 2025 MH Sami. All rights reserved. 
-              <span className="block sm:inline text-amber-400 font-amiri ml-0 sm:ml-2 mt-2 sm:mt-0 animate-glow-pulse">جزاك الله خيرا</span>
+              {content?.footer.copyright || '© 2025 MH Sami. All rights reserved.'}
+              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">{content?.footer.arabicText || 'جزاك الله خيرا'}</span>
             </p>
           </div>
         </div>
