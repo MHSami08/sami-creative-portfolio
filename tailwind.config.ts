@@ -176,18 +176,20 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
 				'accordion-up': 'accordion-up 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-				'fade-in': 'fade-in 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-				'fade-in-up': 'fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-in-left': 'slide-in-left 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-				'slide-in-right': 'slide-in-right 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
-				'scale-in': 'scale-in 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-				'float': 'float 8s ease-in-out infinite',
-				'morph': 'morph 10s ease-in-out infinite',
-				'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
-				'shimmer': 'shimmer 2s linear infinite',
-				'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
-				'pulse-scale': 'pulse-scale 2s ease-in-out infinite',
-				'glass-morph': 'glass-morph 4s ease-in-out infinite'
+				'fade-in': 'fade-in 1s cubic-bezier(0.4, 0, 0.2, 1)',
+				'fade-in-up': 'fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-in-left': 'slide-in-left 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
+				'slide-in-right': 'slide-in-right 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
+				'scale-in': 'scale-in 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+				'rotate-3d': 'rotate-3d 15s ease-in-out infinite',
+				'float-3d': 'float-3d 6s ease-in-out infinite',
+				'glow-pulse-3d': 'glow-pulse-3d 4s ease-in-out infinite',
+				'shimmer-3d': 'shimmer-3d 3s linear infinite',
+				'bounce-3d': 'bounce-3d 2s ease-in-out infinite',
+				'pulse-scale-3d': 'pulse-scale-3d 3s ease-in-out infinite',
+				'card-hover-3d': 'card-hover-3d 0.3s ease-out forwards',
+				'video-scroll': 'video-scroll 20s linear infinite',
+				'interactive-float': 'interactive-float 8s ease-in-out infinite'
 			}
 		}
 	},
