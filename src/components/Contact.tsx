@@ -26,6 +26,30 @@ const Contact = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form data
+    if (!formData.name.trim()) {
+      alert('Please enter your name');
+      return;
+    }
+    
+    if (!formData.email.trim()) {
+      alert('Please enter your email');
+      return;
+    }
+    
+    if (!formData.message.trim()) {
+      alert('Please enter your message');
+      return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -44,7 +68,7 @@ const Contact = () => {
       setTimeout(() => setIsSubmitted(false), 3000);
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      console.error('Email send error:', error);
       alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);

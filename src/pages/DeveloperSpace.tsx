@@ -116,6 +116,25 @@ const DeveloperSpace = () => {
 
   const handleSaveProject = (projectData: any) => {
     try {
+      // Validate required fields
+      if (!projectData.title?.trim()) {
+        toast({
+          title: "Validation Error",
+          description: "Project title is required",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!projectData.description?.trim()) {
+        toast({
+          title: "Validation Error", 
+          description: "Project description is required",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const tools = typeof projectData.tools === 'string' 
         ? projectData.tools.split(',').map((tool: string) => tool.trim()).filter(Boolean)
         : projectData.tools;
@@ -131,13 +150,19 @@ const DeveloperSpace = () => {
       };
 
       if (projectToSave.id && projects.find(p => p.id === projectToSave.id)) {
-        updateProject(projectToSave.id, projectToSave);
+        const updated = updateProject(projectToSave.id, projectToSave);
+        if (!updated) {
+          throw new Error('Failed to update project');
+        }
         toast({
           title: "Project Updated",
           description: "Your changes have been saved and will appear in the portfolio",
         });
       } else {
-        addProject(projectToSave);
+        const created = addProject(projectToSave);
+        if (!created) {
+          throw new Error('Failed to create project');
+        }
         toast({
           title: "Project Created",
           description: "New project has been added to your portfolio",
@@ -147,9 +172,10 @@ const DeveloperSpace = () => {
       setIsEditing(false);
       setEditingProject(null);
     } catch (error) {
+      console.error('Save project error:', error);
       toast({
         title: "Error",
-        description: "Failed to save project. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to save project. Please try again.",
         variant: "destructive",
       });
     }

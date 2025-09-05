@@ -311,16 +311,29 @@ class ContentManager {
 
   importContent(contentJson: string): void {
     try {
+      if (!contentJson || typeof contentJson !== 'string') {
+        throw new Error('Invalid content format');
+      }
+      
       const imported = JSON.parse(contentJson);
       // Validate the imported content has the required structure
       if (!imported || typeof imported !== 'object') {
         throw new Error('Invalid content structure');
       }
+      
+      // Validate required sections exist
+      const requiredSections = ['navigation', 'hero', 'about', 'services', 'contact', 'myAim'];
+      for (const section of requiredSections) {
+        if (!imported[section]) {
+          console.warn(`Missing section: ${section}, using default`);
+        }
+      }
+      
       this.content = { ...defaultContent, ...imported };
       this.saveContent();
     } catch (error) {
       console.error('Import error:', error);
-      throw new Error('Invalid content format. Please ensure you are importing a valid JSON file.');
+      throw new Error(`Import failed: ${error instanceof Error ? error.message : 'Invalid content format'}`);
     }
   }
 }

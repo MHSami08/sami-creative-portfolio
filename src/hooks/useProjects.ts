@@ -20,15 +20,30 @@ export const useProjects = () => {
   }, [projectManager]);
 
   const addProject = (projectData: Omit<VideoProject, 'id' | 'createdAt' | 'updatedAt'>) => {
-    return projectManager.addProject(projectData);
+    try {
+      return projectManager.addProject(projectData);
+    } catch (error) {
+      console.error('Add project error:', error);
+      throw error;
+    }
   };
 
   const updateProject = (id: number, updates: Partial<VideoProject>) => {
-    return projectManager.updateProject(id, updates);
+    try {
+      return projectManager.updateProject(id, updates);
+    } catch (error) {
+      console.error('Update project error:', error);
+      throw error;
+    }
   };
 
   const deleteProject = (id: number) => {
-    return projectManager.deleteProject(id);
+    try {
+      return projectManager.deleteProject(id);
+    } catch (error) {
+      console.error('Delete project error:', error);
+      return false;
+    }
   };
 
   const getProjectsByCategory = (category: 'long' | 'short') => {
