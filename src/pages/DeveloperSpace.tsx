@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw, Home, User, Briefcase, MessageCircle, Target, Navigation, Palette, Globe, FileText, Download, Upload, Menu } from 'lucide-react';
+import { ArrowLeft, Plus, Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, BarChart3, Settings, LogOut, Play, RotateCcw, Home, User, Briefcase, MessageCircle, Target, Navigation, Palette, Globe, FileText, Download, Upload, Menu, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,6 +16,7 @@ import { SiteContent } from '@/utils/contentManager';
 import ContentEditor from '@/components/ContentEditor';
 import SiteSettings from '@/components/SiteSettings';
 import { useIsMobile } from '@/hooks/use-mobile';
+import VideoPlayer from '@/components/VideoPlayer';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
@@ -68,6 +69,8 @@ const DeveloperSpace = () => {
   const handleLogout = () => {
     auth.logout();
     setPassword('');
+    setActiveSection('dashboard');
+    setSidebarOpen(false);
     toast({
       title: "Logged Out",
       description: "You have been logged out successfully",
@@ -411,7 +414,13 @@ const DeveloperSpace = () => {
               Add Project
             </Button>
             
-            <Button variant="outline" onClick={() => window.location.href = '/'} className="border-blue-400/30">
+            <Button 
+              variant="outline" 
+              onClick={() => {
+                window.open('/', '_blank');
+              }} 
+              className="border-blue-400/30"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Portfolio
             </Button>
@@ -420,9 +429,13 @@ const DeveloperSpace = () => {
               variant="outline" 
               onClick={() => {
                 if (confirm('This will reset all projects to defaults. Continue?')) {
-                  const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
+                  const { ProjectManager } = require('@/utils/projectManager');
+                  const projectManager = ProjectManager.getInstance();
                   projectManager.resetToDefaults();
-                  window.location.reload();
+                  toast({
+                    title: "Projects Reset",
+                    description: "All projects have been reset to defaults",
+                  });
                 }
               }}
               className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
@@ -678,6 +691,19 @@ const ProjectEditor = ({
     };
     
     onSave(processedData as VideoProject);
+  };
+
+  const handlePlayVideo = (videoUrl: string, title: string) => {
+    if (videoUrl && videoUrl !== 'N/A') {
+      setCurrentVideo({ url: videoUrl, title });
+      setVideoPlayerOpen(true);
+    } else {
+      toast({
+        title: "No Video Available",
+        description: "This project doesn't have a video URL set",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleChange = (field: string, value: string) => {
