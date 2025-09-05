@@ -9,6 +9,7 @@ import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 import { useContent } from '../hooks/useContent';
+import LanguageToggle from '@/components/LanguageToggle';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,12 +60,6 @@ const Index = () => {
         setIsSearchOpen(true);
         playSound('click');
       }
-      
-      if (!href.startsWith('#')) {
-        console.warn('Invalid section href:', href);
-        return;
-      }
-      
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -113,6 +108,11 @@ const Index = () => {
               >
                 <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
               </button>
+
+              {/* Language Toggle (Desktop) */}
+              <div className="hidden md:block">
+                <LanguageToggle />
+              </div>
 
               {/* Sound Toggle */}
               <button
