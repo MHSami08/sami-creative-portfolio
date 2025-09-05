@@ -7,13 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import emailjs from '@emailjs/browser';
-import { useContent } from '@/hooks/useContent';
 
 const Contact = () => {
-  const { content } = useContent();
-  
-  if (!content) return null;
-
   // State for form handling
   const [formData, setFormData] = useState({
     name: '',
@@ -26,30 +21,6 @@ const Contact = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate form data
-    if (!formData.name.trim()) {
-      alert('Please enter your name');
-      return;
-    }
-    
-    if (!formData.email.trim()) {
-      alert('Please enter your email');
-      return;
-    }
-    
-    if (!formData.message.trim()) {
-      alert('Please enter your message');
-      return;
-    }
-    
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      alert('Please enter a valid email address');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -68,7 +39,7 @@ const Contact = () => {
       setTimeout(() => setIsSubmitted(false), 3000);
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('Email send error:', error);
+      console.error('EmailJS Error:', error);
       alert('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -147,11 +118,12 @@ const Contact = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              {content.contact.title}
+              Let's Connect
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            {content.contact.subtitle}
+            I'd love to hear from you! Whether you have a project idea, want to collaborate, 
+            or just want to say hello, feel free to reach out.
           </p>
         </div>
 
@@ -179,7 +151,7 @@ const Contact = () => {
                   {/* Name Input */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      {content.contact.formLabels.name} *
+                      Full Name *
                     </label>
                     <Input
                       id="name"
@@ -196,7 +168,7 @@ const Contact = () => {
                   {/* Email Input */}
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      {content.contact.formLabels.email} *
+                      Email Address *
                     </label>
                     <Input
                       id="email"
@@ -213,7 +185,7 @@ const Contact = () => {
                   {/* Message Input */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                      {content.contact.formLabels.message} *
+                      Message *
                     </label>
                     <Textarea
                       id="message"
@@ -234,7 +206,7 @@ const Contact = () => {
                     className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 text-lg rounded-xl font-semibold shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/30"
                   >
                     <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    {isSubmitting ? 'Sending...' : content.contact.formLabels.submit}
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}
