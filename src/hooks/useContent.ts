@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import ContentManager, { SiteContent } from '@/utils/contentManager';
-import { getLocalizedContent, subscribeLanguage } from '@/i18n/i18n';
 
 export const useContent = () => {
   const [content, setContent] = useState<SiteContent | null>(null);
@@ -8,21 +7,16 @@ export const useContent = () => {
   const contentManager = ContentManager.getInstance();
 
   useEffect(() => {
-    const update = () => setContent(getLocalizedContent(contentManager.getContent()));
-
     // Initial load
-    update();
+    setContent(contentManager.getContent());
     setLoading(false);
 
-    // Subscribe to content changes
-    const unsubscribeContent = contentManager.subscribe(() => update());
-    // Subscribe to language changes
-    const unsubscribeLang = subscribeLanguage(() => update());
+    // Subscribe to changes
+    const unsubscribe = contentManager.subscribe((updatedContent) => {
+      setContent(updatedContent);
+    });
 
-    return () => {
-      unsubscribeContent();
-      unsubscribeLang();
-    };
+    return unsubscribe;
   }, [contentManager]);
 
   const updateSection = (section: keyof SiteContent, data: any) => {
@@ -47,6 +41,6 @@ export const useContent = () => {
     updateSection,
     resetToDefaults,
     exportContent,
-    importContent,
+    importContent
   };
 };
