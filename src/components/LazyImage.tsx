@@ -17,15 +17,9 @@ const LazyImage: React.FC<LazyImageProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (!src) {
-      setHasError(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -45,21 +39,15 @@ const LazyImage: React.FC<LazyImageProps> = ({
 
   const handleLoad = () => {
     setIsLoaded(true);
-    setHasError(false);
     onLoad?.();
-  };
-
-  const handleError = () => {
-    setHasError(true);
-    setIsLoaded(false);
   };
 
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
       {/* Placeholder */}
-      {(!isLoaded || hasError) && (
+      {!isLoaded && (
         <img
-          src={hasError ? 'https://via.placeholder.com/320x180/f7f7f7/999999?text=Image+Not+Found' : placeholder}
+          src={placeholder}
           alt=""
           className="absolute inset-0 w-full h-full object-cover filter blur-sm opacity-50"
           aria-hidden="true"
@@ -67,7 +55,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
       )}
       
       {/* Actual image */}
-      {isInView && !hasError && (
+      {isInView && (
         <img
           src={src}
           alt={alt}
@@ -75,7 +63,6 @@ const LazyImage: React.FC<LazyImageProps> = ({
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           onLoad={handleLoad}
-          onError={handleError}
           loading="lazy"
           decoding="async"
         />

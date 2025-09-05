@@ -33,22 +33,14 @@ const Index = () => {
   ];
 
   const scrollToSection = (href: string) => {
-    try {
     if (href === '/developer-space') {
       window.location.href = '/developer-space';
       return;
     }
     const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        console.warn('Section not found:', href);
-      }
+    element?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
     playSound('navigation');
-    } catch (error) {
-      console.error('Scroll to section error:', error);
-    }
   };
 
   // Keyboard shortcut for search (Ctrl/Cmd + K)
@@ -59,12 +51,6 @@ const Index = () => {
         setIsSearchOpen(true);
         playSound('click');
       }
-      
-      if (!href.startsWith('#')) {
-        console.warn('Invalid section href:', href);
-        return;
-      }
-      
     };
 
     document.addEventListener('keydown', handleKeyDown);

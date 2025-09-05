@@ -178,14 +178,9 @@ export class ProjectManager {
 
   // Add new project
   addProject(projectData: Omit<VideoProject, 'id' | 'createdAt' | 'updatedAt'>): VideoProject {
-    // Validate required fields
-    if (!projectData.title || !projectData.description) {
-      throw new Error('Title and description are required');
-    }
-
     const newProject: VideoProject = {
       ...projectData,
-      id: Date.now() + Math.random(), // Ensure unique ID
+      id: Date.now(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -199,11 +194,6 @@ export class ProjectManager {
   updateProject(id: number, updates: Partial<VideoProject>): VideoProject | null {
     const index = this.projects.findIndex(project => project.id === id);
     if (index === -1) return null;
-
-    // Validate updates
-    if (updates.title !== undefined && !updates.title.trim()) {
-      throw new Error('Title cannot be empty');
-    }
 
     this.projects[index] = {
       ...this.projects[index],
