@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Search, Volume2, VolumeX } from 'lucide-react';
-import Hero from '../components/Hero';
+import { Menu, X, Search, Volume2, VolumeX, Globe } from 'lucide-react';
+import CinematicHero from '../components/CinematicHero';
 import About from '../components/About';
-import Portfolio from '../components/Portfolio';
-import Services from '../components/Services';
-import Contact from '../components/Contact';
+import VideoShowcase from '../components/VideoShowcase';
+import CaseStudies from '../components/CaseStudies';
+import TestimonialsCarousel from '../components/TestimonialsCarousel';
+import PremiumServices from '../components/PremiumServices';
+import ContactBooking from '../components/ContactBooking';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
 import { useSoundEffects } from '../hooks/useSoundEffects';
@@ -12,6 +14,7 @@ import { useSoundEffects } from '../hooks/useSoundEffects';
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [language, setLanguage] = useState<'en' | 'bn'>('en');
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
 
   useEffect(() => {
@@ -20,15 +23,28 @@ const Index = () => {
     localStorage.setItem('theme', 'dark');
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'About', href: '#about' },
-    { name: 'My Aim', href: '#myaim' },
-    { name: 'Services', href: '#services' },
-    { name: 'Contact', href: '#contact' },
-    { name: "Developer's Space", href: '/developer-space' },
-  ];
+  const navItems = {
+    en: [
+      { name: 'Home', href: '#home' },
+      { name: 'Portfolio', href: '#portfolio' },
+      { name: 'Case Studies', href: '#case-studies' },
+      { name: 'Testimonials', href: '#testimonials' },
+      { name: 'Services', href: '#services' },
+      { name: 'Contact', href: '#contact' },
+      { name: "Developer's Space", href: '/developer-space' },
+    ],
+    bn: [
+      { name: 'হোম', href: '#home' },
+      { name: 'পোর্টফোলিও', href: '#portfolio' },
+      { name: 'কেস স্টাডি', href: '#case-studies' },
+      { name: 'প্রশংসাপত্র', href: '#testimonials' },
+      { name: 'সেবা', href: '#services' },
+      { name: 'যোগাযোগ', href: '#contact' },
+      { name: "ডেভেলপার স্পেস", href: '/developer-space' },
+    ]
+  };
+
+  const currentNavItems = navItems[language];
 
   const scrollToSection = (href: string) => {
     if (href === '/developer-space') {
@@ -71,7 +87,7 @@ const Index = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
-                {navItems.map((item) => (
+                {currentNavItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
@@ -85,6 +101,20 @@ const Index = () => {
             </div>
 
             <div className="flex items-center space-x-1 sm:space-x-2">
+              {/* Language Toggle */}
+              <button
+                onClick={() => {
+                  setLanguage(prev => prev === 'en' ? 'bn' : 'en');
+                  playSound('click');
+                }}
+                className="p-1.5 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-500/10 to-blue-500/10 hover:from-emerald-500/20 hover:to-blue-500/20 transition-all duration-300 border border-emerald-400/30 backdrop-blur-lg shadow-lg hover:shadow-xl group"
+                aria-label="Toggle language"
+                title={`Switch to ${language === 'en' ? 'Bangla' : 'English'}`}
+              >
+                <Globe className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                <span className="ml-1 text-xs font-medium text-emerald-400">{language.toUpperCase()}</span>
+              </button>
+
               {/* Search Button */}
               <button
                 onClick={() => {
@@ -135,7 +165,7 @@ const Index = () => {
           {isMenuOpen && (
             <div className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-background/90 backdrop-blur-xl border-t border-emerald-400/20 rounded-b-2xl">
-                {navItems.map((item) => (
+                {currentNavItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
@@ -170,36 +200,52 @@ const Index = () => {
       />
 
       {/* Main Content */}
-      <main className="pt-12 sm:pt-16">
-        
+      <main className="pt-0">
         <section id="home">
-          <Hero />
+          <CinematicHero language={language} />
         </section>
-        <section id="portfolio" className="py-8 sm:py-16">
-          <Portfolio />
-        </section>
+        
+        <VideoShowcase language={language} />
+        
+        <CaseStudies language={language} />
+        
+        <TestimonialsCarousel language={language} />
+        
         <section id="about" className="py-8 sm:py-16">
           <About />
         </section>
+        
         <section id="myaim" className="py-8 sm:py-16">
           <MyAim />
         </section>
-        <section id="services" className="py-8 sm:py-16">
-          <Services />
-        </section>
-        <section id="contact" className="py-8 sm:py-16">
-          <Contact />
-        </section>
+        
+        <PremiumServices language={language} />
+        
+        <ContactBooking language={language} />
       </main>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-r from-emerald-900/10 to-blue-900/10 border-t border-emerald-400/20 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gradient-to-r from-gray-900 to-black border-t border-gray-700">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-sm sm:text-base text-muted-foreground">
-              © 2025 MH Sami. All rights reserved. 
-              <span className="block sm:inline text-amber-300 font-amiri ml-0 sm:ml-2 mt-1 sm:mt-0">جزاك الله خيرا</span>
-            </p>
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent mb-2">
+                MH Sami
+              </h3>
+              <p className="text-gray-400">
+                {language === 'en' 
+                  ? 'Cinematic Video Editor' 
+                  : 'সিনেমাটিক ভিডিও এডিটর'
+                }
+              </p>
+            </div>
+            
+            <div className="border-t border-gray-700 pt-6">
+              <p className="text-sm text-gray-400">
+                © 2025 MH Sami. {language === 'en' ? 'All rights reserved.' : 'সকল অধিকার সংরক্ষিত।'}
+              </p>
+              <p className="text-amber-300 font-amiri mt-2">جزاك الله خيرا</p>
+            </div>
           </div>
         </div>
       </footer>
