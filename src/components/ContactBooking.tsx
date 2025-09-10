@@ -48,10 +48,10 @@ const ContactBooking = ({ language }: ContactBookingProps) => {
       },
       budgets: {
         placeholder: "Select budget range",
-        basic: "$200 - $500",
-        premium: "$500 - $1000",
-        cinematic: "$1000 - $2000",
-        custom: "$2000+"
+        basic: "৳15,000 - ৳40,000",
+        premium: "৳40,000 - ৳80,000",
+        cinematic: "৳80,000 - ৳1,60,000",
+        custom: "৳1,60,000+"
       },
       timelines: {
         placeholder: "When do you need this?",
@@ -92,10 +92,10 @@ const ContactBooking = ({ language }: ContactBookingProps) => {
       },
       budgets: {
         placeholder: "বাজেট রেঞ্জ নির্বাচন করুন",
-        basic: "২০০ - ৫০০ ডলার",
-        premium: "৫০০ - ১০০০ ডলার",
-        cinematic: "১০০০ - ২০০০ ডলার",
-        custom: "২০০০+ ডলার"
+        basic: "৳১৫,০০০ - ৳৪০,০০০",
+        premium: "৳৪০,০০০ - ৳৮০,০০০",
+        cinematic: "৳৮০,০০০ - ৳১,৬০,০০০",
+        custom: "৳১,৬০,০০০+"
       },
       timelines: {
         placeholder: "কখন প্রয়োজন?",

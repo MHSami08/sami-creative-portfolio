@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, Send, CheckCircle } from 'lucide-react';
 import { FaFacebook, FaYoutube, FaTiktok } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
@@ -107,7 +107,7 @@ const Contact = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-emerald-50/30 via-background to-blue-50/30 dark:from-emerald-900/10 dark:via-background dark:to-blue-900/10 relative overflow-hidden">
+    <section className="py-12 sm:py-20 bg-gradient-to-br from-emerald-50/30 via-background to-blue-50/30 dark:from-emerald-900/10 dark:via-background dark:to-blue-900/10 relative overflow-hidden">
       {/* Background pattern - decorative elements */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#10b981/05_1px,transparent_1px),linear-gradient(to_bottom,#10b981/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       <div className="absolute top-10 right-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl animate-float"></div>
@@ -116,22 +116,22 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
               Let's Connect
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
             I'd love to hear from you! Whether you have a project idea, want to collaborate, 
             or just want to say hello, feel free to reach out.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Contact Form Section */}
-          <Card className="bg-gradient-to-br from-emerald-500/5 to-blue-500/5 backdrop-blur-xl border border-emerald-400/30 shadow-2xl shadow-emerald-500/10">
+          <Card className="bg-gradient-to-br from-emerald-500/5 to-blue-500/5 backdrop-blur-xl border border-emerald-400/30 shadow-2xl shadow-emerald-500/10 order-2 lg:order-1">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-center">
                 <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
                   Send a Message
                 </span>
@@ -140,9 +140,9 @@ const Contact = () => {
             <CardContent>
               {/* Success message display */}
               {isSubmitted ? (
-                <div className="text-center py-8">
+                <div className="text-center py-6 sm:py-8">
                   <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
-                  <h3 className="text-xl font-semibold text-emerald-600 mb-2">Message Sent!</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-emerald-600 mb-2">Message Sent!</h3>
                   <p className="text-muted-foreground">جزاك الله خيرا! I'll get back to you soon, Insha'Allah.</p>
                 </div>
               ) : (
@@ -203,7 +203,7 @@ const Contact = () => {
                   <Button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 text-lg rounded-xl font-semibold shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/30"
+                    className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/30"
                   >
                     <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     {isSubmitting ? 'Sending...' : 'Send Message'}
@@ -214,14 +214,14 @@ const Contact = () => {
           </Card>
 
           {/* Contact Information Section */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
             <div>
-              <h3 className="text-3xl font-bold mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left">
                 <span className="bg-gradient-to-r from-amber-400 to-emerald-500 bg-clip-text text-transparent">
                   Get In Touch
                 </span>
               </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 text-center lg:text-left px-4 lg:px-0">
                 I'm always excited to discuss new projects and opportunities. 
                 Whether you're looking for video editing services or just want to connect, 
                 I'm here to help, بإذن الله.
@@ -229,11 +229,11 @@ const Contact = () => {
             </div>
 
             {/* Social Media Cards - Now fully clickable */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               {contactInfo.map((info, index) => (
                 <Card 
                   key={index} 
-                  className={`group transition-all duration-300 bg-gradient-to-r ${info.bgColor} backdrop-blur-lg border ${info.borderColor} cursor-pointer transform hover:scale-[1.01] hover:shadow-xl hover:shadow-${info.glowColor} ${info.link ? 'hover:' + info.glowColor : ''} ${info.link ? 'dark:hover:shadow-lg' : ''}`}
+                  className={`group transition-all duration-300 bg-gradient-to-r ${info.bgColor} backdrop-blur-lg border ${info.borderColor} ${info.link ? 'cursor-pointer' : 'cursor-default'} transform hover:scale-[1.01] hover:shadow-xl`}
                   onClick={() => handleCardClick(info.link)}
                   role={info.link ? "button" : "presentation"}
                   tabIndex={info.link ? 0 : -1}
@@ -246,18 +246,18 @@ const Contact = () => {
                   }}
                   aria-label={info.link ? `Visit ${info.title} profile` : `${info.title} information`}
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center gap-4">
                       {/* Icon with improved styling */}
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                        <info.icon size={28} className="text-white" />
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-r ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                        <info.icon size={24} className="text-white sm:w-7 sm:h-7" />
                       </div>
                       {/* Content section */}
                       <div className="flex-1">
-                        <h4 className="font-bold text-gray-800 dark:text-gray-100 text-lg group-hover:text-primary transition-colors duration-300">
+                        <h4 className="font-bold text-gray-800 dark:text-gray-100 text-base sm:text-lg group-hover:text-primary transition-colors duration-300">
                           {info.title}
                         </h4>
-                        <p className={`font-medium transition-colors duration-300 ${info.link ? 'text-gray-700 dark:text-gray-200 group-hover:text-primary' : 'text-gray-600 dark:text-gray-300'}`}>
+                        <p className={`font-medium transition-colors duration-300 text-sm sm:text-base ${info.link ? 'text-gray-700 dark:text-gray-200 group-hover:text-primary' : 'text-gray-600 dark:text-gray-300'}`}>
                           {info.value}
                         </p>
                       </div>
@@ -274,10 +274,10 @@ const Contact = () => {
             </div>
 
             {/* Response Time Card with improved styling */}
-            <Card className="bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-lg border border-amber-400/30 shadow-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
-              <CardContent className="p-6">
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Response Time</h4>
-                <p className="text-gray-700 dark:text-gray-200">
+            <Card className="bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-lg border border-amber-400/30 shadow-lg hover:shadow-xl hover:shadow-amber-400/20 transition-all duration-300 hover:scale-[1.01]">
+              <CardContent className="p-4 sm:p-6">
+                <h4 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Response Time</h4>
+                <p className="text-gray-700 dark:text-gray-200 text-sm sm:text-base">
                   I typically respond within 24-48 hours, Insha'Allah. 
                   For urgent matters, please mention it in your message.
                 </p>
@@ -285,17 +285,17 @@ const Contact = () => {
             </Card>
 
             {/* Islamic Quote Section - Enhanced Arabic typography and colors */}
-            <div className="text-center p-6 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-2xl border border-amber-400/30 backdrop-blur-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-2xl border border-amber-400/30 backdrop-blur-lg hover:shadow-xl hover:shadow-amber-400/20 transition-all duration-300 hover:scale-[1.01]">
               {/* Arabic text with improved font and contrast */}
-              <p className="text-amber-600 dark:text-amber-300 font-amiri text-2xl font-bold mb-3 tracking-wide leading-relaxed" dir="rtl">
+              <p className="text-amber-600 dark:text-amber-300 font-amiri text-xl sm:text-2xl font-bold mb-3 tracking-wide leading-relaxed" dir="rtl">
                 وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ
               </p>
               {/* English translation */}
-              <p className="text-base text-gray-700 dark:text-gray-200 font-medium">
+              <p className="text-sm sm:text-base text-gray-700 dark:text-gray-200 font-medium">
                 "And my success is not but through Allah"
               </p>
               {/* Additional Islamic greeting */}
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 italic">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-2 italic">
                 May Allah bless our connection
               </p>
             </div>

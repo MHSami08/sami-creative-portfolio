@@ -3,9 +3,6 @@ import { Menu, X, Search, Volume2, VolumeX, Globe } from 'lucide-react';
 import CinematicHero from '../components/CinematicHero';
 import About from '../components/About';
 import VideoShowcase from '../components/VideoShowcase';
-import CaseStudies from '../components/CaseStudies';
-import TestimonialsCarousel from '../components/TestimonialsCarousel';
-import PremiumServices from '../components/PremiumServices';
 import ContactBooking from '../components/ContactBooking';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
@@ -27,18 +24,16 @@ const Index = () => {
     en: [
       { name: 'Home', href: '#home' },
       { name: 'Portfolio', href: '#portfolio' },
-      { name: 'Case Studies', href: '#case-studies' },
-      { name: 'Testimonials', href: '#testimonials' },
-      { name: 'Services', href: '#services' },
+      { name: 'About', href: '#about' },
+      { name: 'My Aim', href: '#myaim' },
       { name: 'Contact', href: '#contact' },
       { name: "Developer's Space", href: '/developer-space' },
     ],
     bn: [
       { name: 'হোম', href: '#home' },
       { name: 'পোর্টফোলিও', href: '#portfolio' },
-      { name: 'কেস স্টাডি', href: '#case-studies' },
-      { name: 'প্রশংসাপত্র', href: '#testimonials' },
-      { name: 'সেবা', href: '#services' },
+      { name: 'আমার সম্পর্কে', href: '#about' },
+      { name: 'আমার লক্ষ্য', href: '#myaim' },
       { name: 'যোগাযোগ', href: '#contact' },
       { name: "ডেভেলপার স্পেস", href: '/developer-space' },
     ]
@@ -207,10 +202,6 @@ const Index = () => {
         
         <VideoShowcase language={language} />
         
-        <CaseStudies language={language} />
-        
-        <TestimonialsCarousel language={language} />
-        
         <section id="about" className="py-8 sm:py-16">
           <About />
         </section>
@@ -219,9 +210,9 @@ const Index = () => {
           <MyAim />
         </section>
         
-        <PremiumServices language={language} />
-        
-        <ContactBooking language={language} />
+        <section id="contact" className="py-8 sm:py-16">
+          <ContactBooking language={language} />
+        </section>
       </main>
 
       {/* Footer */}

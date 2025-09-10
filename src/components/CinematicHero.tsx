@@ -13,8 +13,8 @@ const CinematicHero = ({ language }: CinematicHeroProps) => {
   const content = {
     en: {
       greeting: "Assalamu Alaikum",
-      title: "Turning raw footage into",
-      subtitle: "cinematic stories",
+      title: "MH Sami",
+      subtitle: "Video Editor & Content Creator",
       description: "A passionate video editor creating meaningful content following Islamic principles",
       watchShowreel: "Watch Showreel",
       hireMe: "Hire Me",
@@ -24,8 +24,8 @@ const CinematicHero = ({ language }: CinematicHeroProps) => {
     },
     bn: {
       greeting: "আস্সালামু আলাইকুম",
-      title: "কাঁচা ফুটেজকে পরিণত করি",
-      subtitle: "সিনেমাটিক গল্পে",
+      title: "এমএইচ সামি",
+      subtitle: "ভিডিও এডিটর ও কন্টেন্ট ক্রিয়েটর",
       description: "ইসলামিক নীতি অনুসরণ করে অর্থবহ কন্টেন্ট তৈরিকারী একজন আবেগপ্রবণ ভিডিও এডিটর",
       watchShowreel: "শোরিল দেখুন",
       hireMe: "আমাকে নিয়োগ করুন",
@@ -108,15 +108,15 @@ const CinematicHero = ({ language }: CinematicHeroProps) => {
 
           {/* Main Title */}
           <motion.div className="space-y-4" variants={itemVariants}>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight">
-              <span className="text-white block mb-2">{text.title}</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <span className="text-white block mb-2 text-center">{text.title}</span>
               <span className="bg-gradient-to-r from-emerald-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-pulse">
                 {text.subtitle}
               </span>
             </h1>
             
             <motion.p 
-              className="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed text-center"
               variants={itemVariants}
             >
               {text.description}
@@ -149,40 +149,40 @@ const CinematicHero = ({ language }: CinematicHeroProps) => {
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-3 gap-8 max-w-md mx-auto pt-12"
+            className="grid grid-cols-3 gap-4 sm:gap-8 max-w-md mx-auto pt-8 sm:pt-12"
             variants={itemVariants}
           >
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
                 1+
               </div>
-              <div className="text-gray-400 text-sm font-medium">{text.yearsExp}</div>
+              <div className="text-gray-400 text-xs sm:text-sm font-medium">{text.yearsExp}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent">
                 20+
               </div>
-              <div className="text-gray-400 text-sm font-medium">{text.projects}</div>
+              <div className="text-gray-400 text-xs sm:text-sm font-medium">{text.projects}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent">
                 Best
               </div>
-              <div className="text-gray-400 text-sm font-medium">{text.quality}</div>
+              <div className="text-gray-400 text-xs sm:text-sm font-medium">{text.quality}</div>
             </div>
           </motion.div>
         </motion.div>
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 1 }}
         >
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center">
             <motion.div
-              className="w-1 h-3 bg-white rounded-full mt-2"
+              className="w-1 h-2 sm:h-3 bg-white rounded-full mt-1 sm:mt-2"
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             />

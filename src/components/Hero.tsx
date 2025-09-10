@@ -77,7 +77,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button 
                 onClick={() => scrollToSection('#portfolio')}
-                className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 border border-blue-400/30"
+                className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 border border-blue-400/30 w-full sm:w-auto"
               >
                 <span>View My Work</span>
                 <ArrowRight className="ml-2 h-4 sm:h-5 w-4 sm:w-5 group-hover:translate-x-1 transition-transform" />
@@ -86,7 +86,7 @@ const Hero = () => {
               <Button 
                 variant="outline"
                 onClick={() => scrollToSection('#contact')}
-                className="group border-2 border-cyan-400/50 text-cyan-400 dark:text-cyan-300 hover:bg-cyan-500 hover:text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold backdrop-blur-lg bg-background/20 transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/20"
+                className="group border-2 border-cyan-400/50 text-cyan-400 dark:text-cyan-300 hover:bg-cyan-500 hover:text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold backdrop-blur-lg bg-background/20 transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/20 w-full sm:w-auto"
               >
                 <Play className="mr-2 h-4 sm:h-5 w-4 sm:w-5 group-hover:scale-110 transition-transform" />
                 <span>Contact Me</span>
