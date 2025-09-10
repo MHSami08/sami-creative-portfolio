@@ -82,22 +82,8 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="py-12 sm:py-20 bg-background relative" id="portfolio">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-      <div className="absolute top-10 right-10 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-
+    <section className="py-12 sm:py-20 bg-background" id="portfolio">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">My Portfolio</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Explore my collection of video editing projects, from Islamic content to creative reels
-          </p>
-        </div>
         
         {/* Long Videos Section */}
         <div className="mb-16">
@@ -109,9 +95,7 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {longVideos.length === 0 ? (
               <div className="col-span-full text-center py-12">
-                <div className="bg-card/50 border-dashed border-2 border-muted-foreground/20 rounded-xl p-8">
-                  <p className="text-muted-foreground">No long videos available yet.</p>
-                </div>
+                <p className="text-muted-foreground">No long videos available yet.</p>
               </div>
             ) : (
               longVideos.map((project, index) => (
@@ -243,9 +227,7 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 max-w-sm md:max-w-4xl mx-auto gap-6 sm:gap-8">
             {shortVideos.length === 0 ? (
               <div className="col-span-full text-center py-12">
-                <div className="bg-card/50 border-dashed border-2 border-muted-foreground/20 rounded-xl p-8">
-                  <p className="text-muted-foreground">No short videos available yet.</p>
-                </div>
+                <p className="text-muted-foreground">No short videos available yet.</p>
               </div>
             ) : (
               shortVideos.map((project, index) => (
@@ -288,7 +270,7 @@ const Portfolio = () => {
         </div>
 
         {/* Call to action */}  
-        <div className="text-center animate-fade-in bg-gradient-to-r from-blue-500/5 to-purple-500/5 backdrop-blur-lg border border-blue-400/30 rounded-2xl p-8 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">  
+        <div className="text-center animate-fade-in bg-card rounded-2xl border border-border p-6 hover:shadow-lg transition-all duration-300">  
           <h3 className="text-xl font-bold mb-3">  
             Ready to Collaborate?  
           </h3>  
@@ -297,7 +279,7 @@ const Portfolio = () => {
           </p>  
           <Button   
             onClick={scrollToContact}  
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 text-base rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"  
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 text-sm hover:scale-105 transition-all duration-200"  
             aria-label="Contact me for collaboration"
           >  
             Get In Touch  
