@@ -67,7 +67,7 @@ const Contact = () => {
       icon: FaYoutube,
       title: "YouTube",
       value: "MH_officialYT",
-      link: "https://youtube.com/@mhsami-08?si=u3EFol8eZyvqnfzw",
+      link: "https://youtube.com/@mh_officialyt?si=Wkv2fKgn-E6JN8Fv",
       // Colors for light mode (darker) and dark mode (brighter/glowing)
       color: "from-red-600 to-red-700 dark:from-red-400 dark:to-red-500",
       bgColor: "from-red-600/10 to-red-700/10 dark:from-red-400/20 dark:to-red-500/20",
