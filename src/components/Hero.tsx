@@ -22,9 +22,6 @@ const Hero = () => {
         
         {/* Cyber-style floating elements - Hidden on small screens */}
         
-         <div className="hidden lg:block absolute top-1/2 left-16 p-3 bg-amber-500/20 backdrop-blur-lg rounded-xl border border-amber-400/30 animate-float shadow-lg shadow-amber-500/20" style={{ animationDelay: '3s' }}>
-          <Sparkles className="w-6 h-6 text-amber-400" />
-        </div>
         
         {/* Additional cyber elements - Responsive */}
           <div className="hidden md:block absolute top-1/3 right-20 w-2 h-16 bg-gradient-to-b from-blue-400/50 to-transparent rounded-full animate-pulse"></div> 
@@ -34,27 +31,27 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Enhanced Content */}
-          <div className="text-center lg:text-left space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1">
+          <div className="text-center space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1 flex flex-col items-center lg:items-start">
             {/* Islamic greeting with cyber styling */}
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
-                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400 animate-pulse" />
+                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-blue-400" />
                 <p className="text-blue-400 dark:text-blue-300 text-base sm:text-lg font-bold">Assalamu Alaikum</p>
-                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400 animate-pulse" />
+                <Sparkles className="w-4 sm:w-5 h-4 sm:h-5 text-amber-400" />
               </div>
             </div>
 
             {/* Improved typography with better flow */}
-            <div className="space-y-4 lg:space-y-6">
+            <div className="space-y-4 lg:space-y-6 text-center lg:text-left">
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
                 
-                <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-pulse">
+                <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent">
                   I'm MH Sami
                 </span>
               </h1>
               
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 A Passionate
                 <span className="text-blue-400 font-bold"> Video Editor </span>
                  creating meaningful content following 
@@ -129,23 +126,23 @@ const Hero = () => {
                   </div>
                 </div>
                 
-        {/* Enhanced floating decorations - Responsive sizing */}
-        <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 sm:w-12 h-8 sm:h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center animate-float shadow-xl shadow-blue-500/50 border border-blue-300/50 hover:scale-110 transition-transform duration-300">
-          <Sparkles className="w-4 sm:w-6 h-4 sm:h-6 text-white animate-pulse" />
+        {/* Static decorations - No animations */}
+        <div className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 sm:w-12 h-8 sm:h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/50 border border-blue-300/50">
+          <Sparkles className="w-4 sm:w-6 h-4 sm:h-6 text-white" />
         </div>
-        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center animate-float shadow-xl shadow-cyan-500/50 border border-cyan-300/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '1s' }}>
+        <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 w-6 sm:w-10 h-6 sm:h-10 bg-gradient-to-r from-cyan-400 to-cyan-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-xl shadow-cyan-500/50 border border-cyan-300/50">
           <Video className="w-3 sm:w-5 h-3 sm:h-5 text-white" />
         </div>
-        <div className="absolute top-8 sm:top-12 left-4 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-amber-400 to-amber-500 rounded-md sm:rounded-lg flex items-center justify-center animate-float shadow-lg shadow-amber-500/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '2s' }}>
-          <Code className="w-3 sm:w-4 h-3 sm:h-4 text-white animate-spin" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-8 sm:top-12 left-4 sm:left-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-amber-400 to-amber-500 rounded-md sm:rounded-lg flex items-center justify-center shadow-lg shadow-amber-500/50">
+          <Code className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
         </div>
-        <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-md sm:rounded-lg flex items-center justify-center animate-float shadow-lg shadow-blue-500/50 hover:scale-110 transition-transform duration-300" style={{ animationDelay: '1.5s' }}>
-          <Target className="w-3 sm:w-4 h-3 sm:h-4 text-white animate-pulse" />
+        <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-8 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-md sm:rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/50">
+          <Target className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
         </div>
         
-        {/* Additional floating elements for better visual appeal */}
-        <div className="absolute top-1/2 -left-2 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-float opacity-70 hover:opacity-100 transition-opacity" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-3/4 -right-2 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-float opacity-60 hover:opacity-100 transition-opacity" style={{ animationDelay: '4s' }}></div>
+        {/* Additional static elements */}
+        <div className="absolute top-1/2 -left-2 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full opacity-70"></div>
+        <div className="absolute top-3/4 -right-2 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full opacity-60"></div>
               </div>
             </div>
           </div>

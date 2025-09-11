@@ -32,16 +32,32 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   };
 
   const embedUrl = getYouTubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
-  const aspectRatioClass = isShortVideo ? 'aspect-[9/16]' : 'aspect-video';
+  
+  // Adjust dimensions for better desktop viewing
+  const getPlayerDimensions = () => {
+    if (isShortVideo) {
+      // For 9:16 videos, make them smaller on desktop
+      return {
+        containerClass: "w-full max-w-sm sm:max-w-md lg:max-w-lg max-h-[85vh]",
+        aspectClass: "aspect-[9/16]"
+      };
+    } else {
+      // For regular videos
+      return {
+        containerClass: "w-full max-w-4xl max-h-[85vh]",
+        aspectClass: "aspect-video"
+      };
+    }
+  };
+
+  const { containerClass, aspectClass } = getPlayerDimensions();
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4 transition-opacity duration-300">
       <div
         className={`
           relative bg-background rounded-lg shadow-xl
-          w-full max-w-full
-          sm:max-w-[95vw] md:max-w-[85vw] lg:max-w-[70vw]
-          max-h-[90vh] flex flex-col
+          ${containerClass} flex flex-col
         `}
       >
         {/* Header */}
@@ -59,7 +75,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         </div>
 
         {/* Video Container */}
-        <div className={`flex-grow ${aspectRatioClass} bg-black`}>
+        <div className={`flex-grow ${aspectClass} bg-black`}>
           {embedUrl ? (
             <iframe
               src={embedUrl}
