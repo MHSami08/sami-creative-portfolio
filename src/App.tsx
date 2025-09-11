@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="min-h-screen overflow-y-auto">
+      <div className="min-h-screen overflow-y-auto scroll-smooth">
         <Toaster />
         <Sonner />
         <BrowserRouter>

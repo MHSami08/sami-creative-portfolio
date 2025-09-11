@@ -36,15 +36,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // Adjust dimensions for better desktop viewing
   const getPlayerDimensions = () => {
     if (isShortVideo) {
-      // For 9:16 videos, make them smaller on desktop
+      // For 9:16 videos, make them much smaller on desktop to fit properly
       return {
-        containerClass: "w-full max-w-sm sm:max-w-md lg:max-w-lg max-h-[85vh]",
+        containerClass: "w-full max-w-xs sm:max-w-sm lg:max-w-md max-h-[75vh]",
         aspectClass: "aspect-[9/16]"
       };
     } else {
       // For regular videos
       return {
-        containerClass: "w-full max-w-4xl max-h-[85vh]",
+        containerClass: "w-full max-w-3xl max-h-[75vh]",
         aspectClass: "aspect-video"
       };
     }
@@ -53,12 +53,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const { containerClass, aspectClass } = getPlayerDimensions();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-2 sm:p-4 transition-opacity duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6 lg:p-8 transition-opacity duration-300">
       <div
         className={`
           relative bg-background rounded-lg shadow-xl
-          ${containerClass} flex flex-col
+          ${containerClass} flex flex-col overflow-hidden
         `}
+        style={{ maxHeight: '80vh', maxWidth: '90vw' }}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">

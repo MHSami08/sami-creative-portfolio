@@ -223,6 +223,29 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
+  /* Enhanced smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Webkit scrollbar styling for smoother appearance */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+
   /* Line clamp utility for better text truncation */
   .line-clamp-2 {
     display: -webkit-box;
