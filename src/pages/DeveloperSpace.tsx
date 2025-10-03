@@ -498,10 +498,9 @@ const ProjectEditor = ({
     const newErrors: Record<string, string> = {};
     
     if (!formData.title.trim()) newErrors.title = 'Title is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
     if (!formData.type.trim()) newErrors.type = 'Type is required';
     if (!formData.duration.trim()) newErrors.duration = 'Duration is required';
-    if (!formData.thumbnail.trim()) newErrors.thumbnail = 'Thumbnail URL is required';
+    if (!formData.videoUrl.trim()) newErrors.videoUrl = 'Video URL is required';
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -544,9 +543,14 @@ const ProjectEditor = ({
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column */}
-            <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Basic Information</CardTitle>
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+              <CardHeader className="border-b border-border/50">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                    <Settings className="w-4 h-4 text-white" />
+                  </div>
+                  Basic Information
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -562,16 +566,18 @@ const ProjectEditor = ({
                 </div>
 
                 <div>
-                  <Label htmlFor="description" className="text-sm font-medium">Description *</Label>
+                  <Label htmlFor="description" className="text-sm font-medium">
+                    Description <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
                   <Textarea
                     id="description"
                     value={formData.description}
                     onChange={(e) => handleInputChange('description', e.target.value)}
                     placeholder="Brief description of your project"
-                    className={`mt-1 ${errors.description ? 'border-red-500' : ''}`}
+                    className="mt-1"
                     rows={3}
                   />
-                  {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+                  <p className="text-xs text-muted-foreground mt-1">Auto-generated from video if left empty</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
@@ -632,49 +638,64 @@ const ProjectEditor = ({
             </Card>
 
             {/* Right Column */}
-            <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-              <CardHeader>
-                <CardTitle className="text-lg">Media & Links</CardTitle>
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+              <CardHeader className="border-b border-border/50">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <Play className="w-4 h-4 text-white" />
+                  </div>
+                  Media & Links
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label htmlFor="videoUrl" className="text-sm font-medium">Video URL</Label>
+                  <Label htmlFor="videoUrl" className="text-sm font-medium">
+                    Video URL *
+                  </Label>
                   <Input
                     id="videoUrl"
                     value={formData.videoUrl}
                     onChange={(e) => handleInputChange('videoUrl', e.target.value)}
-                    placeholder="https://youtu.be/... or https://vimeo.com/..."
-                    className="mt-1"
+                    placeholder="https://youtu.be/... or https://vimeo.com/... or TikTok/Facebook"
+                    className={`mt-1 ${errors.videoUrl ? 'border-red-500' : ''}`}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">Leave empty if video is not ready</p>
+                  {errors.videoUrl && <p className="text-red-500 text-xs mt-1">{errors.videoUrl}</p>}
+                  <p className="text-xs text-muted-foreground mt-1">Supports YouTube, Vimeo, TikTok, and Facebook videos</p>
                 </div>
 
                 <div>
-                  <Label htmlFor="thumbnail" className="text-sm font-medium">Thumbnail URL *</Label>
+                  <Label htmlFor="thumbnail" className="text-sm font-medium">
+                    Thumbnail URL <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
                   <Input
                     id="thumbnail"
                     value={formData.thumbnail}
                     onChange={(e) => handleInputChange('thumbnail', e.target.value)}
-                    placeholder="https://..."
-                    className={`mt-1 ${errors.thumbnail ? 'border-red-500' : ''}`}
+                    placeholder="https://... (leave empty for auto-generated)"
+                    className="mt-1"
                   />
-                  {errors.thumbnail && <p className="text-red-500 text-xs mt-1">{errors.thumbnail}</p>}
+                  <p className="text-xs text-muted-foreground mt-1">Auto-generated from video URL if left empty</p>
                   {formData.thumbnail && (
-                    <div className="mt-2">
+                    <div className="mt-3 relative group">
                       <img 
                         src={formData.thumbnail} 
                         alt="Thumbnail preview" 
-                        className="w-full max-w-xs aspect-video object-cover rounded border"
+                        className="w-full max-w-sm aspect-video object-cover rounded-lg border-2 border-border shadow-md"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.display = 'none';
                         }}
                       />
+                      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                        Preview
+                      </div>
                     </div>
                   )}
                 </div>
 
                 <div>
-                  <Label htmlFor="tools" className="text-sm font-medium">Tools Used</Label>
+                  <Label htmlFor="tools" className="text-sm font-medium">
+                    Tools Used <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
                   <Input
                     id="tools"
                     value={formData.tools}
@@ -683,31 +704,50 @@ const ProjectEditor = ({
                     className="mt-1"
                   />
                   <p className="text-xs text-muted-foreground mt-1">Separate multiple tools with commas</p>
+                  {formData.tools && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {formData.tools.split(',').filter(Boolean).map((tool, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">
+                          {tool.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
           </div>
 
           {/* Full Width Cards */}
-          <Card className="bg-card/80 backdrop-blur-sm border-border/50">
-            <CardHeader>
-              <CardTitle className="text-lg">Additional Details</CardTitle>
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+            <CardHeader className="border-b border-border/50">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg flex items-center justify-center">
+                  <Edit className="w-4 h-4 text-white" />
+                </div>
+                Additional Details
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="detailedDescription" className="text-sm font-medium">Detailed Description</Label>
+                <Label htmlFor="detailedDescription" className="text-sm font-medium">
+                  Detailed Description <span className="text-muted-foreground">(Optional)</span>
+                </Label>
                 <Textarea
                   id="detailedDescription"
                   value={formData.detailedDescription}
                   onChange={(e) => handleInputChange('detailedDescription', e.target.value)}
-                  placeholder="Detailed description that will appear in hover cards and project details"
+                  placeholder="Detailed description that will appear in hover cards and project details (optional)"
                   className="mt-1"
                   rows={4}
                 />
+                <p className="text-xs text-muted-foreground mt-1">Appears in hover cards for more context</p>
               </div>
 
               <div>
-                <Label htmlFor="features" className="text-sm font-medium">Key Features</Label>
+                <Label htmlFor="features" className="text-sm font-medium">
+                  Key Features <span className="text-muted-foreground">(Optional)</span>
+                </Label>
                 <Textarea
                   id="features"
                   value={formData.features}
@@ -717,6 +757,16 @@ const ProjectEditor = ({
                   rows={3}
                 />
                 <p className="text-xs text-muted-foreground mt-1">Separate multiple features with commas</p>
+                {formData.features && (
+                  <div className="mt-2 space-y-1">
+                    {formData.features.split(',').filter(Boolean).map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{feature.trim()}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
