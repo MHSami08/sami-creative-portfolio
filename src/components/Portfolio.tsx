@@ -244,7 +244,7 @@ const Portfolio = () => {
                   {/* Short Video Thumbnail */}
                   <div className="relative overflow-hidden">
                     <img 
-                      src={project.thumbnail} 
+                      src={getAutoThumbnail(project.videoUrl) || project.thumbnail} 
                       alt={`${project.title} thumbnail`}
                       className="w-full aspect-[9/16] object-cover transition-transform duration-200 group-hover:scale-102"
                     />
