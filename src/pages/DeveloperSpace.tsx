@@ -30,6 +30,15 @@ const DeveloperSpace = () => {
     console.log('Loading state:', loading);
   }, [projects, loading]);
 
+  // Auto-logout when component unmounts (user leaves the page)
+  useEffect(() => {
+    return () => {
+      if (isAuthenticated) {
+        auth.logout();
+      }
+    };
+  }, [isAuthenticated, auth]);
+
   // Update session time every minute
   useEffect(() => {
     if (isAuthenticated) {
@@ -67,6 +76,7 @@ const DeveloperSpace = () => {
       title: "Logged Out",
       description: "You have been logged out successfully",
     });
+    window.location.href = '/';
   };
 
   const handleAddProject = () => {
@@ -195,14 +205,15 @@ const DeveloperSpace = () => {
               Access Developer Space
             </Button>
             
-            <Button 
-              variant="outline" 
-              onClick={() => window.location.href = '/'} 
-              className="w-full border-blue-400/30 hover:bg-blue-500/10"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Portfolio
-            </Button>
+            <a href="/" className="w-full">
+              <Button
+                variant="outline"
+                className="w-full border-blue-400/30 hover:bg-blue-500/10"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Portfolio
+              </Button>
+            </a>
             
             <div className="text-center text-xs text-muted-foreground">
               <p>Secure authentication • Session-based access</p>
@@ -253,10 +264,12 @@ const DeveloperSpace = () => {
                 Add Project
               </Button>
               
-              <Button variant="outline" onClick={() => window.location.href = '/'} className="border-blue-400/30">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Portfolio
-              </Button>
+              <a href="/">
+                <Button variant="outline" className="border-blue-400/30">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Portfolio
+                </Button>
+              </a>
               
               <Button 
                 variant="outline" 
