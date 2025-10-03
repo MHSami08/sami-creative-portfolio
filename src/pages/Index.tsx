@@ -7,13 +7,11 @@ import Services from '../components/Services';
 import Contact from '../components/Contact';
 import MyAim from '../components/MyAim';
 import SearchDialog from '../components/SearchDialog';
-import LanguageToggle from '../components/LanguageToggle';
 import { useSoundEffects } from '../hooks/useSoundEffects';
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [language, setLanguage] = useState('en');
   const { playSound, toggleSound, isEnabled: soundEnabled } = useSoundEffects();
 
   useEffect(() => {
@@ -62,7 +60,7 @@ const Index = () => {
       
       {/* Enhanced Navigation with better mobile layout */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-emerald-400/20 shadow-lg shadow-emerald-500/5">
-        <div className="container mx-auto px-3 sm:px-6 lg:px-8 max-w-full">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12 sm:h-16">
             <div className="flex-shrink-0 min-w-0">
               <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent truncate">
@@ -71,14 +69,14 @@ const Index = () => {
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:block flex-1">
-              <div className="ml-10 flex items-baseline justify-center space-x-2 lg:space-x-4 xl:space-x-6">
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
                 {navItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
                     onMouseEnter={() => playSound('hover')}
-                    className="text-foreground hover:text-emerald-400 px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-emerald-500/10 whitespace-nowrap"
+                    className="text-foreground hover:text-emerald-400 px-2 lg:px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 hover:bg-emerald-500/10"
                   >
                     {item.name}
                   </button>
@@ -87,15 +85,6 @@ const Index = () => {
             </div>
 
             <div className="flex items-center space-x-1 sm:space-x-2">
-              {/* Language Toggle */}
-              <LanguageToggle 
-                currentLanguage={language} 
-                onLanguageChange={(lang) => {
-                  setLanguage(lang);
-                  playSound('click');
-                }} 
-              />
-
               {/* Search Button */}
               <button
                 onClick={() => {

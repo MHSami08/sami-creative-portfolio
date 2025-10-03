@@ -1,26 +1,7 @@
 import { ArrowRight, Play, Sparkles, Code, Video, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
-import { getHeroStats } from '@/utils/heroConfig';
 
 const Hero = () => {
-  const [stats, setStats] = useState(getHeroStats());
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setStats(getHeroStats());
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    // Also listen for custom event for same-tab updates
-    window.addEventListener('heroStatsUpdated', handleStorageChange);
-    
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('heroStatsUpdated', handleStorageChange);
-    };
-  }, []);
-
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -112,15 +93,15 @@ const Hero = () => {
             {/* Enhanced stats with cyber styling */}
             <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 w-full">
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 backdrop-blur-lg border border-blue-400/30 shadow-lg shadow-blue-500/10">
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">{stats.experience}</div>
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">1+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Exp.</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-cyan-600/10 backdrop-blur-lg border border-cyan-400/30 shadow-lg shadow-cyan-500/10">
-                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">{stats.projects}</div>
+                <div className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-500 bg-clip-text text-transparent">20+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Project</div>
               </div>
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/10 backdrop-blur-lg border border-amber-400/30 shadow-lg shadow-amber-500/10">
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">{stats.quality}</div>
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">Best</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Quality</div>
               </div>
             </div>

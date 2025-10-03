@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, RotateCcw, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,7 +11,6 @@ import { useToast } from '@/hooks/use-toast';
 import { useProjects } from '@/hooks/useProjects';
 import { useAuth } from '@/utils/auth';
 import { VideoProject } from '@/utils/projectManager';
-import { getHeroStats, setHeroStats } from '@/utils/heroConfig';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
@@ -19,7 +18,6 @@ const DeveloperSpace = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingProject, setEditingProject] = useState<VideoProject | null>(null);
   const [sessionTime, setSessionTime] = useState(0);
-  const [heroStats, setHeroStatsState] = useState(getHeroStats());
   
   const { toast } = useToast();
   const auth = useAuth();
@@ -79,15 +77,6 @@ const DeveloperSpace = () => {
       description: "You have been logged out successfully",
     });
     window.location.href = '/';
-  };
-
-  const handleSaveHeroStats = () => {
-    setHeroStats(heroStats);
-    window.dispatchEvent(new Event('heroStatsUpdated'));
-    toast({
-      title: "Hero Stats Updated",
-      description: "Homepage stats have been updated successfully",
-    });
   };
 
   const handleAddProject = () => {
@@ -304,82 +293,67 @@ const DeveloperSpace = () => {
             </div>
           </div>
 
-          {/* Tabs for different sections */}
-          <Tabs defaultValue="projects" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid bg-background/50 backdrop-blur-lg border border-blue-400/30">
-              <TabsTrigger value="projects" className="data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400">
-                <Play className="w-4 h-4 mr-2" />
-                Projects
-              </TabsTrigger>
-              <TabsTrigger value="settings" className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400">
-                <Settings className="w-4 h-4 mr-2" />
-                Hero Settings
-              </TabsTrigger>
-            </TabsList>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-400/30">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-blue-400">{projects.length}</p>
+                    <p className="text-xs text-muted-foreground">Total Projects</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border-emerald-400/30">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-emerald-400">{longVideos.length}</p>
+                    <p className="text-xs text-muted-foreground">Long Videos</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-purple-400/30">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-purple-400">{shortVideos.length}</p>
+                    <p className="text-xs text-muted-foreground">Short Videos</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border-amber-400/30">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <Settings className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
+                    <p className="text-xs text-muted-foreground">Completed</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-            {/* Projects Tab */}
-            <TabsContent value="projects" className="space-y-6">
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border-blue-400/30 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-blue-400">{projects.length}</p>
-                        <p className="text-xs text-muted-foreground">Total Projects</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border-emerald-400/30 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                        <Users className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-emerald-400">{longVideos.length}</p>
-                        <p className="text-xs text-muted-foreground">Long Videos</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border-purple-400/30 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                        <Users className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-purple-400">{shortVideos.length}</p>
-                        <p className="text-xs text-muted-foreground">Short Videos</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border-amber-400/30 hover:shadow-lg hover:shadow-amber-500/20 transition-all duration-300">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
-                        <p className="text-xs text-muted-foreground">Completed</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Projects Management for Projects Tab */}
-              <Tabs defaultValue="all" className="space-y-6">
+          {/* Projects Management */}
+          <Tabs defaultValue="all" className="space-y-6">
             <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
               <TabsTrigger value="all">All Projects ({projects.length})</TabsTrigger>
               <TabsTrigger value="long">Long Videos ({longVideos.length})</TabsTrigger>
@@ -394,69 +368,8 @@ const DeveloperSpace = () => {
               <ProjectGrid projects={longVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
             </TabsContent>
             
-                <TabsContent value="short">
-                  <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
-                </TabsContent>
-              </Tabs>
-            </TabsContent>
-
-            {/* Hero Settings Tab */}
-            <TabsContent value="settings">
-              <Card className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border-purple-400/30">
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-purple-400" />
-                    Homepage Hero Statistics
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">Customize the stats displayed on your homepage hero section</p>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="experience">Years of Experience</Label>
-                      <Input
-                        id="experience"
-                        value={heroStats.experience}
-                        onChange={(e) => setHeroStatsState({ ...heroStats, experience: e.target.value })}
-                        placeholder="e.g., 1+, 5+"
-                        className="bg-background/50 border-purple-400/30"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="projects">Projects Completed</Label>
-                      <Input
-                        id="projects"
-                        value={heroStats.projects}
-                        onChange={(e) => setHeroStatsState({ ...heroStats, projects: e.target.value })}
-                        placeholder="e.g., 20+, 50+"
-                        className="bg-background/50 border-purple-400/30"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="quality">Quality Label</Label>
-                      <Input
-                        id="quality"
-                        value={heroStats.quality}
-                        onChange={(e) => setHeroStatsState({ ...heroStats, quality: e.target.value })}
-                        placeholder="e.g., Best, Premium"
-                        className="bg-background/50 border-purple-400/30"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-end">
-                    <Button 
-                      onClick={handleSaveHeroStats}
-                      className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
-                    >
-                      <Save className="mr-2 h-4 w-4" />
-                      Save Hero Stats
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            <TabsContent value="short">
+              <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
             </TabsContent>
           </Tabs>
         </div>

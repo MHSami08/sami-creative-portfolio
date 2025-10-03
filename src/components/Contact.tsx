@@ -127,9 +127,8 @@ const Contact = () => {
           </p>
         </div>
 
-        {/* Desktop Layout - Contact Form First (Full Width), then Social Links */}
-        <div className="hidden lg:block space-y-8">
-          {/* Contact Form Section - Full Width */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Contact Form Section */}
           <Card className="bg-gradient-to-br from-emerald-500/5 to-blue-500/5 backdrop-blur-xl border border-emerald-400/30 shadow-2xl shadow-emerald-500/10">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-center">
@@ -144,7 +143,7 @@ const Contact = () => {
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
                   <h3 className="text-xl font-semibold text-emerald-600 mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground">জزাك الله خيرا! I'll get back to you soon, Insha'Allah.</p>
+                  <p className="text-muted-foreground">جزاك الله خيرا! I'll get back to you soon, Insha'Allah.</p>
                 </div>
               ) : (
                 /* Contact Form */
@@ -214,7 +213,7 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          {/* Contact Information Section Below */}
+          {/* Contact Information Section */}
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left">
@@ -296,175 +295,6 @@ const Contact = () => {
                 "And my success is not but through Allah"
               </p>
               {/* Additional Islamic greeting */}
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 italic">
-                May Allah bless our connection
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile/Tablet Layout - Original Grid */}
-        <div className="lg:hidden grid lg:grid-cols-2 gap-8 items-start">
-          {/* Contact Form Section */}
-          <Card className="bg-gradient-to-br from-emerald-500/5 to-blue-500/5 backdrop-blur-xl border border-emerald-400/30 shadow-2xl shadow-emerald-500/10">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">
-                <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                  Send a Message
-                </span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* Success message display */}
-              {isSubmitted ? (
-                <div className="text-center py-8">
-                  <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-4 animate-bounce" />
-                  <h3 className="text-xl font-semibold text-emerald-600 mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground">জزاك الله خيرا! I'll get back to you soon, Insha'Allah.</p>
-                </div>
-              ) : (
-                /* Contact Form */
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name Input */}
-                  <div>
-                    <label htmlFor="name-mobile" className="block text-sm font-medium text-foreground mb-2">
-                      Full Name *
-                    </label>
-                    <Input
-                      id="name-mobile"
-                      name="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full bg-background/50 backdrop-blur-sm border-emerald-400/30 focus:border-emerald-400 focus:ring-emerald-400/20"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  
-                  {/* Email Input */}
-                  <div>
-                    <label htmlFor="email-mobile" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
-                    </label>
-                    <Input
-                      id="email-mobile"
-                      name="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full bg-background/50 backdrop-blur-sm border-emerald-400/30 focus:border-emerald-400 focus:ring-emerald-400/20"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
-                  
-                  {/* Message Input */}
-                  <div>
-                    <label htmlFor="message-mobile" className="block text-sm font-medium text-foreground mb-2">
-                      Message *
-                    </label>
-                    <Textarea
-                      id="message-mobile"
-                      name="message"
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      className="w-full resize-none bg-background/50 backdrop-blur-sm border-emerald-400/30 focus:border-emerald-400 focus:ring-emerald-400/20"
-                      placeholder="Tell me about your project or just say hello..."
-                    />
-                  </div>
-                  
-                  {/* Submit Button */}
-                  <Button 
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 text-lg rounded-xl font-semibold shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/40 transition-all duration-300 hover:scale-105 group disabled:opacity-50 disabled:cursor-not-allowed border border-emerald-400/30"
-                  >
-                    <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
-                  </Button>
-                </form>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Contact Information Section */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left">
-                <span className="bg-gradient-to-r from-amber-400 to-emerald-500 bg-clip-text text-transparent">
-                  Get In Touch
-                </span>
-              </h3>
-              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
-                I'm always excited to discuss new projects and opportunities. 
-                Whether you're looking for video editing services or just want to connect, 
-                I'm here to help, بإذن الله.
-              </p>
-            </div>
-
-            {/* Social Media Cards - Now fully clickable */}
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
-              {contactInfo.map((info, index) => (
-                <Card 
-                  key={index} 
-                  className={`group transition-all duration-300 bg-gradient-to-r ${info.bgColor} backdrop-blur-lg border ${info.borderColor} cursor-pointer transform hover:scale-[1.01] hover:shadow-xl hover:shadow-${info.glowColor} ${info.link ? 'hover:' + info.glowColor : ''} ${info.link ? 'dark:hover:shadow-lg' : ''}`}
-                  onClick={() => handleCardClick(info.link)}
-                  role={info.link ? "button" : "presentation"}
-                  tabIndex={info.link ? 0 : -1}
-                  onKeyDown={(e) => {
-                    if (info.link && (e.key === 'Enter' || e.key === ' ')) {
-                      e.preventDefault();
-                      handleCardClick(info.link);
-                    }
-                  }}
-                  aria-label={info.link ? `Visit ${info.title} profile` : `${info.title} information`}
-                >
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                        <info.icon size={28} className="text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-bold text-gray-800 dark:text-gray-100 text-lg group-hover:text-primary transition-colors duration-300">
-                          {info.title}
-                        </h4>
-                        <p className={`font-medium transition-colors duration-300 ${info.link ? 'text-gray-700 dark:text-gray-200 group-hover:text-primary' : 'text-gray-600 dark:text-gray-300'}`}>
-                          {info.value}
-                        </p>
-                      </div>
-                      {info.link && (
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Response Time Card */}
-            <Card className="bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-lg border border-amber-400/30 shadow-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
-              <CardContent className="p-4 sm:p-6">
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Response Time</h4>
-                <p className="text-gray-700 dark:text-gray-200">
-                  I typically respond within 24-48 hours, Insha'Allah. 
-                  For urgent matters, please mention it in your message.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* Islamic Quote Section */}
-            <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-2xl border border-amber-400/30 backdrop-blur-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
-              <p className="text-amber-600 dark:text-amber-300 font-amiri text-xl sm:text-2xl font-bold mb-3 tracking-wide leading-relaxed" dir="rtl">
-                وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ
-              </p>
-              <p className="text-base text-gray-700 dark:text-gray-200 font-medium">
-                "And my success is not but through Allah"
-              </p>
               <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 italic">
                 May Allah bless our connection
               </p>
