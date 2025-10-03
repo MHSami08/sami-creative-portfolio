@@ -26,15 +26,15 @@ const MyAim = () => {
           {/* Main aim statement */}
           <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-gradient-to-r from-emerald-500/10 to-blue-500/10 backdrop-blur-lg border border-emerald-400/30 shadow-2xl shadow-emerald-500/20">
-              <CardContent className="p-8">
-                <div className="flex items-start gap-6">
+              <CardContent className="p-6 sm:p-8">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                   <div className="flex-shrink-0">
                     <div className="w-16 h-16 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/50">
                       <Heart className="w-8 h-8 text-white" />
                     </div>
                   </div>
-                  <div className="flex-1 text-left">
-                    <p className="text-xl md:text-2xl text-foreground leading-relaxed font-medium">
+                  <div className="flex-1">
+                    <p className="text-lg sm:text-xl md:text-2xl text-foreground leading-relaxed font-medium">
                       My aim is to serve the 
                       <span className="text-emerald-400 font-bold"> Muslim Ummah </span>
                       with my work and skills. So that we can face challenges of the world and be a 
@@ -49,15 +49,15 @@ const MyAim = () => {
 
             {/* Quranic verse related to the aim */}
             <Card className="bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-lg border border-amber-400/30 shadow-xl shadow-amber-500/20">
-              <CardContent className="p-8">
+              <CardContent className="p-6 sm:p-8">
                 <div className="text-center space-y-4">
                   <div className="flex justify-center">
                     <Star className="w-8 h-8 text-amber-400 animate-pulse" />
                   </div>
-                  <p className="text-amber-400 dark:text-amber-300 font-amiri text-xl md:text-2xl font-bold">
+                  <p className="text-amber-400 dark:text-amber-300 font-amiri text-lg sm:text-xl md:text-2xl font-bold">
                     "وَأَعِدُّوا لَهُم مَّا اسْتَطَعْتُم مِّن قُوَّةٍ"
                   </p>
-                  <p className="text-muted-foreground text-lg">
+                  <p className="text-muted-foreground text-base sm:text-lg">
                     "And prepare against them whatever you are able of power"
                   </p>
                   <p className="text-sm text-muted-foreground italic">
@@ -70,7 +70,7 @@ const MyAim = () => {
         </div>
 
         {/* Vision cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-16">
           {[
             {
               icon: Users,
@@ -98,7 +98,7 @@ const MyAim = () => {
             }
           ].map((item, index) => (
             <Card key={index} className={`group hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${item.bgColor} backdrop-blur-lg border ${item.borderColor} hover:scale-105 hover:rotate-1`}>
-              <CardContent className="p-8 text-center">
+              <CardContent className="p-6 sm:p-8 text-center">
                 <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${item.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <item.icon className="w-8 h-8 text-white" />
                 </div>
@@ -111,7 +111,7 @@ const MyAim = () => {
 
         {/* Hadith section */}
         <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-lg border border-blue-400/30 shadow-xl shadow-blue-500/20">
-          <CardContent className="p-8">
+          <CardContent className="p-6 sm:p-8">
             <div className="text-center space-y-6">
               <div className="flex justify-center">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 rounded-xl flex items-center justify-center">

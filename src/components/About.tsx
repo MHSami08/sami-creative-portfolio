@@ -65,22 +65,22 @@ const About = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">About Me</span>
           </h2>
-          <div className="max-w-3xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed">
+          <div className="max-w-3xl mx-auto space-y-6 text-base sm:text-lg text-muted-foreground leading-relaxed text-center">
             <p>
-              I am an ordinary Muslim, passionate about <span className="text-blue-400 font-semibold">EDITING</span>. 
+              I am an ordinary Muslim, passionate about <span className="text-blue-400 font-semibold">EDITING</span>.
               Though I am at the beginning of my journey, I am deeply committed to growing and sharing my creative work.
             </p>
             <p>
-              My goal is to create content that is both <span className="text-amber-400 font-semibold">meaningful and halal</span>, 
+              My goal is to create content that is both <span className="text-amber-400 font-semibold">meaningful and halal</span>,
               contributing positively to our community while honing my technical skills.
             </p>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Islamic Values */}
           <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-center lg:text-left mb-8">
+            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8">
               <span className="bg-gradient-to-r from-amber-400 to-blue-500 bg-clip-text text-transparent">My Values</span>
             </h3>
             <div className="space-y-6">
@@ -104,7 +104,7 @@ const About = () => {
 
           {/* Timeline */}
           <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-center lg:text-left mb-8">
+            <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8">
               <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">My Journey</span>
             </h3>
             <div className="relative">
@@ -130,7 +130,7 @@ const About = () => {
                     {/* Timeline content */}
                     <Card className="flex-1 bg-gradient-to-r from-blue-500/5 to-purple-500/5 backdrop-blur-lg border border-blue-400/30 hover:shadow-xl transition-all duration-300 hover:scale-105">
                       <CardContent className="p-6">
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-3 mb-2 flex-wrap">
                           <span className="text-sm font-bold text-blue-400 bg-blue-400/10 px-3 py-1 rounded-full border border-blue-400/30">
                             {item.year}
                           </span>
@@ -152,7 +152,7 @@ const About = () => {
         </div>
 
         {/* Enhanced Stats Section */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {[
             { label: "Learning Hours", value: "100+", color: "from-blue-400 to-blue-500", bgColor: "from-blue-500/10 to-blue-600/10" },
             { label: "Projects Planned", value: "5+", color: "from-purple-400 to-purple-500", bgColor: "from-purple-500/10 to-purple-600/10" },

@@ -121,13 +121,13 @@ const Contact = () => {
               Let's Connect
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-center">
             I'd love to hear from you! Whether you have a project idea, want to collaborate, 
             or just want to say hello, feel free to reach out.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Contact Form Section */}
           <Card className="bg-gradient-to-br from-emerald-500/5 to-blue-500/5 backdrop-blur-xl border border-emerald-400/30 shadow-2xl shadow-emerald-500/10">
             <CardHeader>
@@ -216,12 +216,12 @@ const Contact = () => {
           {/* Contact Information Section */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-3xl font-bold mb-8">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center lg:text-left">
                 <span className="bg-gradient-to-r from-amber-400 to-emerald-500 bg-clip-text text-transparent">
                   Get In Touch
                 </span>
               </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
                 I'm always excited to discuss new projects and opportunities. 
                 Whether you're looking for video editing services or just want to connect, 
                 I'm here to help, بإذن الله.
@@ -229,7 +229,7 @@ const Contact = () => {
             </div>
 
             {/* Social Media Cards - Now fully clickable */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-3 sm:gap-4">
               {contactInfo.map((info, index) => (
                 <Card 
                   key={index} 
@@ -246,7 +246,7 @@ const Contact = () => {
                   }}
                   aria-label={info.link ? `Visit ${info.title} profile` : `${info.title} information`}
                 >
-                  <CardContent className="p-6">
+                  <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center gap-4">
                       {/* Icon with improved styling */}
                       <div className={`w-14 h-14 rounded-2xl bg-gradient-to-r ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
@@ -275,7 +275,7 @@ const Contact = () => {
 
             {/* Response Time Card with improved styling */}
             <Card className="bg-gradient-to-r from-amber-500/10 to-emerald-500/10 backdrop-blur-lg border border-amber-400/30 shadow-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-3">Response Time</h4>
                 <p className="text-gray-700 dark:text-gray-200">
                   I typically respond within 24-48 hours, Insha'Allah. 
@@ -285,9 +285,9 @@ const Contact = () => {
             </Card>
 
             {/* Islamic Quote Section - Enhanced Arabic typography and colors */}
-            <div className="text-center p-6 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-2xl border border-amber-400/30 backdrop-blur-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-r from-amber-500/10 to-emerald-500/10 rounded-2xl border border-amber-400/30 backdrop-blur-lg hover:shadow-xl hover:shadow-amber-400/20 dark:hover:shadow-lg dark:hover:shadow-amber-400/50 transition-all duration-300 hover:scale-[1.01]">
               {/* Arabic text with improved font and contrast */}
-              <p className="text-amber-600 dark:text-amber-300 font-amiri text-2xl font-bold mb-3 tracking-wide leading-relaxed" dir="rtl">
+              <p className="text-amber-600 dark:text-amber-300 font-amiri text-xl sm:text-2xl font-bold mb-3 tracking-wide leading-relaxed" dir="rtl">
                 وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ
               </p>
               {/* English translation */}

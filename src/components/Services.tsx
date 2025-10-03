@@ -64,17 +64,17 @@ const Services = () => {
               What I Plan to Offer
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed text-center">
             I am learning video editing and plan to offer creative, Islamic-friendly content editing services 
             in the near future. Feel free to reach out for collaboration or small projects.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20 max-w-4xl mx-auto">
           {services.map((service, index) => (
             <Card key={index} className={`group hover:shadow-xl transition-all duration-500 ${service.bgColor} backdrop-blur-sm border ${service.borderColor} hover:scale-105`}>
-              <CardHeader className="text-center pb-4">
+              <CardHeader className="text-center pb-4 px-4 sm:px-6">
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <service.icon className="w-8 h-8 text-white" />
                 </div>
@@ -89,7 +89,7 @@ const Services = () => {
                   </span>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4 sm:px-6 pb-6">
                 <p className="text-muted-foreground text-center">{service.description}</p>
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
@@ -105,13 +105,13 @@ const Services = () => {
         </div>
 
         {/* Principles Section */}
-        <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center mb-12">
+        <div className="mb-12 sm:mb-16">
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
             <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
               My Work Principles
             </span>
           </h3>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {principles.map((principle, index) => (
               <div key={index} className="text-center group">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-400 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -125,13 +125,13 @@ const Services = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-background/70 backdrop-blur-sm rounded-3xl p-12 border border-border/50">
-          <h3 className="text-3xl font-bold mb-4">
+        <div className="text-center bg-background/70 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-12 border border-border/50">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 to-amber-500 bg-clip-text text-transparent">
               Ready to Collaborate?
             </span>
           </h3>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
             Whether you have a small project or want to discuss future collaborations, 
             I'd love to hear from you. Let's create something meaningful together, In shaa Allah.
           </p>

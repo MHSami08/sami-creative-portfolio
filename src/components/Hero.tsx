@@ -31,7 +31,7 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Enhanced Content */}
-          <div className="text-center space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1 flex flex-col items-center lg:items-start">
+          <div className="space-y-6 lg:space-y-8 animate-fade-in order-2 lg:order-1 flex flex-col items-center lg:items-start">
             {/* Islamic greeting with cyber styling */}
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-500/10 to-amber-500/10 rounded-full border border-blue-400/30 backdrop-blur-lg shadow-lg shadow-blue-500/10">
@@ -42,16 +42,16 @@ const Hero = () => {
             </div>
 
             {/* Improved typography with better flow */}
-            <div className="space-y-4 lg:space-y-6 text-center lg:text-left">
+            <div className="space-y-4 lg:space-y-6">
               
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-center lg:text-left">
                 
                 <span className="bg-gradient-to-r from-blue-400 via-cyan-500 to-blue-600 bg-clip-text text-transparent">
                   I'm MH Sami
                 </span>
               </h1>
               
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
                 A Passionate
                 <span className="text-blue-400 font-bold"> Video Editor </span>
                  creating meaningful content following 
@@ -59,7 +59,7 @@ const Hero = () => {
               </p>
 
               {/* Quranic verse */}
-              <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg">
+              <div className="p-4 sm:p-6 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-2xl border border-blue-400/20 backdrop-blur-lg w-full">
                 <p className="text-blue-400 dark:text-blue-300 font-amiri text-base sm:text-lg font-medium text-center mb-2">
                   "لَا إِلَٰهَ إِلَّا ٱللَّٰهُ مُحَمَّدٌ رَسُولُ ٱللَّٰهِ"
                 </p>
@@ -71,7 +71,7 @@ const Hero = () => {
             </div>
 
             {/* Enhanced CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start w-full">
               <Button 
                 onClick={() => scrollToSection('#portfolio')}
                 className="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl font-semibold shadow-xl shadow-blue-500/25 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105 border border-blue-400/30"
@@ -91,7 +91,7 @@ const Hero = () => {
             </div>
 
             {/* Enhanced stats with cyber styling */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 sm:pt-8 w-full">
               <div className="text-center p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 backdrop-blur-lg border border-blue-400/30 shadow-lg shadow-blue-500/10">
                 <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">1+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">Years Exp.</div>
