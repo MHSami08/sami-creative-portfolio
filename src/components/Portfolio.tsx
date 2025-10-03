@@ -242,11 +242,11 @@ const Portfolio = () => {
                   onClick={() => project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
                 >  
                   {/* Short Video Thumbnail */}
-                  <div className="relative overflow-hidden aspect-[9/16] bg-black">
+                  <div className="relative overflow-hidden bg-black" style={{ aspectRatio: '9/16' }}>
                     <img
                       src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
                       alt={`${project.title} thumbnail`}
-                      className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-102"
+                      className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-102"
                     />
                     {project.status === 'completed' && (
                       <div className="absolute top-2 right-2">
