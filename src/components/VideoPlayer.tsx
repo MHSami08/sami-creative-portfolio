@@ -31,7 +31,31 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     return match ? `https://player.vimeo.com/video/${match[1]}?autoplay=1` : null;
   };
 
-  const embedUrl = getYouTubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
+  const getTikTokEmbedUrl = (url: string) => {
+    // Match TikTok video URLs
+    const match = url.match(/tiktok\.com\/(?:@[\w.-]+\/video\/|v\/|embed\/v2\/)?(\d+)/);
+    if (match) {
+      return `https://www.tiktok.com/embed/v2/${match[1]}`;
+    }
+    // Match short TikTok URLs (vm.tiktok.com)
+    const shortMatch = url.match(/vm\.tiktok\.com\/([\w]+)/);
+    if (shortMatch) {
+      return url; // Short URLs need to be resolved, but we can try direct embed
+    }
+    return null;
+  };
+
+  const getFacebookEmbedUrl = (url: string) => {
+    // Encode the Facebook URL for embedding
+    const encodedUrl = encodeURIComponent(url);
+    return `https://www.facebook.com/plugins/video.php?href=${encodedUrl}&show_text=false&autoplay=1`;
+  };
+
+  const embedUrl = 
+    getYouTubeEmbedUrl(videoUrl) || 
+    getVimeoEmbedUrl(videoUrl) || 
+    getTikTokEmbedUrl(videoUrl) || 
+    getFacebookEmbedUrl(videoUrl);
   
   // Adjust dimensions for better desktop viewing
   const getPlayerDimensions = () => {
