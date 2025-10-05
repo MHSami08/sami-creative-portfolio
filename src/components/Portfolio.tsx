@@ -8,7 +8,33 @@ import { VideoProject } from '@/utils/projectManager';
 
 const Portfolio = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
+  const [vimeoThumbnails, setVimeoThumbnails] = useState<Record<string, string>>({});
   const { projects, loading, longVideos, shortVideos } = useProjects();
+
+  // Fetch Vimeo thumbnails on mount
+  useEffect(() => {
+    const fetchVimeoThumbnails = async () => {
+      const vimeoProjects = [...longVideos, ...shortVideos].filter(p => p.videoUrl?.includes('vimeo'));
+      const thumbnails: Record<string, string> = {};
+      
+      await Promise.all(
+        vimeoProjects.map(async (project) => {
+          if (project.videoUrl) {
+            const thumbnail = await getVimeoThumbnail(project.videoUrl);
+            if (thumbnail) {
+              thumbnails[project.id] = thumbnail;
+            }
+          }
+        })
+      );
+      
+      setVimeoThumbnails(thumbnails);
+    };
+
+    if (longVideos.length > 0 || shortVideos.length > 0) {
+      fetchVimeoThumbnails();
+    }
+  }, [longVideos, shortVideos]);
 
   // Helper function for auto thumbnail
   const getYouTubeThumbnail = (url: string) => {
@@ -19,16 +45,25 @@ const Portfolio = () => {
     return videoId ? `https://img.youtube.com/vi/${videoId}/sddefault.jpg` : '';
   };
 
-  const getVimeoThumbnail = (url: string) => {
+  const getVimeoThumbnail = async (url: string): Promise<string> => {
     const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
-    return videoId ? `https://vumbnail.com/${videoId}.jpg` : '';
+    if (!videoId) return '';
+    
+    try {
+      const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${videoId}`);
+      const data = await response.json();
+      return data.thumbnail_url || '';
+    } catch (error) {
+      console.error('Failed to fetch Vimeo thumbnail:', error);
+      return '';
+    }
   };
 
-  const getAutoThumbnail = (url: string) => {
+  const getAutoThumbnail = (url: string, projectId: string | number) => {
     if (url?.includes('youtu')) {
       return getYouTubeThumbnail(url);
     } else if (url?.includes('vimeo')) {
-      return getVimeoThumbnail(url);
+      return vimeoThumbnails[String(projectId)] || '';
     }
     return null;
   };
@@ -112,7 +147,7 @@ const Portfolio = () => {
                   {/* Video Thumbnail for Long Videos */}
                   <div className="relative overflow-hidden">
                     <img 
-                      src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
+                      src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail}
                       alt={`${project.title} thumbnail`}
                       className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -245,7 +280,7 @@ const Portfolio = () => {
                   <div className="relative overflow-hidden bg-black rounded-xl">
                     <div className="w-full" style={{ aspectRatio: '9/16' }}>
                       <img
-                        src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
+                        src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail}
                         alt={`${project.title} thumbnail`}
                         className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                       />
