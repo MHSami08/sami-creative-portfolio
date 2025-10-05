@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, RotateCcw, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useProjects } from '@/hooks/useProjects';
 import { useAuth } from '@/utils/auth';
 import { VideoProject } from '@/utils/projectManager';
+import { getHeroStats, saveHeroStats, HeroStats } from '@/utils/heroConfig';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
@@ -18,6 +19,7 @@ const DeveloperSpace = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingProject, setEditingProject] = useState<VideoProject | null>(null);
   const [sessionTime, setSessionTime] = useState(0);
+  const [heroStats, setHeroStats] = useState<HeroStats>(getHeroStats());
   
   const { toast } = useToast();
   const auth = useAuth();
@@ -166,21 +168,26 @@ const DeveloperSpace = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900/20 via-background to-purple-900/20 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/10_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/10_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
         
-        <Card className="w-full max-w-md relative z-10 bg-card/80 backdrop-blur-xl border-blue-400/30 shadow-2xl shadow-blue-500/10">
-          <CardHeader className="text-center pb-2">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Settings className="w-8 h-8 text-white" />
+        <Card className="w-full max-w-md relative z-10 bg-card/95 backdrop-blur-xl border-2 border-primary/30 shadow-2xl shadow-primary/20">
+          <CardHeader className="text-center pb-4">
+            <div className="flex justify-center mb-6">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Settings className="w-10 h-10 text-white" />
+                </div>
+              </div>
             </div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <CardTitle className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent mb-2">
               Developer's Space
             </CardTitle>
-            <p className="text-muted-foreground">Secure access required</p>
+            <p className="text-muted-foreground text-sm">🔒 Content Management Portal</p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm font-medium">Admin Password</Label>
+            <div className="space-y-3">
+              <Label htmlFor="password" className="text-sm font-semibold">Admin Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -189,34 +196,39 @@ const DeveloperSpace = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                   placeholder="Enter your secure password"
-                  className="pr-10 bg-background/50 border-blue-400/30 focus:border-blue-400"
+                  className="pr-10 bg-background/50 border-primary/30 focus:border-primary h-12 text-base"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
             </div>
             
-            <Button onClick={handleLogin} className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
-              Access Developer Space
+            <Button 
+              onClick={handleLogin} 
+              className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 text-white py-4 text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            >
+              🚀 Access Developer Space
             </Button>
             
-            <a href="/" className="w-full">
+            <a href="/" className="w-full block">
               <Button
                 variant="outline"
-                className="w-full border-blue-400/30 hover:bg-blue-500/10"
+                className="w-full border-2 border-primary/30 hover:bg-primary/10 py-3"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Portfolio
               </Button>
             </a>
             
-            <div className="text-center text-xs text-muted-foreground">
-              <p>Secure authentication • Session-based access</p>
+            <div className="text-center pt-2">
+              <p className="text-xs text-muted-foreground">
+                🔐 Secure Authentication • Auto-Logout on Exit
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -351,6 +363,65 @@ const DeveloperSpace = () => {
               </CardContent>
             </Card>
           </div>
+
+          {/* Hero Stats Customization */}
+          <Card className="mb-8 bg-card/50 backdrop-blur-sm border-border/50">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Target className="h-5 w-5 text-primary" />
+                <CardTitle>Hero Section Stats</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="experience">Years Experience</Label>
+                  <Input
+                    id="experience"
+                    value={heroStats.experience}
+                    onChange={(e) => {
+                      const newStats = { ...heroStats, experience: e.target.value };
+                      setHeroStats(newStats);
+                      saveHeroStats(newStats);
+                    }}
+                    placeholder="e.g., 2+"
+                    className="bg-background/50"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="projects">Projects Count</Label>
+                  <Input
+                    id="projects"
+                    value={heroStats.projects}
+                    onChange={(e) => {
+                      const newStats = { ...heroStats, projects: e.target.value };
+                      setHeroStats(newStats);
+                      saveHeroStats(newStats);
+                    }}
+                    placeholder="e.g., 50+"
+                    className="bg-background/50"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="quality">Quality Level</Label>
+                  <Input
+                    id="quality"
+                    value={heroStats.quality}
+                    onChange={(e) => {
+                      const newStats = { ...heroStats, quality: e.target.value };
+                      setHeroStats(newStats);
+                      saveHeroStats(newStats);
+                    }}
+                    placeholder="e.g., 100%"
+                    className="bg-background/50"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-4">
+                Changes are saved automatically and will reflect on the hero section
+              </p>
+            </CardContent>
+          </Card>
 
           {/* Projects Management */}
           <Tabs defaultValue="all" className="space-y-6">
