@@ -224,7 +224,7 @@ const Portfolio = () => {
           </h3>
           <p className="text-muted-foreground text-center mb-8">Quick impactful content</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 max-w-sm md:max-w-4xl mx-auto gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto gap-4 sm:gap-6">
             {shortVideos.length === 0 ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground">No short videos available yet.</p>
@@ -242,12 +242,14 @@ const Portfolio = () => {
                   onClick={() => project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
                 >  
                   {/* Short Video Thumbnail */}
-                  <div className="relative overflow-hidden aspect-[9/16] bg-black">
-                    <img
-                      src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
-                      alt={`${project.title} thumbnail`}
-                      className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-105"
-                    />
+                  <div className="relative overflow-hidden bg-black rounded-t-xl">
+                    <div className="aspect-[9/16]">
+                      <img
+                        src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
+                        alt={`${project.title} thumbnail`}
+                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                      />
+                    </div>
                     {project.status === 'completed' && (
                       <div className="absolute top-2 right-2">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
@@ -255,12 +257,12 @@ const Portfolio = () => {
                         </span>
                       </div>
                     )}
-                    <div className="p-4">
-                      <h4 className="text-foreground text-base font-semibold mb-1 line-clamp-2">{project.title}</h4>
-                      <div className="flex justify-between items-center text-xs text-muted-foreground">
-                        <span>{project.type}</span>
-                        <span>{project.duration}</span>
-                      </div>
+                  </div>
+                  <div className="p-3">
+                    <h4 className="text-foreground text-sm font-semibold mb-1 line-clamp-2">{project.title}</h4>
+                    <div className="flex justify-between items-center text-xs text-muted-foreground">
+                      <span>{project.type}</span>
+                      <span>{project.duration}</span>
                     </div>
                   </div>
                 </article>  
