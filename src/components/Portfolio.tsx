@@ -224,7 +224,7 @@ const Portfolio = () => {
           </h3>
           <p className="text-muted-foreground text-center mb-8">Quick impactful content</p>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 max-w-6xl mx-auto gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 max-w-sm md:max-w-4xl mx-auto gap-6 sm:gap-8">
             {shortVideos.length === 0 ? (
               <div className="col-span-full text-center py-12">
                 <p className="text-muted-foreground">No short videos available yet.</p>
