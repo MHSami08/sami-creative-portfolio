@@ -282,7 +282,7 @@ const Portfolio = () => {
                       <img
                         src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail}
                         alt={`${project.title} thumbnail`}
-                        className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-105"
                       />
                     </div>
                     {project.status === 'completed' && (
