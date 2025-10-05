@@ -242,8 +242,8 @@ const Portfolio = () => {
                   onClick={() => project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
                 >  
                   {/* Short Video Thumbnail */}
-                  <div className="relative overflow-hidden bg-black rounded-t-xl">
-                    <div className="aspect-[9/16]">
+                  <div className="relative overflow-hidden bg-black rounded-xl">
+                    <div className="w-full" style={{ aspectRatio: '9/16' }}>
                       <img
                         src={getAutoThumbnail(project.videoUrl) || project.thumbnail}
                         alt={`${project.title} thumbnail`}
@@ -251,18 +251,18 @@ const Portfolio = () => {
                       />
                     </div>
                     {project.status === 'completed' && (
-                      <div className="absolute top-2 right-2">
+                      <div className="absolute top-2 right-2 z-10">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                           Ready
                         </span>
                       </div>
                     )}
-                  </div>
-                  <div className="p-3">
-                    <h4 className="text-foreground text-sm font-semibold mb-1 line-clamp-2">{project.title}</h4>
-                    <div className="flex justify-between items-center text-xs text-muted-foreground">
-                      <span>{project.type}</span>
-                      <span>{project.duration}</span>
+                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                      <h4 className="text-white text-sm font-semibold mb-1 line-clamp-2">{project.title}</h4>
+                      <div className="flex justify-between items-center text-xs text-white/80">
+                        <span>{project.type}</span>
+                        <span>{project.duration}</span>
+                      </div>
                     </div>
                   </div>
                 </article>  

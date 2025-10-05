@@ -383,6 +383,10 @@ const DeveloperSpace = () => {
                       const newStats = { ...heroStats, experience: e.target.value };
                       setHeroStats(newStats);
                       saveHeroStats(newStats);
+                      toast({
+                        title: "Stats Updated",
+                        description: "Experience value saved successfully",
+                      });
                     }}
                     placeholder="e.g., 2+"
                     className="bg-background/50"
@@ -397,6 +401,10 @@ const DeveloperSpace = () => {
                       const newStats = { ...heroStats, projects: e.target.value };
                       setHeroStats(newStats);
                       saveHeroStats(newStats);
+                      toast({
+                        title: "Stats Updated",
+                        description: "Projects value saved successfully",
+                      });
                     }}
                     placeholder="e.g., 50+"
                     className="bg-background/50"
@@ -411,15 +419,32 @@ const DeveloperSpace = () => {
                       const newStats = { ...heroStats, quality: e.target.value };
                       setHeroStats(newStats);
                       saveHeroStats(newStats);
+                      toast({
+                        title: "Stats Updated",
+                        description: "Quality value saved successfully",
+                      });
                     }}
                     placeholder="e.g., 100%"
                     className="bg-background/50"
                   />
                 </div>
               </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                Changes are saved automatically and will reflect on the hero section
-              </p>
+              <div className="flex items-center justify-between mt-4">
+                <p className="text-xs text-muted-foreground">
+                  ✅ Changes are saved automatically and will reflect on the hero section
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    window.open('/', '_blank');
+                  }}
+                  className="border-blue-400/30"
+                >
+                  <Eye className="mr-2 h-4 w-4" />
+                  Preview Hero
+                </Button>
+              </div>
             </CardContent>
           </Card>
 
