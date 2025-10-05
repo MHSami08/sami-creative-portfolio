@@ -19,10 +19,12 @@ const Portfolio = () => {
     return videoId ? `https://img.youtube.com/vi/${videoId}/sddefault.jpg` : '';
   };
 
-  const getVimeoThumbnail = (url: string) => {
-    const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
-    return videoId ? `https://vumbnail.com/${videoId}.jpg` : '';
-  };
+  const getVimeoThumbnail = async (url: string) => {
+  const oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(url)}`;
+  const res = await fetch(oembedUrl);
+  const data = await res.json();
+  return data.thumbnail_url;
+};
 
   const getAutoThumbnail = (url: string) => {
     if (url?.includes('youtu')) {
