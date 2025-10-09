@@ -23,7 +23,7 @@ const DeveloperSpace = () => {
   
   const { toast } = useToast();
   const auth = useAuth();
-  const { projects, loading, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
+  const { projects, loading, longVideos, shortVideos } = useProjects();
   const isAuthenticated = auth.isAuthenticated();
 
   // Debug: Log projects when they change
@@ -105,63 +105,21 @@ const DeveloperSpace = () => {
   };
 
   const handleDeleteProject = (projectId: number) => {
-    if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
-      if (deleteProject(projectId)) {
-        toast({
-          title: "Project Deleted",
-          description: "Project has been removed from your portfolio",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Failed to delete project",
-          variant: "destructive",
-        });
-      }
-    }
+    toast({
+      title: "Feature Disabled",
+      description: "Project deletion is disabled. Data is now permanently stored in the database.",
+      variant: "destructive",
+    });
   };
 
   const handleSaveProject = (projectData: any) => {
-    try {
-      const tools = typeof projectData.tools === 'string' 
-        ? projectData.tools.split(',').map((tool: string) => tool.trim()).filter(Boolean)
-        : projectData.tools;
-      
-      const features = typeof projectData.features === 'string'
-        ? projectData.features.split(',').map((feature: string) => feature.trim()).filter(Boolean)
-        : projectData.features;
-
-      const projectToSave = {
-        ...projectData,
-        tools,
-        features
-      };
-
-      if (projectToSave.id && projects.find(p => p.id === projectToSave.id)) {
-        // Update existing
-        updateProject(projectToSave.id, projectToSave);
-        toast({
-          title: "Project Updated",
-          description: "Your changes have been saved and will appear in the portfolio",
-        });
-      } else {
-        // Add new
-        addProject(projectToSave);
-        toast({
-          title: "Project Created",
-          description: "New project has been added to your portfolio",
-        });
-      }
-
-      setIsEditing(false);
-      setEditingProject(null);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to save project. Please try again.",
-        variant: "destructive",
-      });
-    }
+    toast({
+      title: "Feature Disabled",
+      description: "Project editing is disabled. Please manage projects directly in the database.",
+      variant: "destructive",
+    });
+    setIsEditing(false);
+    setEditingProject(null);
   };
 
   // Login Screen
@@ -286,11 +244,10 @@ const DeveloperSpace = () => {
               <Button 
                 variant="outline" 
                 onClick={() => {
-                  if (confirm('This will reset all projects to defaults. Continue?')) {
-                    const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
-                    projectManager.resetToDefaults();
-                    window.location.reload();
-                  }
+                  toast({
+                    title: "Feature Disabled",
+                    description: "Projects are now stored in the database and cannot be reset from here.",
+                  });
                 }}
                 className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
               >
