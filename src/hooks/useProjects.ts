@@ -1,53 +1,48 @@
 import { useState, useEffect } from 'react';
-import { fetchProjects } from '@/lib/supabaseClient';
-import { seedDatabaseIfEmpty } from '@/utils/seedDatabase';
-
-// Map database fields to component expected format
-const mapDbProject = (dbProject: any) => ({
-  id: dbProject.id,
-  title: dbProject.title,
-  description: dbProject.description,
-  category: dbProject.category,
-  status: dbProject.status === 'published' ? 'completed' : dbProject.status,
-  tools: dbProject.tools || [],
-  duration: dbProject.duration || '',
-  type: dbProject.category === 'long' ? 'Long Video' : 'Shorts',
-  videoUrl: dbProject.video_url,
-  thumbnail: dbProject.thumbnail || '',
-  detailedDescription: dbProject.description,
-  features: dbProject.tags || [],
-  createdAt: dbProject.created_at,
-  updatedAt: dbProject.updated_at
-});
+import { ProjectManager, VideoProject } from '@/utils/projectManager';
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<VideoProject[]>([]);
   const [loading, setLoading] = useState(true);
+  const projectManager = ProjectManager.getInstance();
 
   useEffect(() => {
-    const loadProjects = async () => {
-      setLoading(true);
-      
-      // Seed database if empty
-      await seedDatabaseIfEmpty();
-      
-      // Fetch projects
-      const data = await fetchProjects();
-      const mappedProjects = data.map(mapDbProject);
-      setProjects(mappedProjects);
-      setLoading(false);
-    };
+    // Initial load
+    setProjects(projectManager.getAllProjects());
+    setLoading(false);
 
-    loadProjects();
-  }, []);
+    // Subscribe to changes
+    const unsubscribe = projectManager.subscribe((updatedProjects) => {
+      setProjects(updatedProjects);
+    });
 
-  const longVideos = projects.filter(p => p.category === 'long');
-  const shortVideos = projects.filter(p => p.category === 'short');
+    return unsubscribe;
+  }, [projectManager]);
+
+  const addProject = (projectData: Omit<VideoProject, 'id' | 'createdAt' | 'updatedAt'>) => {
+    return projectManager.addProject(projectData);
+  };
+
+  const updateProject = (id: number, updates: Partial<VideoProject>) => {
+    return projectManager.updateProject(id, updates);
+  };
+
+  const deleteProject = (id: number) => {
+    return projectManager.deleteProject(id);
+  };
+
+  const getProjectsByCategory = (category: 'long' | 'short') => {
+    return projects.filter(project => project.category === category);
+  };
 
   return {
     projects,
     loading,
-    longVideos,
-    shortVideos,
+    addProject,
+    updateProject,
+    deleteProject,
+    getProjectsByCategory,
+    longVideos: getProjectsByCategory('long'),
+    shortVideos: getProjectsByCategory('short')
   };
 };
