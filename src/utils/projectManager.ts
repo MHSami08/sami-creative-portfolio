@@ -85,6 +85,22 @@ const initialProjects: VideoProject[] = [
     updatedAt: new Date().toISOString()
   },
   {
+    id: 7,
+    title: "Surah Al Haqqah(29-34)",
+    description: "",
+    category: "short",
+    status: "completed",
+    tools: ["Node Video Editor", "Alight motion"],
+    duration: "1:08 min",
+    type: "Reel",
+    videoUrl: "https://vimeo.com/1116434062",
+    thumbnail: "",
+    detailedDescription: "",
+    features: ["Professional video editing", "Islamic content creation"],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
     id: 8,
     title: "Daily Reminder",
     description: "Short Islamic reminder for daily reflection",
