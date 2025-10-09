@@ -8,14 +8,14 @@
   "description": "Official website of MH Official – Projects, videos, and portfolio.",
   "icons": [
     {
-      "src": "/MH_OfficialYT Logo.png",
+      "src": "/MH_OfficialYT_Logo.png",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/png"
     },
     {
       "src": "/MH_OfficialYT Logo.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png"
     }
   ]
 }
