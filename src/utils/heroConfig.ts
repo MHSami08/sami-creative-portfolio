@@ -8,9 +8,9 @@ export interface HeroStats {
 const HERO_CONFIG_KEY = 'mh_hero_config';
 
 const defaultStats: HeroStats = {
-  experience: '2+',
-  projects: '50+',
-  quality: '100%'
+  experience: '1+',
+  projects: '26+',
+  quality: 'BEST'
 };
 
 export const getHeroStats = (): HeroStats => {
