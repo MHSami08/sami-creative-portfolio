@@ -3,8 +3,7 @@ import { ExternalLink, Github, Play, Calendar, Clock, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import VideoPlayer from '@/components/VideoPlayer';
-import { useProjects } from '@/hooks/useProjects';
-import { VideoProject } from '@/utils/projectManager';
+import { useProjects, VideoProject } from '@/hooks/useProjects';
 
 const Portfolio = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; isShortVideo: boolean } | null>(null);
@@ -68,25 +67,13 @@ const Portfolio = () => {
     return null;
   };
 
-  // Helper function to get YouTube embed URL
-  const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.includes('youtu.be') 
-      ? url.split('youtu.be/')[1]?.split('?')[0]
-      : url.split('v=')[1]?.split('&')[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-  };
-
-  // Helper function to get Vimeo embed URL
-  const getVimeoEmbedUrl = (url: string) => {
-    const videoId = url.match(/vimeo\.com\/(\d+)/)?.[1];
-    return videoId ? `https://player.vimeo.com/video/${videoId}` : null;
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'planned': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300';
       case 'learning': return 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300';
-      case 'completed': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
+      case 'completed': 
+      case 'published': 
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300';
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
     }
   };
@@ -99,7 +86,7 @@ const Portfolio = () => {
   };
 
   const handleProjectClick = (project: VideoProject) => {
-    if (project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A') {
+    if ((project.status === 'completed' || project.status === 'published') && project.videoUrl && project.videoUrl !== 'N/A') {
       setSelectedVideo({ 
         url: project.videoUrl, 
         title: project.title,
@@ -137,7 +124,7 @@ const Portfolio = () => {
                 <article  
                   key={project.id}  
                   className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.01] hover:-translate-y-1 animate-fade-in ${
-                    project.status === 'completed' && project.videoUrl ? 'cursor-pointer' : 'cursor-default'
+                    (project.status === 'completed' || project.status === 'published') && project.videoUrl ? 'cursor-pointer' : 'cursor-default'
                   } dark:hover:border-cyan-400 dark:hover:shadow-cyan-400/20 dark:hover:shadow-lg`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                   role="article"
@@ -147,11 +134,11 @@ const Portfolio = () => {
                   {/* Video Thumbnail for Long Videos */}
                   <div className="relative overflow-hidden">
                     <img 
-                      src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail}
+                      src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail || ''}
                       alt={`${project.title} thumbnail`}
                       className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    {project.status === 'completed' && (
+                    {(project.status === 'completed' || project.status === 'published') && (
                       <div className="absolute top-3 right-3">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                           Ready to Watch
@@ -177,28 +164,19 @@ const Portfolio = () => {
                                 <h4 className="font-semibold text-sm sm:text-base">{project.title}</h4>
                               </div>
                               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                                {project.detailedDescription}
+                                {project.description}
                               </p>
-                              <div className="space-y-2">
-                                <h5 className="font-medium text-sm">Key Features:</h5>
-                                <ul className="text-sm text-muted-foreground space-y-1">
-                                  {project.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-center gap-2">
-                                      <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
-                                      {feature}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
                               <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2 border-t">
                                 <div className="flex items-center gap-1">
                                   <Calendar className="h-3 w-3" />
-                                  <span>{project.type}</span>
+                                  <span>{project.category === 'long' ? 'Long Video' : 'Short Video'}</span>
                                 </div>
-                                <div className="flex items-center gap-1">
-                                  <Clock className="h-3 w-3" />
-                                  <span>{project.duration}</span>
-                                </div>
+                                {project.duration && (
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    <span>{project.duration}</span>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </HoverCardContent>
@@ -222,13 +200,15 @@ const Portfolio = () => {
                       <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">  
                         <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />  
                         <span className="font-medium">Type:</span>  
-                        <span>{project.type}</span>  
+                        <span>{project.category === 'long' ? 'Long Video' : 'Short Video'}</span>  
                       </div>  
-                      <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">  
-                        <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />  
-                        <span className="font-medium">Duration:</span>  
-                        <span>{project.duration}</span>  
-                      </div>  
+                      {project.duration && (
+                        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">  
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />  
+                          <span className="font-medium">Duration:</span>  
+                          <span>{project.duration}</span>  
+                        </div>
+                      )}
                     </div>  
 
                     {/* Tools used */}  
@@ -269,23 +249,23 @@ const Portfolio = () => {
                 <article  
                   key={project.id}  
                   className={`group bg-card rounded-xl border border-border overflow-hidden transition-all duration-200 ease-out hover:shadow-md ${
-                    project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' ? 'cursor-pointer' : 'cursor-default'
+                    (project.status === 'completed' || project.status === 'published') && project.videoUrl && project.videoUrl !== 'N/A' ? 'cursor-pointer' : 'cursor-default'
                   } hover:border-primary/20`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                   role="article"
                   aria-label={`Project: ${project.title}`}
-                  onClick={() => project.status === 'completed' && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
+                  onClick={() => (project.status === 'completed' || project.status === 'published') && project.videoUrl && project.videoUrl !== 'N/A' && handleProjectClick(project)}
                 >  
                   {/* Short Video Thumbnail */}
                   <div className="relative overflow-hidden bg-black rounded-xl">
                     <div className="w-full" style={{ aspectRatio: '9/16' }}>
                       <img
-                        src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail}
+                        src={getAutoThumbnail(project.videoUrl, project.id) || project.thumbnail || ''}
                         alt={`${project.title} thumbnail`}
                         className="w-full h-full object-contain transition-transform duration-200 group-hover:scale-105"
                       />
                     </div>
-                    {project.status === 'completed' && (
+                    {(project.status === 'completed' || project.status === 'published') && (
                       <div className="absolute top-2 right-2 z-10">
                         <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                           Ready
@@ -295,7 +275,7 @@ const Portfolio = () => {
                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
                       <h4 className="text-white text-sm font-semibold mb-1 line-clamp-2">{project.title}</h4>
                       <div className="flex justify-between items-center text-xs text-white/80">
-                        <span>{project.type}</span>
+                        <span>{project.category === 'long' ? 'Long Video' : 'Short Video'}</span>
                         <span>{project.duration}</span>
                       </div>
                     </div>
