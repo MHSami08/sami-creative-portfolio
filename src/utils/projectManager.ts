@@ -99,6 +99,22 @@ const initialProjects: VideoProject[] = [
     features: ["Professional video editing", "Islamic content creation"],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: 8,
+    title: "Daily Reminder",
+    description: "Short Islamic reminder for daily reflection",
+    category: "short",
+    status: "completed",
+    tools: ["Inshot", "Alight Motion"],
+    duration: "1:00 min",
+    type: "Reminder Reel",
+    videoUrl: "N/A",
+    thumbnail: "https://i.postimg.cc/B6vdXZzW/IMG-20250721-092425.jpg",
+    detailedDescription: "Daily Islamic reminder to keep faith strong and spirits high.",
+    features: ["Text animation", "Islamic imagery", "Spiritual content"],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ];
 

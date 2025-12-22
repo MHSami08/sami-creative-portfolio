@@ -1,28 +1,38 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, Eye, EyeOff, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, Target } from 'lucide-react';
+import { ArrowLeft, Plus, CreditCard as Edit, Trash2, Eye, EyeOff, Save, X, Clock, Users, ChartBar as BarChart3, Settings, LogOut, Play, RotateCcw, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
-import { useProjects, VideoProject } from '@/hooks/useProjects';
+import { useProjects } from '@/hooks/useProjects';
 import { useAuth } from '@/utils/auth';
+import { VideoProject } from '@/utils/projectManager';
 import { getHeroStats, saveHeroStats, HeroStats } from '@/utils/heroConfig';
 
 const DeveloperSpace = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingProject, setEditingProject] = useState<VideoProject | null>(null);
   const [sessionTime, setSessionTime] = useState(0);
   const [heroStats, setHeroStats] = useState<HeroStats>(getHeroStats());
   
   const { toast } = useToast();
   const auth = useAuth();
-  const { projects, loading, longVideos, shortVideos, error } = useProjects();
+  const { projects, loading, addProject, updateProject, deleteProject, longVideos, shortVideos } = useProjects();
   const isAuthenticated = auth.isAuthenticated();
 
-  // Auto-logout when component unmounts
+  // Debug: Log projects when they change
+  useEffect(() => {
+    console.log('Projects in Developer Space:', projects);
+    console.log('Loading state:', loading);
+  }, [projects, loading]);
+
+  // Auto-logout when component unmounts (user leaves the page)
   useEffect(() => {
     return () => {
       if (isAuthenticated) {
@@ -39,7 +49,7 @@ const DeveloperSpace = () => {
       };
       
       updateSessionTime();
-      const interval = setInterval(updateSessionTime, 60000);
+      const interval = setInterval(updateSessionTime, 60000); // Update every minute
       
       return () => clearInterval(interval);
     }
@@ -69,6 +79,89 @@ const DeveloperSpace = () => {
       description: "You have been logged out successfully",
     });
     window.location.href = '/';
+  };
+
+  const handleAddProject = () => {
+    const newProject: Omit<VideoProject, 'id' | 'createdAt' | 'updatedAt'> = {
+      title: '',
+      description: '',
+      category: 'long',
+      tools: [],
+      duration: '',
+      type: '',
+      videoUrl: '',
+      thumbnail: '',
+      detailedDescription: '',
+      features: [],
+      status: 'planned'
+    };
+    setEditingProject(newProject as VideoProject);
+    setIsEditing(true);
+  };
+
+  const handleEditProject = (project: VideoProject) => {
+    setEditingProject(project);
+    setIsEditing(true);
+  };
+
+  const handleDeleteProject = (projectId: number) => {
+    if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+      if (deleteProject(projectId)) {
+        toast({
+          title: "Project Deleted",
+          description: "Project has been removed from your portfolio",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete project",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  const handleSaveProject = (projectData: any) => {
+    try {
+      const tools = typeof projectData.tools === 'string' 
+        ? projectData.tools.split(',').map((tool: string) => tool.trim()).filter(Boolean)
+        : projectData.tools;
+      
+      const features = typeof projectData.features === 'string'
+        ? projectData.features.split(',').map((feature: string) => feature.trim()).filter(Boolean)
+        : projectData.features;
+
+      const projectToSave = {
+        ...projectData,
+        tools,
+        features
+      };
+
+      if (projectToSave.id && projects.find(p => p.id === projectToSave.id)) {
+        // Update existing
+        updateProject(projectToSave.id, projectToSave);
+        toast({
+          title: "Project Updated",
+          description: "Your changes have been saved and will appear in the portfolio",
+        });
+      } else {
+        // Add new
+        addProject(projectToSave);
+        toast({
+          title: "Project Created",
+          description: "New project has been added to your portfolio",
+        });
+      }
+
+      setIsEditing(false);
+      setEditingProject(null);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save project. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   // Login Screen
@@ -143,6 +236,18 @@ const DeveloperSpace = () => {
     );
   }
 
+  // Project Editor
+  if (isEditing && editingProject) {
+    return <ProjectEditor 
+      project={editingProject} 
+      onSave={handleSaveProject}
+      onCancel={() => {
+        setIsEditing(false);
+        setEditingProject(null);
+      }}
+    />;
+  }
+
   // Main Dashboard
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10">
@@ -156,7 +261,7 @@ const DeveloperSpace = () => {
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 Developer's Space
               </h1>
-              <p className="text-muted-foreground mt-1">View your video portfolio • {projects.length} projects</p>
+              <p className="text-muted-foreground mt-1">Manage your video portfolio • {projects.length} projects</p>
             </div>
             
             <div className="flex flex-wrap items-center gap-2">
@@ -166,12 +271,32 @@ const DeveloperSpace = () => {
                 <span className="text-sm text-blue-400 font-medium">{sessionTime}m left</span>
               </div>
               
+              <Button onClick={handleAddProject} className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700">
+                <Plus className="mr-2 h-4 w-4" />
+                Add Project
+              </Button>
+              
               <a href="/">
                 <Button variant="outline" className="border-blue-400/30">
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Portfolio
                 </Button>
               </a>
+              
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  if (confirm('This will reset all projects to defaults. Continue?')) {
+                    const projectManager = require('@/utils/projectManager').ProjectManager.getInstance();
+                    projectManager.resetToDefaults();
+                    window.location.reload();
+                  }
+                }}
+                className="border-amber-400/30 text-amber-400 hover:bg-amber-500/10"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
+                Reset
+              </Button>
               
               <Button variant="destructive" onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
@@ -231,8 +356,8 @@ const DeveloperSpace = () => {
                     <Settings className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'published').length}</p>
-                    <p className="text-xs text-muted-foreground">Published</p>
+                    <p className="text-2xl font-bold text-amber-400">{projects.filter(p => p.status === 'completed').length}</p>
+                    <p className="text-xs text-muted-foreground">Completed</p>
                   </div>
                 </div>
               </CardContent>
@@ -304,87 +429,126 @@ const DeveloperSpace = () => {
                   />
                 </div>
               </div>
-              <div className="mt-4 p-3 bg-blue-500/10 rounded-lg border border-blue-400/30">
-                <p className="text-sm text-muted-foreground">
-                  📌 Projects are now stored in the cloud database. To add or edit projects, contact the admin or use the database directly.
+              <div className="flex items-center justify-between mt-4">
+                <p className="text-xs text-muted-foreground">
+                  ✅ Changes are saved automatically and will reflect on the hero section
                 </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    window.open('/', '_blank');
+                  }}
+                  className="border-blue-400/30"
+                >
+                  <Eye className="mr-2 h-4 w-4" />
+                  Preview Hero
+                </Button>
               </div>
             </CardContent>
           </Card>
 
-          {/* Projects List */}
-          <Tabs defaultValue="all" className="space-y-4">
-            <TabsList className="bg-card/50 border border-border/50">
+          {/* Projects Management */}
+          <Tabs defaultValue="all" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
               <TabsTrigger value="all">All Projects ({projects.length})</TabsTrigger>
               <TabsTrigger value="long">Long Videos ({longVideos.length})</TabsTrigger>
               <TabsTrigger value="short">Short Videos ({shortVideos.length})</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="all" className="space-y-4">
-              <ProjectList projects={projects} />
+            <TabsContent value="all">
+              <ProjectGrid projects={projects} onEdit={handleEditProject} onDelete={handleDeleteProject} />
             </TabsContent>
-
-            <TabsContent value="long" className="space-y-4">
-              <ProjectList projects={longVideos} />
+            
+            <TabsContent value="long">
+              <ProjectGrid projects={longVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
             </TabsContent>
-
-            <TabsContent value="short" className="space-y-4">
-              <ProjectList projects={shortVideos} />
+            
+            <TabsContent value="short">
+              <ProjectGrid projects={shortVideos} onEdit={handleEditProject} onDelete={handleDeleteProject} />
             </TabsContent>
           </Tabs>
-
-          {error && (
-            <div className="mt-4 p-4 bg-red-500/10 border border-red-400/30 rounded-lg">
-              <p className="text-red-400">Error loading projects: {error}</p>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 };
 
-// Project List Component
-const ProjectList = ({ projects }: { projects: VideoProject[] }) => {
+// Project Grid Component
+const ProjectGrid = ({ 
+  projects, 
+  onEdit, 
+  onDelete 
+}: { 
+  projects: VideoProject[];
+  onEdit: (project: VideoProject) => void;
+  onDelete: (id: number) => void;
+}) => {
   if (projects.length === 0) {
     return (
-      <div className="text-center py-12 bg-card/50 rounded-lg border border-border/50">
-        <p className="text-muted-foreground">No projects found</p>
-      </div>
+      <Card className="p-12 text-center bg-card/50 border-dashed border-2 border-muted-foreground/20">
+        <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
+          <Plus className="w-8 h-8 text-muted-foreground" />
+        </div>
+        <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
+        <p className="text-muted-foreground">Create your first project to get started</p>
+      </Card>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {projects.map((project) => (
-        <Card key={project.id} className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 hover:border-primary/30">
-          <CardContent className="p-4">
-            {/* Thumbnail */}
-            {project.thumbnail && (
-              <div className="relative mb-3 rounded-lg overflow-hidden">
-                <img 
-                  src={project.thumbnail} 
-                  alt={project.title}
-                  className="w-full aspect-video object-cover"
-                />
-                <div className="absolute top-2 right-2">
-                  <Badge className={project.status === 'published' ? 'bg-green-500' : 'bg-blue-500'}>
+        <Card key={project.id} className="group hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm border-border/50 hover:border-primary/30">
+          <CardHeader className="pb-2">
+            <div className="flex justify-between items-start gap-2">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-lg line-clamp-2 group-hover:text-primary transition-colors">
+                  {project.title || 'Untitled Project'}
+                </CardTitle>
+                <div className="flex items-center gap-2 mt-2">
+                  <Badge variant={project.category === 'long' ? 'default' : 'secondary'} className="text-xs">
+                    {project.category}
+                  </Badge>
+                  <Badge 
+                    variant="outline" 
+                    className={`text-xs ${
+                      project.status === 'completed' ? 'border-emerald-400 text-emerald-400' :
+                      project.status === 'learning' ? 'border-amber-400 text-amber-400' :
+                      'border-blue-400 text-blue-400'
+                    }`}
+                  >
                     {project.status}
                   </Badge>
                 </div>
               </div>
-            )}
-            
-            <h3 className="font-semibold text-lg mb-1 line-clamp-1">{project.title}</h3>
-            
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline" className="text-xs">
-                {project.category === 'long' ? 'Long Video' : 'Short Video'}
-              </Badge>
-              {project.featured && (
-                <Badge className="bg-amber-500/20 text-amber-400 text-xs">Featured</Badge>
-              )}
+              <div className="flex gap-1">
+                <Button size="sm" variant="ghost" onClick={() => onEdit(project)} className="opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button size="sm" variant="ghost" onClick={() => onDelete(project.id)} className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive">
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {project.thumbnail && project.thumbnail !== 'N/A' && (
+              <div className="relative overflow-hidden rounded-lg">
+                <img 
+                  src={project.thumbnail} 
+                  alt={project.title}
+                  className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {project.videoUrl && project.videoUrl !== 'N/A' && (
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                      <Play className="w-6 h-6 text-white ml-1" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
             
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground line-clamp-2">
@@ -392,7 +556,7 @@ const ProjectList = ({ projects }: { projects: VideoProject[] }) => {
               </p>
               
               <div className="flex justify-between items-center text-xs text-muted-foreground">
-                <span>{project.category === 'long' ? 'Long Video' : 'Short Video'}</span>
+                <span>{project.type || 'Unknown type'}</span>
                 <span>{project.duration || 'No duration'}</span>
               </div>
               
@@ -412,12 +576,322 @@ const ProjectList = ({ projects }: { projects: VideoProject[] }) => {
               )}
             </div>
             
-            <div className="text-xs text-muted-foreground pt-2 border-t mt-2">
+            <div className="text-xs text-muted-foreground pt-2 border-t">
               Updated: {new Date(project.updatedAt).toLocaleDateString()}
             </div>
           </CardContent>
         </Card>
       ))}
+    </div>
+  );
+};
+
+// Enhanced Project Editor Component
+const ProjectEditor = ({ 
+  project, 
+  onSave, 
+  onCancel 
+}: { 
+  project: VideoProject;
+  onSave: (project: any) => void;
+  onCancel: () => void;
+}) => {
+  const [formData, setFormData] = useState({
+    ...project,
+    tools: project.tools.join(', '),
+    features: project.features.join(', ')
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.type.trim()) newErrors.type = 'Type is required';
+    if (!formData.duration.trim()) newErrors.duration = 'Duration is required';
+    if (!formData.videoUrl.trim()) newErrors.videoUrl = 'Video URL is required';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      onSave(formData);
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-900/10 via-background to-purple-900/10 p-4">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f6/05_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6/05_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+      
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {project.id && project.title ? 'Edit Project' : 'Create New Project'}
+            </h1>
+            <p className="text-muted-foreground">
+              {project.id && project.title ? 'Update your project details' : 'Add a new project to your portfolio'}
+            </p>
+          </div>
+          <Button variant="outline" onClick={onCancel} className="border-red-400/30 text-red-400 hover:bg-red-500/10">
+            <X className="mr-2 h-4 w-4" />
+            Cancel
+          </Button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column */}
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+              <CardHeader className="border-b border-border/50">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                    <Settings className="w-4 h-4 text-white" />
+                  </div>
+                  Basic Information
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="title" className="text-sm font-medium">Project Title *</Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    placeholder="Enter project title"
+                    className={`mt-1 ${errors.title ? 'border-red-500' : ''}`}
+                  />
+                  {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
+                </div>
+
+                <div>
+                  <Label htmlFor="description" className="text-sm font-medium">
+                    Description <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description}
+                    onChange={(e) => handleInputChange('description', e.target.value)}
+                    placeholder="Brief description of your project"
+                    className="mt-1"
+                    rows={3}
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Auto-generated from video if left empty</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="category" className="text-sm font-medium">Category *</Label>
+                    <select
+                      id="category"
+                      value={formData.category}
+                      onChange={(e) => handleInputChange('category', e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background"
+                    >
+                      <option value="long">Long Video</option>
+                      <option value="short">Short Video</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="status" className="text-sm font-medium">Status *</Label>
+                    <select
+                      id="status"
+                      value={formData.status}
+                      onChange={(e) => handleInputChange('status', e.target.value)}
+                      className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background"
+                    >
+                      <option value="planned">Planned</option>
+                      <option value="learning">In Progress</option>
+                      <option value="completed">Completed</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="type" className="text-sm font-medium">Project Type *</Label>
+                    <Input
+                      id="type"
+                      value={formData.type}
+                      onChange={(e) => handleInputChange('type', e.target.value)}
+                      placeholder="e.g., Nasheed Video, Quote Reel"
+                      className={`mt-1 ${errors.type ? 'border-red-500' : ''}`}
+                    />
+                    {errors.type && <p className="text-red-500 text-xs mt-1">{errors.type}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="duration" className="text-sm font-medium">Duration *</Label>
+                    <Input
+                      id="duration"
+                      value={formData.duration}
+                      onChange={(e) => handleInputChange('duration', e.target.value)}
+                      placeholder="e.g., 3:29 min, 25 sec"
+                      className={`mt-1 ${errors.duration ? 'border-red-500' : ''}`}
+                    />
+                    {errors.duration && <p className="text-red-500 text-xs mt-1">{errors.duration}</p>}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Right Column */}
+            <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+              <CardHeader className="border-b border-border/50">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <Play className="w-4 h-4 text-white" />
+                  </div>
+                  Media & Links
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="videoUrl" className="text-sm font-medium">
+                    Video URL *
+                  </Label>
+                  <Input
+                    id="videoUrl"
+                    value={formData.videoUrl}
+                    onChange={(e) => handleInputChange('videoUrl', e.target.value)}
+                    placeholder="https://youtu.be/... or https://vimeo.com/... or TikTok/Facebook"
+                    className={`mt-1 ${errors.videoUrl ? 'border-red-500' : ''}`}
+                  />
+                  {errors.videoUrl && <p className="text-red-500 text-xs mt-1">{errors.videoUrl}</p>}
+                  <p className="text-xs text-muted-foreground mt-1">Supports YouTube, Vimeo, TikTok, and Facebook videos</p>
+                </div>
+
+                <div>
+                  <Label htmlFor="thumbnail" className="text-sm font-medium">
+                    Thumbnail URL <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <Input
+                    id="thumbnail"
+                    value={formData.thumbnail}
+                    onChange={(e) => handleInputChange('thumbnail', e.target.value)}
+                    placeholder="https://... (leave empty for auto-generated)"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Auto-generated from video URL if left empty</p>
+                  {formData.thumbnail && (
+                    <div className="mt-3 relative group">
+                      <img 
+                        src={formData.thumbnail} 
+                        alt="Thumbnail preview" 
+                        className="w-full max-w-sm aspect-video object-cover rounded-lg border-2 border-border shadow-md"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                        Preview
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="tools" className="text-sm font-medium">
+                    Tools Used <span className="text-muted-foreground">(Optional)</span>
+                  </Label>
+                  <Input
+                    id="tools"
+                    value={formData.tools}
+                    onChange={(e) => handleInputChange('tools', e.target.value)}
+                    placeholder="VN Video Editor, Alight Motion, Capcut"
+                    className="mt-1"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Separate multiple tools with commas</p>
+                  {formData.tools && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {formData.tools.split(',').filter(Boolean).map((tool, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded text-xs">
+                          {tool.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Full Width Cards */}
+          <Card className="bg-card/80 backdrop-blur-sm border-border/50 hover:shadow-lg transition-shadow">
+            <CardHeader className="border-b border-border/50">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg flex items-center justify-center">
+                  <Edit className="w-4 h-4 text-white" />
+                </div>
+                Additional Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label htmlFor="detailedDescription" className="text-sm font-medium">
+                  Detailed Description <span className="text-muted-foreground">(Optional)</span>
+                </Label>
+                <Textarea
+                  id="detailedDescription"
+                  value={formData.detailedDescription}
+                  onChange={(e) => handleInputChange('detailedDescription', e.target.value)}
+                  placeholder="Detailed description that will appear in hover cards and project details (optional)"
+                  className="mt-1"
+                  rows={4}
+                />
+                <p className="text-xs text-muted-foreground mt-1">Appears in hover cards for more context</p>
+              </div>
+
+              <div>
+                <Label htmlFor="features" className="text-sm font-medium">
+                  Key Features <span className="text-muted-foreground">(Optional)</span>
+                </Label>
+                <Textarea
+                  id="features"
+                  value={formData.features}
+                  onChange={(e) => handleInputChange('features', e.target.value)}
+                  placeholder="High-quality audio processing, Professional video editing, Islamic content creation"
+                  className="mt-1"
+                  rows={3}
+                />
+                <p className="text-xs text-muted-foreground mt-1">Separate multiple features with commas</p>
+                {formData.features && (
+                  <div className="mt-2 space-y-1">
+                    {formData.features.split(',').filter(Boolean).map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0" />
+                        <span className="text-muted-foreground">{feature.trim()}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Action Buttons */}
+          <div className="flex gap-4 justify-end">
+            <Button type="button" variant="outline" onClick={onCancel} className="border-red-400/30 text-red-400 hover:bg-red-500/10">
+              Cancel
+            </Button>
+            <Button type="submit" className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-8">
+              <Save className="mr-2 h-4 w-4" />
+              Save Project
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
